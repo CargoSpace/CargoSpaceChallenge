@@ -1,0 +1,251 @@
+{% load static %}
+{% include "app/_header.html" %}
+  <div class="app" id="app">
+  	<script type="text/javascript">
+  		var now = '{{ countDown.now }}';
+  		var endtime = '{{ countDown.end_time }}';
+  	</script>
+<!-- 
+$data['now']            = date('Y-m-d H:i:s', time());
+$data['endtime']        = end_time($current_package->row()->sub_datetime, $this->settings->item('delete_records_after')); 
+-->
+<!-- ############ LAYOUT START-->
+
+  <div class="p-a white">
+        <div class="navbar" data-pjax>
+              <a data-toggle="collapse" data-target="#navbar" class="navbar-item pull-right hidden-md-up m-a-0 m-l">
+                <i class="ion-android-menu"></i>
+              </a>
+              <!-- brand -->
+              <a href="#" class="navbar-brand">
+              	<h2 class="text-muted _600">
+  								<span class="text-muted">Cargo_</span>
+  							</h2>
+              </a>
+              
+              <!-- / brand -->
+      
+              <!-- navbar collapse -->
+              <div class="collapse navbar-toggleable-sm pull-right pull-none-xs" id="navbar">
+                <!-- link and dropdown -->
+                <ul class="nav navbar-nav text-info-hover" data-ui-nav>
+                  <li class="nav-item">
+                    <a href="/register" class="nav-link">
+                      <span class="nav-text text-info">
+                        Sign Up
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="/login" class="nav-link">
+                      <span class="btn btn-md rounded info">
+                        Log in
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+                <!-- / link and dropdown -->
+              </div>
+              <!-- / navbar collapse -->
+        </div>
+  </div>
+
+  <!-- content -->
+  <div id="content" class="app-content" role="main">
+    <div class="app-body">
+
+<!-- ############ PAGE START-->
+
+<div class="row-col white">
+	<div class="col-sm-3"></div>
+	<div class="col-sm-6 text-center">
+		<div class="p-t-lg">
+			<h1 class="m-y-md text-black">Cargo_ Challenge</h1>
+			<h6 class="btn btn-lg rounded p-x-md m-x">Grow your algorithm skills every 3 hours</h6>
+			<!--<a href="/dashboard" class="btn btn-lg rounded success p-x-md m-x">Get Started</a>-->
+			<div class="row padding">
+				<div class="col-md-6 offset-sm-3">
+					<div class="box-color info pos-rlt">
+						<span class="arrow bottom b-info"></span>
+						<div class="box-body"><a href=""> > Challenge</a></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 offset-sm-3">
+					<div id="clockdiv">
+        		<!--<div class="days-wrap"><span class="days"></span>DAYS</div>-->
+	        	<div class="hours-wrap"><span class="hours"></span>HOURS</div>
+	        	<div class="minutes-wrap"><span class="minutes"></span>MINUTES</div>
+	        	<div class="seconds-wrap"><span class="seconds"></span>SECONDS</div>
+	      	</div>
+				</div>
+			</div>
+			<!--<a href="/dashboard" class="btn btn-lg rounded success p-x-md m-x">Get Started</a>-->
+		</div>
+	</div>
+	<div class="col-sm-3"></div>
+</div>
+<div class="white">
+	<div>
+    <canvas data-ui-jp="chart" data-ui-options="
+    {
+      type: 'line',
+      data: {
+          labels: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
+          datasets: [
+              {
+                  label: 'Dataset',
+                  data: [0, 10, 19, 25, 28, 22, 32, 30, 35, 41, 35, 40, 42, 45, 43, 50, 52, 55, 65, 60, 62, 60, 70, 77, 85, 100],
+                  fill: true,
+                  lineTension: 0.3,
+                  backgroundColor: '#F0F0F0',
+                  borderColor: '#E0E0E0',
+                  borderWidth: 3,
+                  pointBorderColor: '#2196f3',
+                  pointBackgroundColor: '#fff',
+                  pointBorderWidth: 2,
+                  pointHoverRadius: 4,
+                  pointHoverBackgroundColor: '#fff',
+                  pointHoverBorderColor: '#fff',
+                  pointHoverBorderWidth: 2,
+                  pointRadius: 0,
+                  pointHitRadius: 10,
+                  spanGaps: false,
+                  barPercentage: 1
+              }
+          ]
+      },
+      options: {
+      		maintainAspectRatio: false,
+	      	scales:{
+		      	xAxes: [{
+		           display: false,
+		           barPercentage: 0.5
+		        }],
+		        yAxes: [{
+		           display: false
+		        }]
+	       	},
+	       	legend:{
+	       		display: false
+	   		},
+	   		tooltips:{
+	   			enabled: false
+	   		}
+      }
+    }
+    " height="280">
+    </canvas>
+  	</div>
+</div>
+<!-- ############ PAGE END-->
+
+    </div>
+  </div>
+  <!-- / -->
+
+  <div class="footer dark-light text-info-hover">
+  	<div class="container">
+  		<div class="p-y-lg b-b">
+  			<a href="/cschallenge" class="btn info rounded pull-right pull-none-xs">Register</a>
+  			<div class="m-r">
+  				<div class="text-md p-y-sm">Register your team for Cargo Space Challenge 2017</div>
+  			</div>
+  		</div>
+  	</div>
+  	<div class="container">
+  		<div class="row p-y-lg">
+  			<div class="col-md-5">
+  				<h6 class="text-sm text-u-c m-b text-muted">I'm</h6>
+  				<p>Modern, Clean &amp; Flat User Interface Kit, <br>Made with LOVE &amp; PASSION</p>
+  				<p class="m-t-md text-muted p-r-lg">
+  					<small class="text-muted">You can use it to build your Content manage system, CRM, Task app, Travel app, Medical app...</small>
+  				</p>
+  				<div class="text-muted m-y-lg">
+  					<h2 class="text-muted _600">
+  						<span class="text-muted">Cargo_</span>
+  					</h2>
+  				</div>
+  			</div>
+  			<div class="col-sm-2 col-xs-6">
+  				<h6 class="text-sm text-u-c m-b text-muted">Company</h6>
+  				<div class="m-b-md">
+  					<ul class="nav l-h-2x">
+  						<li class="nav-item">
+  							<a class="nav-link" href="#">About us</a>
+  						</li>
+  						<li class="nav-item">
+  							<a class="nav-link" href="#">Mobile apps</a>
+  						</li>
+  						<li class="nav-item">
+  							<a class="nav-link" href="#">Blog news</a>
+  						</li>
+  						<li class="nav-item">
+  							<a class="nav-link" href="#">Jobs</a>
+  						</li>
+  					</ul>
+  				</div>
+  			</div>
+  			<div class="col-sm-2 col-xs-6">
+  				<h6 class="text-sm text-u-c m-b text-muted">App</h6>
+  				<div class="m-b-md">
+  					<ul class="nav l-h-2x">
+  						<li class="nav-item">
+  							<a class="nav-link" href="app.project.html">Projects</a>
+  						</li>
+  						<li class="nav-item">
+  							<a class="nav-link" href="app.inbox.html">Inbox</a>
+  						</li>
+  						<li class="nav-item">
+  							<a class="nav-link" href="app.message.html">Message</a>
+  						</li>
+  						<li class="nav-item">
+  							<a class="nav-link" href="app.contact.html">Contacts</a>
+  						</li>
+  					</ul>
+  				</div>
+  			</div>
+  
+  			<div class="col-sm-3 col-xs-6">
+  				<h6 class="text-sm text-u-c m-b text-muted">Connect</h6>
+  				<div class="m-b-md">
+  					<ul class="nav l-h-2x">
+  						<li class="nav-item">
+  							<a class="nav-link" href="#">Contact</a>
+  						</li>
+  						<li class="nav-item">
+  							<a class="nav-link" href="#">Support</a>
+  						</li>
+  					</ul>
+  				</div>
+  			</div>
+  		</div>
+  		<div class="p-y-lg">
+  			<div class="m-b-lg text-sm">
+  				
+  				<div class="text-muted pull-right pull-none-xs m-b">
+  					<span class="text-muted">&copy; Copyright Cargo Space. All rights reserved.</span>
+  				</div>
+  				<div>
+  					<a href="https://facebook.com/cargo_" class="btn btn-sm btn-icon btn-social rounded lt" title="Facebook">
+  				        <i class="fa fa-facebook"></i>
+  				        <i class="fa fa-facebook indigo"></i>
+  				    </a>
+  				    <a href="https://twitter.com/cargo_" class="btn btn-sm btn-icon btn-social rounded lt" title="Twitter">
+  				        <i class="fa fa-twitter"></i>
+  				        <i class="fa fa-twitter light-blue"></i>
+  				    </a>
+  				    <a href="https://plus.google.com/cargo_" class="btn btn-sm btn-icon btn-social rounded lt" title="Google+">
+  				        <i class="fa fa-google-plus"></i>
+  				        <i class="fa fa-google-plus red-600"></i>
+  				    </a>
+  				</div>
+  	        </div>
+  		</div>
+  	</div>
+  </div>
+
+<!-- ############ LAYOUT END-->
+  </div>
+{% include "app/_footer.html" %}
