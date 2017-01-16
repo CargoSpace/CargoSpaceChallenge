@@ -4,6 +4,9 @@ python3 manage.py runserver $IP:$PORT
 ### Start new App as follows
 django-admin startapp dashboard
 
+#Migrate Model Changes
+python3 manage.py makemigrations
+
 ### Install new module by adding an entry in requirements.txt then
 sudo pip3 install -r requirements.txt
 

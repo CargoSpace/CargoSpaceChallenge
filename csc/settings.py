@@ -135,6 +135,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'app',
     'dashboard',
+    'contest',
     'djangocms_admin_style',
     'django.contrib.auth',
     'django.contrib.contenttypes',

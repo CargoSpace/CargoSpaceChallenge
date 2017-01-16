@@ -16,7 +16,8 @@ class ProblemSet(models.Model):
 		('A', 'Problem A'), 	#Simplest
 		('B', 'Problem B'), 	#Simpler
 		('C', 'Problem C'), 	#Simple
-		('D', 'Problem D') ) )	#Hard
+		('D', 'Problem D'),		#Hard
+		('E', 'Problem E') ) )	#Harder
 	created_at = models.DateTimeField(auto_now_add=True)
 	created_by = models.ForeignKey('auth.User', on_delete=models.CASCADE, blank=True, null=True, default=None)
 	updated_at = models.DateTimeField(auto_now=True)
@@ -66,19 +67,21 @@ class ContestProblem(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 	def __str__(self):
-		return '%s' % (self.label)
+		return '%s' % (self.contest)
 		
 
 class ContestSubmission(models.Model):
-	"""ContestProblem Model"""
+	"""ContestSubmission Model"""
 	id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 	contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
 	problem = models.ForeignKey(ProblemSet, on_delete=models.CASCADE)
+	submission = models.FileField(null=False, blank=False)
 	submitted_by = models.ForeignKey('auth.User', on_delete=models.CASCADE, blank=True, null=True, default=None)
+	accepted = models.BooleanField(default=False)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 	def __str__(self):
-		return '%s' % (self.label)
+		return '%s' % (self.contest)
 	def save(self, *args, **kwargs):
 		user = get_current_user()
 		if user and not user.pk:

@@ -32,3 +32,4 @@ django-formtools==1.0
 django-mptt==0.8.6
 django-polymorphic==0.8.1
 djangocms-attributes-field==0.1.1
+django-crum==0.7.1
