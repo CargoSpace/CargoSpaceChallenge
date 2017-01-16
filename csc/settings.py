@@ -136,6 +136,8 @@ INSTALLED_APPS = (
     'app',
     'dashboard',
     'contest',
+    'rpc',
+    'modernrpc',
     'djangocms_admin_style',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -177,6 +179,10 @@ INSTALLED_APPS = (
     'csc',
     'templatetag_handlebars',
 )
+
+MODERNRPC_METHODS_MODULES = [
+    'rpc.rpc_methods'
+]
 
 # LANGUAGES = (
 #     ## Customize this

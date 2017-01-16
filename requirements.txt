@@ -33,3 +33,4 @@ django-mptt==0.8.6
 django-polymorphic==0.8.1
 djangocms-attributes-field==0.1.1
 django-crum==0.7.1
+django_modern_rpc==0.4.2
