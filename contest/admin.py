@@ -45,4 +45,4 @@ class AutoContestTitleAdmin(admin.ModelAdmin):
 	
 @admin.register(ContestSetting)
 class ContestSettingAdmin(admin.ModelAdmin):
-	list_display = ('interval', 'duration', 'pauseAutomaticContest', 'useAutoContestTitle')
+	list_display = ('title', 'interval', 'duration', 'pauseAutomaticContest', 'useAutoContestTitle')

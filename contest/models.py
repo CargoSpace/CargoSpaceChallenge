@@ -103,6 +103,7 @@ class AutoContestTitle(models.Model):
 class ContestSetting(models.Model):
 	"""ContestSetting Model"""
 	id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+	title = models.TextField(default="Settings")
 	interval = models.IntegerField(default=3) #Hours
 	duration = models.IntegerField(default=30) #Minutes
 	pauseAutomaticContest = models.BooleanField(default=False)

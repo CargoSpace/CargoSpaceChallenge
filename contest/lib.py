@@ -4,8 +4,8 @@ from contest.models import ProblemSet, ProblemInput
 import random
 
 def getRandomObject(problemSets):
-    if len(problemSets):
-        return random.sample(problemSets, 1)[0];
+    if problemSets and len(problemSets) > 0:
+        return random.choice(problemSets);
     else:
         return None;
             
