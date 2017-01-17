@@ -89,3 +89,25 @@ class ContestSubmission(models.Model):
 		if not self.pk:
 			self.submitted_by = user
 		super(ContestSubmission, self).save(*args, **kwargs)
+		
+class AutoContestTitle(models.Model):
+	"""ContestTitle Model"""
+	id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+	title = models.TextField(blank=False, null=False)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+	def __str__(self):
+		return '%s' % (self.title)
+
+
+class ContestSetting(models.Model):
+	"""ContestSetting Model"""
+	id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+	interval = models.IntegerField(default=3) #Hours
+	duration = models.IntegerField(default=30) #Minutes
+	pauseAutomaticContest = models.BooleanField(default=False)
+	useAutoContestTitle = models.BooleanField(default=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+	def __str__(self):
+		return '%s' % (self.title)

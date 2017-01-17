@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import ProblemSet, ProblemInput, Contest, ContestProblem, ContestSubmission
+from .models import ProblemSet, ProblemInput, Contest, ContestProblem, ContestSubmission, AutoContestTitle, ContestSetting
 
 @admin.register(ProblemSet)
 class ProblemSetAdmin(admin.ModelAdmin):
@@ -37,3 +37,12 @@ class ContestSubmissionAdmin(admin.ModelAdmin):
 		if not change:
 			obj.submitted_by = request.user
 			obj.save()
+			
+@admin.register(AutoContestTitle)
+class AutoContestTitleAdmin(admin.ModelAdmin):
+	list_display = ('title', 'created_at',)
+	search_fields = ('title', )
+	
+@admin.register(ContestSetting)
+class ContestSettingAdmin(admin.ModelAdmin):
+	list_display = ('interval', 'duration', 'pauseAutomaticContest', 'useAutoContestTitle')
