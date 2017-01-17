@@ -3,7 +3,8 @@ from modernrpc.core import rpc_method
 from contest.models import Contest, ContestProblem, ContestSubmission, AutoContestTitle, ContestSetting
 from contest.models import ProblemSet, ProblemInput
 from contest import views, lib as contest_lib
-import datetime
+import moment
+from datetime import datetime
 
 @rpc_method
 def create_contest():
@@ -20,10 +21,10 @@ def create_contest():
             return {'status': False, 'message': 'No contest title found'}
         else:
             contestTitle = autoContestTitle.title
-    now = datetime.datetime.now()
+    now = moment.now()
     newContest = Contest.objects.create(title=contestTitle, 
-        start_time= datetime.time(now.hour + contestSetting.interval, now.minute, now.second).strftime("%Y-%m-%d %H:%I:%S"), 
-        end_time=datetime.time(now.hour + contestSetting.interval, now.minute + contestSetting.duration, now.second).strftime("%Y-%m-%d %H:%I:%S") )
+        start_time= now.add(hour=int(contestSetting.interval)).date.strftime("%Y-%m-%d %H:%I:%S"), 
+        end_time=now.add(hour=int(contestSetting.interval), minutes=contestSetting.duration).date.strftime("%Y-%m-%d %H:%I:%S"), )
     newContest.save()
     contestProblemSet = ContestProblem.objects.create(contest=newContest, problem=newContestProblem)
     contestProblemSet.save()
