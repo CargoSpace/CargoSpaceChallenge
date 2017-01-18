@@ -10,9 +10,10 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from .forms import LoginForm
 
-from datetime import date
 import time
-import datetime
+from datetime import datetime, date
+from contest.models import Contest
+from rpc import rpc_methods
 
 # Function to render templates
 def render_template(context, request, template_name = "default"):
@@ -24,13 +25,21 @@ def render_template(context, request, template_name = "default"):
 	return HttpResponse(template_obj.render(context, request))
 
 def index(request):
+	
+	contest = Contest.objects.filter(start_time__gt=datetime.now()).order_by('-start_time').first() #ascending order
+	rpc_methods.create_contest()
+	print(contest.start_time)
+	print(contest.end_time)
+	
 	context = { 
 		'title': config.app + ' | Algorithm Warm-up Everyday at 12PM', 
 		'page': 'home',
 		'countDown': {
-			'now': date.fromtimestamp(time.time()).strftime("%Y-%m-%d %H:%I:%S"),
-			'end_time': datetime.date(2017, 1, 17).strftime("%Y-%m-%d %H:%I:%S"),
+			'now': contest.start_time.strftime("%Y-%m-%d %H:%I:%S"),
+			'end_time': contest.end_time.strftime("%Y-%m-%d %H:%I:%S"),
 		},
+		'contestIsRunning': False,
+		'current_contest': None
 	}
 	return render_template(context, request)
 
