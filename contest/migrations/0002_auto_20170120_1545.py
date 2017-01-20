@@ -7,13 +7,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('contest', '0002_auto_20170117_0157'),
+        ('contest', '0001_initial'),
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='contestsetting',
+        migrations.AlterField(
+            model_name='problemset',
             name='title',
-            field=models.TextField(default='Settings'),
+            field=models.TextField(default=None),
         ),
     ]

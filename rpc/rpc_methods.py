@@ -17,7 +17,7 @@ def create_contest():
         return {'status': False, 'message': 'No contest problem found'}
     contestTitle = "Cargo_ Challenge"
     if contestSetting.useAutoContestTitle:
-        autoContestTitle = contest_lib.getRandomObject(AutoContestTitle.objects.all());
+        autoContestTitle = contest_lib.getRandomObject(AutoContestTitle.objects.all())
         if not autoContestTitle:
             return {'status': False, 'message': 'No contest title found'}
         else:

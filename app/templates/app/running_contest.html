@@ -15,65 +15,61 @@
 		<div id="left_side" class="col-xs-3 w-xl" style="height: 600px">
 		    <div class="row-col b-r bg">
 		        <div class="padding">
+		        	<div class="row">
+						<div class="col-md-6 offset-sm-3">
+							<div id="clockdiv">
+				        		<!--<div class="days-wrap"><span class="days"></span>DAYS</div>-->
+					        	<div class="hours-wrap"><span class="hours"></span>HOURS</div>
+					        	<div class="minutes-wrap"><span class="minutes"></span>MINUTES</div>
+					        	<div class="seconds-wrap"><span class="seconds"></span>SECONDS</div>
+						     </div>
+						</div>
+					</div>
 		        	<p>Problemset</p>
 		        	<div class="box">
 					    <ul class="list inset">
-					        <li class="list-item"><a herf="" class="list-left">
-					        	<span class="w-40 square avatar accent"><span>A</span> <i class="away b-white"></i></span></a>
-					            <div class="list-body">
-					                <div><a href="#">Problem A</a></div>
-					            </div>
+					        <li class="list-item">
+					        	<a herf="" class="pull-left m-r">
+				                	<span class="w-30">
+				                  		<img src="{% static "app/images/a0.jpg" %}" class="w-full" alt="A">
+				                 	</span>
+				                </a>
+				                <div class="clear">
+				                  <a href="#" class="_500 text-ellipsis">Problem A</a>
+				                </div>
 					        </li>
-					        <li class="list-item"><a herf="" class="list-left">
-					        	<span class="w-40 circle avatar green"><span>B</span> <i class="off b-white"></i></span></a>
-					            <div class="list-body">
-					                <div><a href="#">Problem B</a></div>
-					            </div>
+					        <li class="list-item">
+					        	<a herf="" class="pull-left m-r">
+				                	<span class="w-30">
+				                  		<img src="{% static "app/images/a1.jpg" %}" class="w-full" alt="B">
+				                 	</span>
+				                </a>
+				                <div class="clear">
+				                  <a href="#" class="_500 text-ellipsis">Problem B</a>
+				                </div>
 					        </li>
-					        <li class="list-item"><a herf="" class="list-left">
-					        	<span class="w-40 circle avatar green"><span>C</span> <i class="off b-white"></i></span></a>
-					            <div class="list-body">
-					                <div><a href="#">Problem C</a></div>
-					            </div>
+					        <li class="list-item">
+					        	<a herf="" class="pull-left m-r">
+				                	<span class="w-30">
+				                  		<img src="{% static "app/images/a2.jpg" %}" class="w-full" alt="C">
+				                 	</span>
+				                </a>
+				                <div class="clear">
+				                  <a href="#" class="_500 text-ellipsis">Problem C</a>
+				                </div>
 					        </li>
-					        <li class="list-item"><a herf="" class="list-left">
-					        	<span class="w-40 circle avatar green"><span>D</span> <i class="off b-white"></i></span></a>
-					            <div class="list-body">
-					                <div><a href="#">Problem D</a></div>
-					            </div>
+					        <li class="list-item">
+					        	<a herf="" class="pull-left m-r">
+				                	<span class="w-30">
+				                  		<img src="{% static "app/images/a3.jpg" %}" class="w-full" alt="D">
+				                 	</span>
+				                </a>
+				                <div class="clear">
+				                  <a href="#" class="_500 text-ellipsis">Problem D</a>
+				                </div>
 					        </li>
 					    </ul>
 					</div>
-		        	<p>Top Challengers</p>
-		        	<div class="box">
-		        		<div class="list-group list-group-sm no-borders no-radius">
-		        			<div class="list-group-item">
-		        				<span class="pull-right">293,200</span>
-		        				<i class="fa fa-fw fa-circle text-success"></i> Daser Retnan
-		        				<small class="text-muted text-ellipsis">Cargo Space Challenger</small>
-		        			</div>
-		        			<div class="list-group-item">
-		        				<span class="pull-right">293,200</span>
-		        				<i class="fa fa-fw fa-circle text-success"></i> Victor Olowe
-		        				<small class="text-muted text-ellipsis">Cargo Space Challenger</small>
-		        			</div>
-		        			<div class="list-group-item">
-		        				<span class="pull-right">293,200</span>
-		        				<i class="fa fa-fw fa-circle text-success"></i> Loreta Jugu
-		        				<small class="text-muted text-ellipsis">Cargo Space Challenger</small>
-		        			</div>
-		        			<div class="list-group-item">
-		        				<span class="pull-right">293,200</span>
-		        				<i class="fa fa-fw fa-circle text-success"></i> Nani Chang
-		        				<small class="text-muted text-ellipsis">Cargo Space Challenger</small>
-		        			</div>
-		        			<div class="list-group-item">
-		        				<span class="pull-right">293,200</span>
-		        				<i class="fa fa-fw fa-circle text-success"></i> Gorilla Head
-		        				<small class="text-muted text-ellipsis">Cargo Space Challenger</small>
-		        			</div>
-		        		</div>
-		        	</div>
 		        	<p>Top Challengers</p>
 		        	<div class="box">
 					    <ul class="list inset">
@@ -120,20 +116,53 @@
 		        </div>
 		    </div>
 		</div>
-		<div id="detail" class="col-xs-9" style="height: 600px">
+		<div id="detail" class="col-xs-9" style="min-height: 600px">
+			<div class="padding" style="padding-bottom: 10px;">
+				<h4>Problem A: Akila and the B</h4>
+			</div>
 			<div class="padding">
 				<div class="row-col">
 					<div class="panel box no-border m-b-xs">
-						<div class="box-header p-y-sm">Contest II</div>
 						<div class="box-body">
-							<div class="text-sm text-muted">
+							<div class="">
 								<div class="pull-left m-r">
-									<span class="text-md w-32 avatar rounded success">A</span>
+									<span class="w-40">
+				                  		<img src="{% static "app/images/a1.jpg" %}" class="w-full" alt="A">
+				                 	</span>
 								</div>
 								<p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,<br><br>raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.</p>
 							</div>
 						</div>
 					</div>
+					
+					<div class="panel box no-border m-b-xs">
+						<div class="box-body">
+							<div class="">
+								<a href="" class="btn btn-fw info">Download Standard Input..</a>
+							</div>
+						</div>
+					</div>
+					
+					<div class="panel box no-border m-b-xs">
+						<div class="box-body">
+							<div class="">
+								<form role="form" class="form" action="/contest" method="post" enctype="multipart/form-data">
+								{% csrf_token %}
+								<div class="form-group">
+									<!--<label for="exampleInputFile">Standard Output File..</label>-->
+									<div class="form-file">
+										<input type="file">
+										<button class="btn info">Upload Standard Output..</button>
+									</div>
+					              	<!--<p class="help-block">Upload the output of your file.</p>-->
+					            </div>
+					            </form>
+							</div>
+						</div>
+					</div>
+					
+					
+            
 				</div>	
 			</div>
 		</div>

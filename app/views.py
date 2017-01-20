@@ -45,7 +45,14 @@ def index(request):
 	
 # /contest
 def running_contest(request):
-	context = { 'title': 'Contest is Running | ' + config.app, 'page' : 'running_contest' }
+	context = {
+		'title': 'Contest is Running | ' + config.app, 
+		'page' : 'running_contest',
+		'countDown': {
+			'now': str(datetime.utcnow()),
+			'end_time': str(datetime.now()),
+		},
+	}
 	return render_template(context, request, 'running_contest')
 	
 def doAuth(request):
