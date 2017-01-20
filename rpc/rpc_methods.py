@@ -4,7 +4,8 @@ from contest.models import Contest, ContestProblem, ContestSubmission, AutoConte
 from contest.models import ProblemSet, ProblemInput
 from contest import views, lib as contest_lib
 import time, moment
-from datetime import datetime, date
+from datetime import date
+import datetime
 
 @rpc_method
 def create_contest():
@@ -21,9 +22,16 @@ def create_contest():
             return {'status': False, 'message': 'No contest title found'}
         else:
             contestTitle = autoContestTitle.title
+    start_time= moment.utcnow().clone()
+    end_time = start_time.clone().add(minutes=int(contestSetting.duration))
+    start_time = datetime.datetime(start_time.year, start_time.month, start_time.day, start_time.hours, start_time.minutes, start_time.seconds)
+    end_time = datetime.datetime(end_time.year, end_time.month, end_time.day, end_time.hours, end_time.minutes, end_time.seconds)
+    print (start_time)
+    print (end_time)
+    # return
     newContest = Contest.objects.create(title=contestTitle, 
-        start_time= moment.now().add(hours=int(contestSetting.interval)).date.strftime("%Y-%m-%d %H:%I:%S"), 
-        end_time=moment.now().add(hours=int(contestSetting.interval)).add(minutes=30).date.strftime("%Y-%m-%d %H:%I:%S"),) #.format("YYYY-MM-DD HH:MM:ss"), )
+        start_time= start_time, 
+        end_time= end_time,) #.format("YYYY-MM-DD HH:MM:ss"), )
     newContest.save()
     contestProblemSet = ContestProblem.objects.create(contest=newContest, problem=newContestProblem)
     contestProblemSet.save()

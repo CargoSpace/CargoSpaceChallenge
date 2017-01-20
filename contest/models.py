@@ -9,6 +9,7 @@ from crum import get_current_user
 class ProblemSet(models.Model):
 	"""ProblemSet Model"""
 	id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+	title = models.TextField()
 	problem = models.TextField()
 	language = models.CharField(max_length=5, default='en')
 	image = models.FileField(null=True, blank=True)
@@ -22,7 +23,7 @@ class ProblemSet(models.Model):
 	created_by = models.ForeignKey('auth.User', on_delete=models.CASCADE, blank=True, null=True, default=None)
 	updated_at = models.DateTimeField(auto_now=True)
 	def __str__(self):
-		return '%s' % (self.problem)
+		return '%s' % (self.title)
 	def save(self, *args, **kwargs):
 		user = get_current_user()
 		if user and not user.pk:

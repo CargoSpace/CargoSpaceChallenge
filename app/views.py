@@ -14,6 +14,7 @@ import time
 from datetime import datetime, date
 from contest.models import Contest
 from rpc import rpc_methods
+import requests
 
 # Function to render templates
 def render_template(context, request, template_name = "default"):
@@ -25,24 +26,28 @@ def render_template(context, request, template_name = "default"):
 	return HttpResponse(template_obj.render(context, request))
 
 def index(request):
-	
 	contest = Contest.objects.filter(start_time__gt=datetime.now()).order_by('-start_time').first() #ascending order
-	rpc_methods.create_contest()
-	print(contest.start_time)
-	print(contest.end_time)
-	
-	context = { 
+	response = requests.get("https://csc-contest-maker.herokuapp.com/next_contest")
+	if response.status_code != 200:
+		return
+	sReponse = response.json()
+	context = {
 		'title': config.app + ' | Algorithm Warm-up Everyday at 12PM', 
 		'page': 'home',
 		'countDown': {
-			'now': contest.start_time.strftime("%Y-%m-%d %H:%I:%S"),
-			'end_time': contest.end_time.strftime("%Y-%m-%d %H:%I:%S"),
+			'now': str(datetime.utcnow()),
+			'end_time': sReponse['start_time'],
 		},
 		'contestIsRunning': False,
 		'current_contest': None
 	}
 	return render_template(context, request)
-
+	
+# /contest
+def running_contest(request):
+	context = { 'title': 'Contest is Running | ' + config.app, 'page' : 'running_contest' }
+	return render_template(context, request, 'running_contest')
+	
 def doAuth(request):
 	if request.method == 'POST':
 		form = LoginForm(request.POST or None)
@@ -91,6 +96,7 @@ def auth(request):
 	
 # /register
 def register(request):
+	rpc_methods.create_contest()
 	context = { 'title': 'Register | ' + config.app, 'page' : 'register' }
 	return render_template(context, request, 'register')
 	
