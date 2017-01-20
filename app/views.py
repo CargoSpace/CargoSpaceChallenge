@@ -15,6 +15,8 @@ from datetime import datetime, date
 from contest.models import Contest
 from rpc import rpc_methods
 import requests
+from .forms import ContestSubmissionForm
+from . import lib
 
 # Function to render templates
 def render_template(context, request, template_name = "default"):
@@ -54,42 +56,60 @@ def running_contest(request):
 		},
 	}
 	return render_template(context, request, 'running_contest')
+
+def doSubmission(request):
+	if request.method == 'POST':
+		form = ContestSubmissionForm(request.POST, request.FILES)
+        if form.is_valid():
+        	form.save()
+            messages.success(request, "Successfuly Submitted");
+			return redirect(running_contest)
+        else:
+        	messages.error(request, "Sorry, Please check your input and try again.")
+			return redirect(running_contest)
+	return redirect(running_contest);
 	
 def doAuth(request):
 	if request.method == 'POST':
-		form = LoginForm(request.POST or None)
-		if form.is_valid():
-			user = form.authenticate_via_email()
-			if user is not None:
-				login(request, user)
-				if user.is_superuser:
-					return redirect('/admin')
-				else:
-					return redirect(index)
-		messages.error(request, "Please check the inputs and try again")
-		return redirect(auth)
-	else:
-		return redirect('/login')
-
-def doRegister(request):
-	if request.method == 'POST':
-		if request.POST['mobile'] and request.POST['email'] and request.POST['password'] and request.POST['name']:
-			mobile = request.POST['mobile']
-			name = request.POST['name']
-			email = request.POST['email']
+		if request.POST['username'] and request.POST['password']:
+			username = request.POST['username']
 			password = request.POST['password']
-			user = User.objects.create_user(username=mobile, email=email, password=password, full_name=name)
+			user = authenticate(username=username, password=password)
 			if user is not None:
 				login(request, user)
 				if user.is_superuser:
-					return redirect('/admin')
+					return redirect(running_contest)
 				else:
-					return redirect(index)
+					return redirect(running_contest)
 			else:
 				messages.error(request, "Please check the inputs and try again")
 				return redirect(auth)
+	return redirect(auth)
+
+def doRegister(request):
+	if request.method == 'POST':
+		print(request.POST)
+		if request.POST['mobile'] and request.POST['email'] and request.POST['password'] and request.POST['full_name']:
+			username = request.POST['mobile']
+			full_name = request.POST['full_name']
+			email = request.POST['email']
+			password = request.POST['password']
+			user = User.objects.create_user(username=username, email=email, password=password)
+			if user is not None:
+				user = authenticate(username=username, password=password)
+				login(request, user)
+				if user.authenticated:
+					if user.is_superuser:
+						return redirect(running_contest) # redirect to our dashboard
+					else:
+						return redirect(running_contest)
+				else:
+					return redirect(register)
+			else:
+				messages.error(request, "Please check the inputs and try again")
+				return redirect(register)
 	else:
-		return redirect('/register')
+		return redirect(register)
 	
 
 def logout_user(request):
@@ -98,11 +118,15 @@ def logout_user(request):
     
 # login
 def auth(request):
+	if request.method == 'POST':
+		return doAuth(request)
 	context = { 'title': 'Login | ' + config.app, 'page' : 'login' }
 	return render_template(context, request, 'login')
 	
 # /register
 def register(request):
+	if request.method == 'POST':
+		return doRegister(request)
 	rpc_methods.create_contest()
 	context = { 'title': 'Register | ' + config.app, 'page' : 'register' }
 	return render_template(context, request, 'register')

@@ -22,26 +22,33 @@
       <div class="p-a-md">
         <div>
           <a href="#" class="btn btn-block indigo text-white m-b-sm">
-            <i class="fa fa-facebook pull-left"></i>
-            Sign up with Facebook
-          </a>
-          <a href="#" class="btn btn-block red text-white">
-            <i class="fa fa-google-plus pull-left"></i>
-            Sign up with Google+
+            <i class="fa pull-left"></i>
+            Sign in with Logical Address
           </a>
         </div>
         <div class="m-y text-sm">
           OR
         </div>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
         <form name="form" action="/register" method="post">
+          {% csrf_token %}
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="Username" required>
+            <input type="text" class="form-control" name="full_name" placeholder="Full Name" required>
           </div>
           <div class="form-group">
-            <input type="email" class="form-control" placeholder="Email" required>
+            <input type="text" class="form-control" name="mobile" placeholder="mobile" required>
           </div>
           <div class="form-group">
-            <input type="password" class="form-control" placeholder="Password" required>
+            <input type="email" class="form-control" name="email" placeholder="Email" required>
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" name="password" placeholder="Password" required>
           </div>
           <div class="m-b-md text-sm">
             <span class="text-muted">By clicking Sign Up, I agree to the</span> 

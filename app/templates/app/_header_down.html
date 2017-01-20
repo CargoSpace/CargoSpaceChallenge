@@ -17,6 +17,7 @@
               <div class="collapse navbar-toggleable-sm pull-right pull-none-xs" id="navbar">
                 <!-- link and dropdown -->
                 <ul class="nav navbar-nav text-info-hover" data-ui-nav>
+                  {% if user == None %}
                   <li class="nav-item">
                     <a href="/register" class="nav-link">
                       <span class="nav-text text-info">
@@ -31,6 +32,22 @@
                       </span>
                     </a>
                   </li>
+                  {% endif %}
+                  
+                  {% if user %}
+                  <li class="nav-item">
+                    <a href="/logout" class="nav-link">
+                      <span class="nav-text text-info">
+                        Log out
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                       <span class="btn btn-md rounded info">Bonjour {{ user.username }}</span>
+                    </a>
+                  </li>
+                  {% endif %}
                 </ul>
                 <!-- / link and dropdown -->
               </div>
