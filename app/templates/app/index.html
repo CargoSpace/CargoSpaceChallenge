@@ -4,6 +4,8 @@
   	<script type="text/javascript">
   		var now = '{{ countDown.now }}';
   		var endtime = '{{ countDown.end_time }}';
+  		var activeNow = '{{ activeCountDown.now }}';
+  		var activeEndtime = '{{ activeCountDown.end_time }}';
   	</script>
 
  {% include "app/_header_down.html" %}
@@ -20,23 +22,35 @@
 		<div class="p-t-lg">
 			<h1 class="m-y-md text-black">Cargo Space Challenge</h1>
 			<h6 class="text-muted">Solve One Algorithm Challenge Every 3 Hours</h6>
-			<!--<a href="/dashboard" class="btn btn-lg rounded success p-x-md m-x">Get Started</a>-->
+			{% if contestIsActive %}
+			<div class="row">
+				<div class="col-md-6 offset-sm-3">
+				    <a href="/contest" class="btn btn-lg rounded success p-x-md m-x">goto: contest</a>
+					<div id="activeClockdiv">
+        		        <!--<div class="days-wrap"><span class="activeDays"></span>DAYS</div>-->
+        	        	<div class="hours-wrap"><span class="hours"></span>HOURS</div>
+        	        	<div class="minutes-wrap"><span class="minutes"></span>MINUTES</div>
+        	        	<div class="seconds-wrap"><span class="seconds"></span>SECONDS</div>
+	      	        </div>
+				</div>
+			</div>
+			{% endif %}
 			<div class="row padding">
 				<div class="col-md-6 offset-sm-3">
 					<div class="box-color blue pos-rlt">
 						<span class="arrow bottom b-blue"></span>
-						<div class="box-body"><a href=""> > Challenge</a></div>
+						<div class="box-body"><h4>(new challenge)->next()</h4></div>
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-6 offset-sm-3">
 					<div id="clockdiv">
-        		<!--<div class="days-wrap"><span class="days"></span>DAYS</div>-->
-	        	<div class="hours-wrap"><span class="hours"></span>HOURS</div>
-	        	<div class="minutes-wrap"><span class="minutes"></span>MINUTES</div>
-	        	<div class="seconds-wrap"><span class="seconds"></span>SECONDS</div>
-	      	</div>
+        		        <!--<div class="days-wrap"><span class="days"></span>DAYS</div>-->
+        	        	<div class="hours-wrap"><span class="hours"></span>HOURS</div>
+        	        	<div class="minutes-wrap"><span class="minutes"></span>MINUTES</div>
+        	        	<div class="seconds-wrap"><span class="seconds"></span>SECONDS</div>
+	      	        </div>
 				</div>
 			</div>
 			<!--<a href="/dashboard" class="btn btn-lg rounded success p-x-md m-x">Get Started</a>-->

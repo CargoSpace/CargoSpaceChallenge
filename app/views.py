@@ -12,7 +12,7 @@ from .forms import LoginForm
 
 import time
 from datetime import datetime, date
-from contest.models import Contest
+from contest.models import Contest, ContestSetting
 from rpc import rpc_methods
 import requests
 from contest.forms import ContestSubmissionForm
@@ -29,22 +29,32 @@ def render_template(context, request, template_name = "default"):
 	return HttpResponse(template_obj.render(context, request))
 
 def index(request):
-	contest = Contest.objects.filter(start_time__gt=datetime.now()).order_by('-start_time').first() #ascending order
-	response = requests.get("https://csc-contest-maker.herokuapp.com/next_contest")
-	if response.status_code != 200:
-		return
-	sReponse = response.json()
+	contest = Contest.objects.filter(start_time__lt=datetime.now(), end_time__gt=datetime.now()).first() #ascending order
+	contestIsActive = True if contest else False
+	nextContest = getNextContest()
 	context = {
 		'title': config.app + ' | Algorithm Warm-up Everyday at 12PM', 
 		'page': 'home',
 		'countDown': {
 			'now': str(datetime.utcnow()),
-			'end_time': sReponse['start_time'],
+			'end_time': nextContest['start_time'] if nextContest else str(datetime.utcnow()),
 		},
-		'contestIsRunning': False,
-		'current_contest': None
+		'activeCountDown': {
+			'now': str(datetime.now()) if contestIsActive else str(datetime.now()),
+			'end_time': str(contest.end_time) if contestIsActive else str(datetime.now()),
+		},
+		'contestIsActive': contestIsActive,
+		'current_contest': contest
 	}
 	return render_template(context, request)
+
+def getNextContest():
+	contestSetting = ContestSetting.objects.all().first()
+	# print(contestSetting.updated_at.replace(tzinfo=None) - datetime.now())
+	response = requests.get("https://csc-contest-maker.herokuapp.com/next_contest")
+	if response.status_code != 200:
+		return None
+	return response.json()
 	
 @login_required(login_url='/login')
 def running_contest(request):
@@ -61,6 +71,8 @@ def running_contest(request):
 				currentProblem = contestProblem.problem
 				currentProblemInputs = contestProblem.problem.problem_input.all()
 				break
+	
+	nextContest = getNextContest()
 	context = {
 		'title': 'Contest is Running | ' + config.app, 
 		'page' : 'running_contest',
@@ -70,6 +82,10 @@ def running_contest(request):
 		'currentProblem' : currentProblem,
 		'currentProblemInputs': currentProblemInputs,
 		'countDown': {
+			'now': str(datetime.utcnow()),
+			'end_time': nextContest['start_time'] if nextContest else str(datetime.utcnow()),
+		},
+		'activeCountDown': {
 			'now': str(datetime.now()) if contestIsActive else str(datetime.now()),
 			'end_time': str(contest.end_time) if contestIsActive else str(datetime.now()),
 		},

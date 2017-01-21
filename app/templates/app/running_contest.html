@@ -2,8 +2,8 @@
 {% include "app/_header.html" %}
   <div class="app" id="app">
 	<script type="text/javascript">
-		var now = '{{ countDown.now }}';
-		var endtime = '{{ countDown.end_time }}';
+		var activeNow = '{{ activeCountDown.now }}';
+		var activeEndtime = '{{ activeCountDown.end_time }}';
 	</script>
 	
 	{% include "app/_header_down.html" %}
@@ -30,14 +30,24 @@
 		        <div class="padding">
 		        	<div class="row">
 						<div class="col-md-6 offset-sm-3">
+							<div id="activeClockdiv">
+		        	        	<div class="hours-wrap"><span class="hours"></span>HOURS</div>
+		        	        	<div class="minutes-wrap"><span class="minutes"></span>MINUTES</div>
+		        	        	<div class="seconds-wrap"><span class="seconds"></span>SECONDS</div>
+			      	        </div>
+						</div>
+					</div>
+					<!--
+		        	<div class="row">
+						<div class="col-md-6 offset-sm-3">
 							<div id="clockdiv">
-				        		<!--<div class="days-wrap"><span class="days"></span>DAYS</div>-->
 					        	<div class="hours-wrap"><span class="hours"></span>HOURS</div>
 					        	<div class="minutes-wrap"><span class="minutes"></span>MINUTES</div>
 					        	<div class="seconds-wrap"><span class="seconds"></span>SECONDS</div>
 						     </div>
 						</div>
 					</div>
+					-->
 		        	<p>Problemset</p>
 		        	<div class="box">
 					    <ul class="list inset">

@@ -1,5 +1,32 @@
-#clockdiv{width:100%;}#clockdiv .days-wrap,#clockdiv .hours-wrap,#clockdiv .minutes-wrap,#clockdiv .seconds-wrap{width:30%;display:inline-block;font-size:12px;vertical-align:middle;text-align:center;}
-#clockdiv .days,#clockdiv .hours,#clockdiv .minutes,#clockdiv .seconds{font-size:32px;display:block;}
+#clockdiv, #activeClockdiv{
+    width:100%;
+}
+#clockdiv .days-wrap,#clockdiv .hours-wrap,#clockdiv .minutes-wrap,#clockdiv .seconds-wrap{
+    width:30%;
+    display:inline-block;
+    font-size:12px;
+    vertical-align:middle;
+    text-align:center;
+    
+}
+#clockdiv .days,#clockdiv .hours,#clockdiv .minutes,#clockdiv .seconds{
+    font-size:32px;
+    display:block;
+}
+
+/*Active Clock Dive*/
+#activeClockdiv .days-wrap,#activeClockdiv .hours-wrap,#activeClockdiv .minutes-wrap,#activeClockdiv .seconds-wrap{
+    width:30%;
+    display:inline-block;
+    font-size:12px;
+    vertical-align:middle;
+    text-align:center;
+    
+}
+#activeClockdiv .days,#activeClockdiv .hours,#activeClockdiv .minutes,#activeClockdiv .seconds{
+    font-size:32px;
+    display:block;
+}
 
 .w-30 {
     width: 30px;
