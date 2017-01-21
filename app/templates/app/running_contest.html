@@ -60,12 +60,13 @@
 				                 	</span>
 				                </a>
 				                <div class="clear">
-				                  <a href="#" class="_500 text-ellipsis">Problem {{contestProblem.problem.problem_type}}</a>
+				                  <a href="/contest?type={{contestProblem.problem.problem_type}}" class="_500 text-ellipsis">Problem {{contestProblem.problem.problem_type}}</a>
 				                </div>
 					        </li>
 							{% endfor %}
 					    </ul>
 					</div>
+					<!--
 		        	<p>Top Challengers</p>
 		        	<div class="box">
 					    <ul class="list inset">
@@ -108,13 +109,13 @@
 					        
 					    </ul>
 					</div>
-					
+					-->
 		        </div>
 		    </div>
 		</div>
 		<div id="detail" class="col-xs-9" style="min-height: 600px">
 			<div class="padding" style="padding-bottom: 10px;">
-				<h4>Problem A: Akila and the B</h4>
+				<h4>Problem {{currentProblem.problem_type}}: Problem {{currentProblem.title}}</h4>
 			</div>
 			<div class="padding">
 				<div class="row-col">
@@ -123,10 +124,21 @@
 							<div class="">
 								<div class="pull-left m-r">
 									<span class="w-40">
-				                  		<img src="{% static "app/images/a1.jpg" %}" class="w-full" alt="A">
+										{% if currentProblem.problem_type == "A" %}
+				                  		<img src="{% static "app/images/a0.jpg" %}" class="w-full" alt="A">
+				                  		{% endif %}
+				                  		{% if currentProblem.problem_type == "B" %}
+				                  		<img src="{% static "app/images/a1.jpg" %}" class="w-full" alt="B">
+				                  		{% endif %}
+				                  		{% if currentProblem.problem_type == "C" %}
+				                  		<img src="{% static "app/images/a2.jpg" %}" class="w-full" alt="C">
+				                  		{% endif %}
+				                  		{% if currentProblem.problem_type == "D" %}
+				                  		<img src="{% static "app/images/a3.jpg" %}" class="w-full" alt="D">
+				                  		{% endif %}
 				                 	</span>
 								</div>
-								<p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,<br><br>raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.</p>
+								<p>{{currentProblem.description}}</p>
 							</div>
 						</div>
 					</div>
@@ -134,7 +146,7 @@
 					<div class="panel box no-border m-b-xs">
 						<div class="box-body">
 							<div class="">
-								<a href="" class="btn btn-fw info">Download Standard Input..</a>
+								<a href="{{currentProblem.problem_input}}" class="btn btn-fw info">Download Standard Input..</a>
 							</div>
 						</div>
 					</div>
@@ -144,8 +156,8 @@
 							<div class="">
 								<form id="submission" role="form" class="form" action="/submission" method="post" enctype="multipart/form-data">
 								{% csrf_token %}
-								<input type="hidden" name="contest" value=""><!--contest_id-->
-								<input type="hidden" name="problem" value=""><!--problem_id-->
+								<input type="hidden" name="contest" value="{{contest.id}}"><!--contest_id-->
+								<input type="hidden" name="problem" value="{{currentProblem.id}}"><!--problem_id-->
 								<div class="form-group">
 									<!--<label for="exampleInputFile">Standard Output File..</label>-->
 									<div class="form-file">

@@ -17,6 +17,7 @@ from rpc import rpc_methods
 import requests
 from contest.forms import ContestSubmissionForm
 from . import lib
+from django.contrib.auth.decorators import login_required
 
 # Function to render templates
 def render_template(context, request, template_name = "default"):
@@ -45,24 +46,26 @@ def index(request):
 	}
 	return render_template(context, request)
 	
-# /contest
+@login_required(login_url='/login')
 def running_contest(request):
 	
 	contest = Contest.objects.filter(start_time__lt=datetime.now(), end_time__gt=datetime.now()).first() #ascending order
 	contestIsActive = True if contest else False
 	contestProblems = contest.contest_problems.all() if contest else None
-		
-	# if request.GET['problem_type']:
-		# if request.GET['problem_type'] == 'A':
-	for contestProblem  in contestProblems:
-		print(contestProblem.problem.description)
-	
+	problemType = request.GET.get("type", "A")
+	currentProblem = contestProblems[0].problem if contest else None
+	if currentProblem:
+		for contestProblem in contestProblems:
+			if contestProblem.problem.problem_type == problemType:
+				currentProblem = contestProblem.problem
+				break
 	context = {
 		'title': 'Contest is Running | ' + config.app, 
 		'page' : 'running_contest',
 		'contestIsActive': contestIsActive,
 		'contest': contest,
 		'contestProblems': contestProblems,
+		'currentProblem' : currentProblem,
 		'countDown': {
 			'now': str(datetime.now()) if contestIsActive else str(datetime.now()),
 			'end_time': str(contest.end_time) if contestIsActive else str(datetime.now()),
@@ -70,17 +73,19 @@ def running_contest(request):
 	}
 	return render_template(context, request, 'running_contest')
 
+@login_required(login_url='/login')
 def doSubmission(request):
 	if request.method == 'POST':
 		form = ContestSubmissionForm(request.POST, request.FILES)
 		if form.is_valid():
-			form.save()
+			#TODO: Perform comparison here
+			submission = form.save(commit=False)
+			submission.submitted_by = request.user
+			submission.save()
 			messages.success(request, "Successfuly Submitted");
-			print ("Successfuly Submitted")
 			return redirect(running_contest)
 		else:
 			messages.error(request, "Sorry, Please check your input and try again.")
-			print ("heyyyyyyyyy")
 			return redirect(running_contest)
 	return redirect(running_contest);
 	

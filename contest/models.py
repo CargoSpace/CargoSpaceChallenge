@@ -19,24 +19,17 @@ class ProblemSet(models.Model):
 		('C', 'Problem C'), 	#Simple
 		('D', 'Problem D') ) )	#Hard
 	created_at = models.DateTimeField(auto_now_add=True)
-	created_by = models.ForeignKey('auth.User', on_delete=models.CASCADE, blank=True, null=True, default=None)
+	created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 	updated_at = models.DateTimeField(auto_now=True)
 	def __str__(self):
 		return '%s' % (self.title)
-	def save(self, *args, **kwargs):
-		user = get_current_user()
-		if user and not user.pk:
-			user = None
-		if not self.pk:
-			self.created_by = user
-		super(ProblemSet, self).save(*args, **kwargs)
 		
 
 class ProblemInput(models.Model):
 	"""ProblemInput Model"""
 	id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 	label = models.TextField()
-	problem = models.ForeignKey(ProblemSet, on_delete=models.CASCADE)
+	problem = models.ForeignKey(ProblemSet, related_name='problem_input', on_delete=models.CASCADE)
 	language = models.CharField(max_length=5, default='en')
 	problem_stdin = models.FileField(null=False, blank=False)
 	problem_stdout = models.FileField(null=False, blank=False)
@@ -76,19 +69,12 @@ class ContestSubmission(models.Model):
 	contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
 	problem = models.ForeignKey(ProblemSet, on_delete=models.CASCADE)
 	submission = models.FileField(null=False, blank=False)
-	submitted_by = models.ForeignKey('auth.User', on_delete=models.CASCADE, blank=True, null=True, default=None)
+	submitted_by = models.ForeignKey(User, on_delete=models.CASCADE)
 	accepted = models.BooleanField(default=False)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 	def __str__(self):
 		return '%s' % (self.contest)
-	def save(self, *args, **kwargs):
-		user = get_current_user()
-		if user and not user.pk:
-			user = None
-		if not self.pk:
-			self.submitted_by = user
-		super(ContestSubmission, self).save(*args, **kwargs)
 		
 class AutoContestTitle(models.Model):
 	"""ContestTitle Model"""
