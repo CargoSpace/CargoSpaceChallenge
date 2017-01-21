@@ -54,10 +54,12 @@ def running_contest(request):
 	contestProblems = contest.contest_problems.all() if contest else None
 	problemType = request.GET.get("type", "A")
 	currentProblem = contestProblems[0].problem if contest else None
+	currentProblemInputs = None
 	if currentProblem:
 		for contestProblem in contestProblems:
 			if contestProblem.problem.problem_type == problemType:
 				currentProblem = contestProblem.problem
+				currentProblemInputs = contestProblem.problem.problem_input.all()
 				break
 	context = {
 		'title': 'Contest is Running | ' + config.app, 
@@ -66,6 +68,7 @@ def running_contest(request):
 		'contest': contest,
 		'contestProblems': contestProblems,
 		'currentProblem' : currentProblem,
+		'currentProblemInputs': currentProblemInputs,
 		'countDown': {
 			'now': str(datetime.now()) if contestIsActive else str(datetime.now()),
 			'end_time': str(contest.end_time) if contestIsActive else str(datetime.now()),

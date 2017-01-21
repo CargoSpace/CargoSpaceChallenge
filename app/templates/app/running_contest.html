@@ -115,7 +115,7 @@
 		</div>
 		<div id="detail" class="col-xs-9" style="min-height: 600px">
 			<div class="padding" style="padding-bottom: 10px;">
-				<h4>Problem {{currentProblem.problem_type}}: Problem {{currentProblem.title}}</h4>
+				<h4>Problem {{currentProblem.problem_type}}: {{currentProblem.title}}</h4>
 			</div>
 			<div class="padding">
 				<div class="row-col">
@@ -143,13 +143,27 @@
 						</div>
 					</div>
 					
+					{% if currentProblem.image %}
 					<div class="panel box no-border m-b-xs">
 						<div class="box-body">
 							<div class="">
-								<a href="{{currentProblem.problem_input}}" class="btn btn-fw info">Download Standard Input..</a>
+								<center><img class="img-responsive" class="img-rounded" src="{{currentProblem.image.url}}" style="max-width: 400px" alt="{{currentProblem.problem_type}} - {{currentProblem.title}}"></center>
 							</div>
 						</div>
 					</div>
+					{% endif %}
+					
+					{% if currentProblemInputs %}
+					{% for currentProblemInput in currentProblemInputs %}
+					<div class="panel box no-border m-b-xs">
+						<div class="box-body">
+							<div class="">
+								<a href="{{currentProblemInput.problem_stdin.url}}" class="btn btn-fw info">Download Standard Input..</a>
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+					{% endif %}
 					
 					<div class="panel box no-border m-b-xs">
 						<div class="box-body">
