@@ -32,7 +32,7 @@ def render_template(context, request, template_name = "default"):
 def index(request):
 	contest = Contest.objects.filter(start_time__lt=timezone.now(), end_time__gt=timezone.now()).first() #ascending order
 	contestIsActive = True if contest else False
-	nextContest = getNextContest()
+	nextContest = getNextContest(contestIsActive)
 	context = {
 		'title': config.app + ' | Algorithm Warm-up Everyday at 12PM', 
 		'page': 'home',
@@ -49,10 +49,10 @@ def index(request):
 	}
 	return render_template(context, request)
 
-def getNextContest():
+def getNextContest(contestIsActive):
 	contestSetting = ContestSetting.objects.all().first()
 	minutesAgo = abs((datetime.now() - contestSetting.updated_at.replace(tzinfo=None)).days) * 24 * 60
-	if True:# and (minutesAgo > 10 or contestSetting.last_read_next_contest == None):
+	if minutesAgo >= 10 or contestSetting.last_read_next_contest is None or contestIsActive:
 		response = requests.get("https://csc-contest-maker.herokuapp.com/next_contest")
 		if response.status_code != 200:
 			return None
@@ -84,7 +84,7 @@ def running_contest(request):
 				currentProblemInputs = contestProblem.problem.problem_input.all()
 				break
 	
-	nextContest = getNextContest()
+	nextContest = getNextContest(contestIsActive)
 	context = {
 		'title': 'Contest is Running | ' + config.app, 
 		'page' : 'running_contest',
