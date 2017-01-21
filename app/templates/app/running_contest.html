@@ -2,6 +2,8 @@
 {% include "app/_header.html" %}
   <div class="app" id="app">
 	<script type="text/javascript">
+		var now = '{{ countDown.now }}';
+  		var endtime = '{{ countDown.end_time }}';
 		var activeNow = '{{ activeCountDown.now }}';
 		var activeEndtime = '{{ activeCountDown.end_time }}';
 	</script>
@@ -13,13 +15,35 @@
 	<!-- ############ PAGE START-->
 	{% if not contestIsActive %}
 	<div class="row-col">
-		<div class="p-y-lg clearfix">
-		    <div class="text-center">
-		      <h2 class="_700 m-b">Play time is Over</h2>
-		      <h5 class="m-b-md">Let's get back to work! See you again later</h5>
-		      <!--<a href="#" class="btn rounded btn-outline b-info text-info p-x-md m-y">Start Now</a>-->
-		    </div>
+		<div class="col-sm-3"></div>
+		<div class="col-sm-6 text-center">
+			<div class="p-y-lg clearfix">
+			    <div class="text-center">
+			      <h2 class="_700 m-b">Play time is Over</h2>
+			      <h5 class="m-b-md">Get back to work! See you again later</h5>
+			      <!--<a href="#" class="btn rounded btn-outline b-info text-info p-x-md m-y">Start Now</a>-->
+			    </div>
+			    <div class="row padding">
+					<div class="col-md-6 offset-sm-3">
+						<div class="box-color blue pos-rlt">
+							<span class="arrow bottom b-blue"></span>
+							<div class="box-body"><h4>(new Challenge)->next()</h4></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6 offset-sm-3">
+						<div id="clockdiv">
+	        		        <!--<div class="days-wrap"><span class="days"></span>DAYS</div>-->
+	        	        	<div class="hours-wrap"><span class="hours"></span>HOURS</div>
+	        	        	<div class="minutes-wrap"><span class="minutes"></span>MINUTES</div>
+	        	        	<div class="seconds-wrap"><span class="seconds"></span>SECONDS</div>
+		      	        </div>
+					</div>
+				</div>
+			</div>
 		</div>
+		<div class="col-sm-3"></div>
 	</div>
 	{% endif %}
 	
