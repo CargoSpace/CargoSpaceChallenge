@@ -29,5 +29,17 @@
   <script src="{% static "app/scripts/ajax.js" %}"></script>
   <script src="{% static "app/js/countdown.js" %}"></script>
 <!-- endbuild -->
+{% if page == "running_contest" %}
+<script type="text/javascript">
+  $( document ).ready(function() {
+    var fileUpload = document.getElementById("file_upload");
+    if(fileUpload){
+      document.getElementById("file_upload").onchange = function() {
+        document.getElementById("submission").submit();  
+      }
+    }
+  });
+</script>
+{% endif %}
 </body>
 </html>

@@ -11,6 +11,19 @@
   <div id="content" class="app-content" role="main">
 	<div class="app-body dark-light">
 	<!-- ############ PAGE START-->
+	{% if not contestIsActive %}
+	<div class="row-col">
+		<div class="p-y-lg clearfix">
+		    <div class="text-center">
+		      <h2 class="_700 m-b">Play time is Over</h2>
+		      <h5 class="m-b-md">Let's get back to work! See you again later</h5>
+		      <!--<a href="#" class="btn rounded btn-outline b-info text-info p-x-md m-y">Start Now</a>-->
+		    </div>
+		</div>
+	</div>
+	{% endif %}
+	
+	{% if contestIsActive %}
 	<div class="row-col">
 		<div id="left_side" class="col-xs-3 w-xl" style="height: 600px">
 		    <div class="row-col b-r bg">
@@ -28,46 +41,29 @@
 		        	<p>Problemset</p>
 		        	<div class="box">
 					    <ul class="list inset">
-					        <li class="list-item">
+					    	{% for contestProblem in contestProblems %}
+							<li class="list-item">
 					        	<a herf="" class="pull-left m-r">
 				                	<span class="w-30">
+				                		{% if contestProblem.problem.problem_type == "A" %}
 				                  		<img src="{% static "app/images/a0.jpg" %}" class="w-full" alt="A">
-				                 	</span>
-				                </a>
-				                <div class="clear">
-				                  <a href="#" class="_500 text-ellipsis">Problem A</a>
-				                </div>
-					        </li>
-					        <li class="list-item">
-					        	<a herf="" class="pull-left m-r">
-				                	<span class="w-30">
+				                  		{% endif %}
+				                  		{% if contestProblem.problem.problem_type == "B" %}
 				                  		<img src="{% static "app/images/a1.jpg" %}" class="w-full" alt="B">
-				                 	</span>
-				                </a>
-				                <div class="clear">
-				                  <a href="#" class="_500 text-ellipsis">Problem B</a>
-				                </div>
-					        </li>
-					        <li class="list-item">
-					        	<a herf="" class="pull-left m-r">
-				                	<span class="w-30">
+				                  		{% endif %}
+				                  		{% if contestProblem.problem.problem_type == "C" %}
 				                  		<img src="{% static "app/images/a2.jpg" %}" class="w-full" alt="C">
-				                 	</span>
-				                </a>
-				                <div class="clear">
-				                  <a href="#" class="_500 text-ellipsis">Problem C</a>
-				                </div>
-					        </li>
-					        <li class="list-item">
-					        	<a herf="" class="pull-left m-r">
-				                	<span class="w-30">
+				                  		{% endif %}
+				                  		{% if contestProblem.problem.problem_type == "D" %}
 				                  		<img src="{% static "app/images/a3.jpg" %}" class="w-full" alt="D">
+				                  		{% endif %}
 				                 	</span>
 				                </a>
 				                <div class="clear">
-				                  <a href="#" class="_500 text-ellipsis">Problem D</a>
+				                  <a href="#" class="_500 text-ellipsis">Problem {{contestProblem.problem.problem_type}}</a>
 				                </div>
 					        </li>
+							{% endfor %}
 					    </ul>
 					</div>
 		        	<p>Top Challengers</p>
@@ -146,12 +142,14 @@
 					<div class="panel box no-border m-b-xs">
 						<div class="box-body">
 							<div class="">
-								<form role="form" class="form" action="/contest" method="post" enctype="multipart/form-data">
+								<form id="submission" role="form" class="form" action="/submission" method="post" enctype="multipart/form-data">
 								{% csrf_token %}
+								<input type="hidden" name="contest" value=""><!--contest_id-->
+								<input type="hidden" name="problem" value=""><!--problem_id-->
 								<div class="form-group">
 									<!--<label for="exampleInputFile">Standard Output File..</label>-->
 									<div class="form-file">
-										<input type="file" name="submission">
+										<input type="file" name="submission" id="file_upload" {% if not contestIsActive %} disabled {% endif %}>
 										<button class="btn info">Upload Standard Output..</button>
 									</div>
 					              	<!--<p class="help-block">Upload the output of your file.</p>-->
@@ -167,6 +165,7 @@
 			</div>
 		</div>
 	</div>
+	{% endif %}
 	<!-- ############ PAGE END-->
 	</div>
   </div>

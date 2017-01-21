@@ -10,7 +10,7 @@ class ProblemSet(models.Model):
 	"""ProblemSet Model"""
 	id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 	title = models.TextField(default=None)
-	problem = models.TextField()
+	description = models.TextField()
 	language = models.CharField(max_length=5, default='en')
 	image = models.FileField(null=True, blank=True)
 	problem_type = models.CharField(max_length=30, choices=(
@@ -62,7 +62,7 @@ class Contest(models.Model):
 class ContestProblem(models.Model):
 	"""ContestProblem Model"""
 	id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-	contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
+	contest = models.ForeignKey(Contest, related_name='contest_problems', on_delete=models.CASCADE)
 	problem = models.ForeignKey(ProblemSet, on_delete=models.CASCADE)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)

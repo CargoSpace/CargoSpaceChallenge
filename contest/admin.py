@@ -5,8 +5,8 @@ from .models import ProblemSet, ProblemInput, Contest, ContestProblem, ContestSu
 
 @admin.register(ProblemSet)
 class ProblemSetAdmin(admin.ModelAdmin):
-	list_display = ('problem', 'created_by', 'language', 'problem_type', 'created_at',)
-	search_fields = ('problem', 'problem_type', )
+	list_display = ('description', 'created_by', 'language', 'problem_type', 'created_at',)
+	search_fields = ('description', 'problem_type', )
 	
 	def save_model(self, request, obj, form, change):
 		if not change:

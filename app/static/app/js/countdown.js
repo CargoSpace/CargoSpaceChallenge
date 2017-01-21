@@ -33,12 +33,18 @@ function initializeClock(id) {
     //console.log(tx);
 
     if (tx.total <= 0) {
+      location.reload(); 
       clearInterval(timeinterval);
     }
   }
 
-  updateClock();
-  var timeinterval = setInterval(updateClock, 1000);
+  if(t == 0){
+      hoursSpan.innerHTML = '0';
+      minutesSpan.innerHTML = '0';
+      secondsSpan.innerHTML = '0';
+    }else{
+      updateClock();
+      var timeinterval = setInterval(updateClock, 1000);
+    }
 }
-
 initializeClock('clockdiv');

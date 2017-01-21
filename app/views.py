@@ -15,7 +15,7 @@ from datetime import datetime, date
 from contest.models import Contest
 from rpc import rpc_methods
 import requests
-from .forms import ContestSubmissionForm
+from contest.forms import ContestSubmissionForm
 from . import lib
 
 # Function to render templates
@@ -47,12 +47,25 @@ def index(request):
 	
 # /contest
 def running_contest(request):
+	
+	contest = Contest.objects.filter(start_time__lt=datetime.now(), end_time__gt=datetime.now()).first() #ascending order
+	contestIsActive = True if contest else False
+	contestProblems = contest.contest_problems.all() if contest else None
+		
+	# if request.GET['problem_type']:
+		# if request.GET['problem_type'] == 'A':
+	for contestProblem  in contestProblems:
+		print(contestProblem.problem.description)
+	
 	context = {
 		'title': 'Contest is Running | ' + config.app, 
 		'page' : 'running_contest',
+		'contestIsActive': contestIsActive,
+		'contest': contest,
+		'contestProblems': contestProblems,
 		'countDown': {
-			'now': str(datetime.utcnow()),
-			'end_time': str(datetime.now()),
+			'now': str(datetime.now()) if contestIsActive else str(datetime.now()),
+			'end_time': str(contest.end_time) if contestIsActive else str(datetime.now()),
 		},
 	}
 	return render_template(context, request, 'running_contest')
@@ -60,12 +73,14 @@ def running_contest(request):
 def doSubmission(request):
 	if request.method == 'POST':
 		form = ContestSubmissionForm(request.POST, request.FILES)
-        if form.is_valid():
-        	form.save()
-            messages.success(request, "Successfuly Submitted");
+		if form.is_valid():
+			form.save()
+			messages.success(request, "Successfuly Submitted");
+			print ("Successfuly Submitted")
 			return redirect(running_contest)
-        else:
-        	messages.error(request, "Sorry, Please check your input and try again.")
+		else:
+			messages.error(request, "Sorry, Please check your input and try again.")
+			print ("heyyyyyyyyy")
 			return redirect(running_contest)
 	return redirect(running_contest);
 	
@@ -113,9 +128,9 @@ def doRegister(request):
 	
 
 def logout_user(request):
-    logout(request)
-    return redirect(auth)
-    
+	logout(request)
+	return redirect(auth)
+	
 # login
 def auth(request):
 	if request.method == 'POST':
@@ -127,7 +142,6 @@ def auth(request):
 def register(request):
 	if request.method == 'POST':
 		return doRegister(request)
-	rpc_methods.create_contest()
 	context = { 'title': 'Register | ' + config.app, 'page' : 'register' }
 	return render_template(context, request, 'register')
 	

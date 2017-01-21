@@ -11,14 +11,17 @@ import datetime
 def create_contest():
     contestSetting = ContestSetting.objects.all().first()
     if contestSetting.pauseAutomaticContest:
+        print("cant proceed. flag automatic contest pausing..")
         return {'status': False, 'message': 'Automatic Contest Paused'}
     newContestProblem = contest_lib.getRandomObject(ProblemSet.objects.all())
     if not newContestProblem:
+        print("no contest problem found")
         return {'status': False, 'message': 'No contest problem found'}
     contestTitle = "Cargo_ Challenge"
     if contestSetting.useAutoContestTitle:
         autoContestTitle = contest_lib.getRandomObject(AutoContestTitle.objects.all())
         if not autoContestTitle:
+            print("no contest title found, disable autocontest title in settings")
             return {'status': False, 'message': 'No contest title found'}
         else:
             contestTitle = autoContestTitle.title
