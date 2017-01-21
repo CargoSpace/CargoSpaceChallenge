@@ -114,9 +114,13 @@ def doSubmission(request):
 		form = ContestSubmissionForm(request.POST, request.FILES)
 		if form.is_valid():
 			#Check if contest exists and that contest is still running
-			aContest = Contest.objects.get(pk=request.POST['contest'])
+			try:
+				aContest = Contest.objects.get(pk=request.POST['contest'])
+			except Contest.DoesNotExist:
+				messages.error(request, "Contest is over.")
+				return redirect(running_contest)
 			bContest = Contest.objects.filter(start_time__lt=timezone.now(), end_time__gt=timezone.now()).first() #ascending order
-			if aContest is None or bContest is None:
+			if bContest is None:
 				messages.error(request, "Contest is over.")
 				return redirect(running_contest)
 			#TODO: Perform comparison here
