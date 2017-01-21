@@ -50,11 +50,20 @@ def index(request):
 
 def getNextContest():
 	contestSetting = ContestSetting.objects.all().first()
-	# print(contestSetting.updated_at.replace(tzinfo=None) - datetime.now())
-	response = requests.get("https://csc-contest-maker.herokuapp.com/next_contest")
-	if response.status_code != 200:
-		return None
-	return response.json()
+	minutesAgo = abs((datetime.now() - contestSetting.updated_at.replace(tzinfo=None)).days) * 24 * 60
+	if minutesAgo > 10 or contestSetting.last_read_next_contest == None:
+		response = requests.get("https://csc-contest-maker.herokuapp.com/next_contest")
+		if response.status_code != 200:
+			return None
+		response = response.json()
+		contestSetting.last_read_next_contest = response['start_time']
+		contestSetting.save()
+		return response
+	else:
+		# Load from cache to prevent billing after exceeding maximum montly connection quota
+		contestSetting.last_read_next_contest
+		return {'start_time': contestSetting.last_read_next_contest }
+		
 	
 @login_required(login_url='/login')
 def running_contest(request):
