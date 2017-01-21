@@ -6,6 +6,7 @@ from contest import views, lib as contest_lib
 import time, moment
 from datetime import date
 import datetime
+from django.utils import timezone
 
 @rpc_method
 def create_contest():
@@ -29,12 +30,10 @@ def create_contest():
     end_time = start_time.clone().add(minutes=int(contestSetting.duration))
     start_time = datetime.datetime(start_time.year, start_time.month, start_time.day, start_time.hours, start_time.minutes, start_time.seconds)
     end_time = datetime.datetime(end_time.year, end_time.month, end_time.day, end_time.hours, end_time.minutes, end_time.seconds)
-    print (start_time)
-    print (end_time)
-    # return
+
     newContest = Contest.objects.create(title=contestTitle, 
-        start_time= start_time, 
-        end_time= end_time,) #.format("YYYY-MM-DD HH:MM:ss"), )
+        start_time= start_time.replace(tzinfo=timezone.UTC()), 
+        end_time= end_time.replace(tzinfo=timezone.UTC()),)
     newContest.save()
     contestProblemSet = ContestProblem.objects.create(contest=newContest, problem=newContestProblem)
     contestProblemSet.save()

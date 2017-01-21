@@ -7,6 +7,7 @@ from celery.schedules import crontab
 from rpc import rpc_methods
 
 logger = get_task_logger(__name__)
+
 app = Celery()
 app.conf.timezone = 'UTC'
 
@@ -18,7 +19,17 @@ app.conf.beat_schedule = {
         'schedule': crontab(minute=0, hour='*/3'),
         'args': (),
     },
+    'Execute-every-sixty-seconds': {
+        'task': 'Hello World Task',
+        'schedule': crontab(),
+        'args': ('Hello World'),
+    },
 }
+
+@app.on_after_configure.connect
+def setup_periodic_tasks(sender, **kwargs):
+    # Calls test('world') every 30 seconds
+    sender.add_periodic_task(30.0, test.s('world'), expires=10)
 
 @shared_task(name="Create Contest")
 def create_contest():

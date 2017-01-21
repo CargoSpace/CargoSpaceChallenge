@@ -13,7 +13,6 @@ from .forms import LoginForm
 import time
 from datetime import datetime, date
 from contest.models import Contest, ContestSetting
-from rpc import rpc_methods
 import requests
 from contest.forms import ContestSubmissionForm
 from . import lib
