@@ -18,6 +18,7 @@ import requests
 from contest.forms import ContestSubmissionForm
 from . import lib
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
 # Function to render templates
 def render_template(context, request, template_name = "default"):
@@ -29,7 +30,7 @@ def render_template(context, request, template_name = "default"):
 	return HttpResponse(template_obj.render(context, request))
 
 def index(request):
-	contest = Contest.objects.filter(start_time__lt=datetime.now(), end_time__gt=datetime.now()).first() #ascending order
+	contest = Contest.objects.filter(start_time__lt=timezone.now(), end_time__gt=timezone.now()).first() #ascending order
 	contestIsActive = True if contest else False
 	nextContest = getNextContest()
 	context = {
@@ -51,16 +52,18 @@ def index(request):
 def getNextContest():
 	contestSetting = ContestSetting.objects.all().first()
 	minutesAgo = abs((datetime.now() - contestSetting.updated_at.replace(tzinfo=None)).days) * 24 * 60
-	if minutesAgo > 10 or contestSetting.last_read_next_contest == None:
+	if True:# and (minutesAgo > 10 or contestSetting.last_read_next_contest == None):
 		response = requests.get("https://csc-contest-maker.herokuapp.com/next_contest")
 		if response.status_code != 200:
 			return None
 		response = response.json()
 		contestSetting.last_read_next_contest = response['start_time']
 		contestSetting.save()
+		print("read from server")
 		return response
 	else:
 		# Load from cache to prevent billing after exceeding maximum montly connection quota
+		print ("read form cache")
 		contestSetting.last_read_next_contest
 		return {'start_time': contestSetting.last_read_next_contest }
 		
@@ -68,7 +71,7 @@ def getNextContest():
 @login_required(login_url='/login')
 def running_contest(request):
 	
-	contest = Contest.objects.filter(start_time__lt=datetime.now(), end_time__gt=datetime.now()).first() #ascending order
+	contest = Contest.objects.filter(start_time__lt=timezone.now(), end_time__gt=timezone.now()).first() #ascending order
 	contestIsActive = True if contest else False
 	contestProblems = contest.contest_problems.all() if contest else None
 	problemType = request.GET.get("type", "A")
