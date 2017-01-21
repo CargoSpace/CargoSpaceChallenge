@@ -52,18 +52,22 @@ def index(request):
 def getNextContest(contestIsActive):
 	contestSetting = ContestSetting.objects.all().first()
 	minutesAgo = abs((datetime.now() - contestSetting.updated_at.replace(tzinfo=None)).days) * 24 * 60
-	if minutesAgo >= 10 or contestSetting.last_read_next_contest is None or contestIsActive:
+	# print(minutesAgo)
+	# print(contestSetting.last_read_next_contest)
+	# print(contestIsActive)
+	# print(minutesAgo >= 10 or contestSetting.last_read_next_contest is None and contestIsActive)
+	if minutesAgo >= 10 or contestSetting.last_read_next_contest is None and contestIsActive:
 		response = requests.get("https://csc-contest-maker.herokuapp.com/next_contest")
 		if response.status_code != 200:
 			return None
 		response = response.json()
 		contestSetting.last_read_next_contest = response['start_time']
 		contestSetting.save()
-		print("read from server")
+		print("read next_contest from server")
 		return response
 	else:
 		# Load from cache to prevent billing after exceeding maximum montly connection quota
-		print ("read form cache")
+		print ("read next_contest from cache")
 		contestSetting.last_read_next_contest
 		return {'start_time': contestSetting.last_read_next_contest }
 		
@@ -109,6 +113,12 @@ def doSubmission(request):
 	if request.method == 'POST':
 		form = ContestSubmissionForm(request.POST, request.FILES)
 		if form.is_valid():
+			#Check if contest exists and that contest is still running
+			aContest = Contest.objects.get(pk=request.POST['contest'])
+			bContest = Contest.objects.filter(start_time__lt=timezone.now(), end_time__gt=timezone.now()).first() #ascending order
+			if aContest is None or bContest is None:
+				messages.error(request, "Contest is over.")
+				return redirect(running_contest)
 			#TODO: Perform comparison here
 			submission = form.save(commit=False)
 			submission.submitted_by = request.user

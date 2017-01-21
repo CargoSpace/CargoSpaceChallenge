@@ -70,7 +70,10 @@ class ContestSubmission(models.Model):
 	problem = models.ForeignKey(ProblemSet, on_delete=models.CASCADE)
 	submission = models.FileField(null=False, blank=False)
 	submitted_by = models.ForeignKey(User, on_delete=models.CASCADE)
-	accepted = models.BooleanField(default=False)
+	submission_state = models.CharField(max_length=20, choices=(
+		('Pending', 'Pending'),
+		('Accepted', 'Accepted'),
+		('Rejected', 'Rejected')), default='Pending' )
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 	def __str__(self):

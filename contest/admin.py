@@ -31,7 +31,7 @@ class ContestProblemAdmin(admin.ModelAdmin):
 
 @admin.register(ContestSubmission)
 class ContestSubmissionAdmin(admin.ModelAdmin):
-	list_display = ('contest', 'problem', 'submitted_by', 'accepted', 'created_at',)
+	list_display = ('contest', 'problem', 'submitted_by', 'submission_state', 'created_at',)
 	search_fields = ('contest', 'submitted_by',)
 	def save_model(self, request, obj, form, change):
 		if not change:
