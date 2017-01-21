@@ -38,3 +38,5 @@ moment==0.6
 requests==2.12.5
 sqlalchemy>=1.0.14
 celery==4.0
+django_celery_beat==1.0.1
+django_celery_results==1.0.1

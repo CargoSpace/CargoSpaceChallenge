@@ -15,3 +15,15 @@ http://flatfull.com/themes/aside/index.html
 
 ## Celery
 celery -A csc worker -l info
+
+## Start the celery beat service using the django scheduler:
+celery -A csc beat -l info -S django
+
+## Install RabbitMQ
+http://www.rabbitmq.com/install-debian.html
+### Setup RabbitMQ
+NB: reuse your system hostname
+sudo rabbitmqctl status
+daemonizing: sudo rabbitmq-server -detached
+stopping, not killing: sudo rabbitmqctl stop
+http://docs.celeryproject.org/en/latest/getting-started/brokers/rabbitmq.html?highlight=rabbit

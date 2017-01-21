@@ -23,13 +23,15 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-CELERY_BROKER_URL = 'amqp://guest:guest@localhost//'
+CELERY_BROKER_URL = 'amqp://myuser:mypassword@localhost:5672/dretnan-csc-4280924'
 
 #: Only add pickle to this list if your broker is secured
 #: from unwanted access (see userguide/security.html)
 CELERY_ACCEPT_CONTENT = ['json']
-CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
+# CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
 CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_BACKEND = 'django-db'
+# CELERY_RESULT_BACKEND = 'django-cache'
 
 
 # Quick-start development settings - unsuitable for production
@@ -191,6 +193,8 @@ INSTALLED_APPS = (
     #'allauth.socialaccount.providers.google',
     'csc',
     'templatetag_handlebars',
+    'django_celery_beat',
+    'django_celery_results',
 )
 
 MODERNRPC_METHODS_MODULES = [

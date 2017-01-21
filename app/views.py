@@ -56,7 +56,7 @@ def getNextContest(contestIsActive):
 	# print(contestSetting.last_read_next_contest)
 	# print(contestIsActive)
 	# print(minutesAgo >= 10 or contestSetting.last_read_next_contest is None and contestIsActive)
-	if minutesAgo >= 10 or contestSetting.last_read_next_contest is None and contestIsActive:
+	if True:#minutesAgo >= 10 or contestSetting.last_read_next_contest is None and contestIsActive:
 		response = requests.get("https://csc-contest-maker.herokuapp.com/next_contest")
 		if response.status_code != 200:
 			return None
