@@ -36,4 +36,5 @@ django-crum==0.7.1
 django_modern_rpc==0.4.2
 moment==0.6
 requests==2.12.5
-django-celery==3.1.17
+sqlalchemy>=1.0.14
+celery==4.0
