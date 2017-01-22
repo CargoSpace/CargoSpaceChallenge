@@ -1,0 +1,78 @@
+{% load static %}
+{% include "app/_header.html" %}
+    <div class="app" id="app">
+
+<!-- ############ LAYOUT START-->
+  
+  {% include "app/_side.html" %}
+  <!-- content -->
+  <div id="content" class="app-content box-shadow-z2 bg pjax-container" role="main">
+    {% include "app/_navigation.html" %}
+    
+    {% include "app/_copyright.html" %}
+    <div class="app-body">
+        <!-- ############ PAGE START-->
+        <!-- only need a height for layout 4 -->
+        <div class="padding">
+          <div class="p-y-lg clearfix">
+            <div class="text-center">
+              <h2 class="_700 m-b">CargoSpace Challenge Problem Bank</h2>
+              <h5 class="m-b-md">These problems are from various sources</h5>
+              <a href="/dashboard/problem/create" class="btn rounded btn-outline b-info text-info p-x-md m-y">Add Now</a>
+            </div>
+          </div>
+        </div>
+        <!--<div class="padding">-->
+        <div class="container">
+            <!--<div class="col-md-12">-->
+            <div class="col-md-8 offset-sm-2">
+                <div class="box">
+                    <div class="box-header">
+                        <h2>Problem History</h2><small>Submitted by anyone</small></div>
+                    <div class="box-divider m-a-0"></div>
+                    <div class="box-body">
+                        <div class="app-body">
+                            <!--<div class="padding">-->
+                            <div class="table-responsive" id="datatable">
+                                <table id="payrolls" class="table b-t b-b" data-ui-jp="dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Title</th>
+                                            <th>Problem Type</th>
+                                            <th>Submitted By</th>
+                                            <th>Created At</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                      {% for problem in problems %}
+                                        <tr>
+                                          <td>#</td>
+                                          <td><a href="/dashboard/problem/{{problem.id}}">{{ problem.title }}</a></td>
+                                          <td>{{ problem.problem_type }}</td>
+                                          <td>{{ problem.created_by }}</td>
+                                          <td>{{ problem.created_at }}</td>
+                                        </tr>
+                                      {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--</div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--</div>-->
+        </div>
+        <!--</div>-->
+        <!-- ############ PAGE END-->
+        
+        
+    </div>
+  </div>
+  <!-- / -->
+  {% include "app/_theme_switcher.html" %}
+<!-- ############ LAYOUT END-->
+</div>
+
+{% include "app/_footer.html" %}

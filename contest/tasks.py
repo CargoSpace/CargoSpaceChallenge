@@ -5,6 +5,7 @@ from celery.utils.log import get_task_logger
 from celery import Celery
 from celery.schedules import crontab
 from rpc import rpc_methods
+from . import lib
 
 logger = get_task_logger(__name__)
 
@@ -42,3 +43,12 @@ def test(arg):
     logger.info("Creating task:")
     print(arg)
     logger.info("Task finished:")
+    
+
+@shared_task(name="Create Contest")
+def judge_submission(pk):
+    logger.info("Start Judging Submission:")
+    logger.info(pk)
+    logger.info(lib.judge_submission(pk))
+    logger.info("Finished Judging Submission Task:")
+    return pk

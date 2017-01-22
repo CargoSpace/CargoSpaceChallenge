@@ -1,0 +1,33 @@
+{% load static %}
+{% include "app/_header.html" %}
+    <div class="app" id="app">
+
+<!-- ############ LAYOUT START-->
+  
+  {% include "app/_side.html" %}
+  <!-- content -->
+  <div id="content" class="app-content box-shadow-z2 bg pjax-container" role="main">
+    {% include "app/_navigation.html" %}
+    
+    {% include "app/_copyright.html" %}
+    <div class="app-body">
+        <!-- ############ PAGE START-->
+        <!-- only need a height for layout 4 -->
+        <div class="padding">
+          <div class="p-y-lg clearfix">
+            <div class="text-center">
+              <h2 class="_700 m-b">Start up your Bussiness today</h2>
+              <h5 class="m-b-md">We create different services for your product. 30 days guaranteed.</h5>
+              <a href="#" class="btn rounded btn-outline b-info text-info p-x-md m-y">Start Now</a>
+            </div>
+          </div>
+        </div>
+        <!-- ############ PAGE END-->
+    </div>
+  </div>
+  <!-- / -->
+  {% include "app/_theme_switcher.html" %}
+<!-- ############ LAYOUT END-->
+</div>
+
+{% include "app/_footer.html" %}

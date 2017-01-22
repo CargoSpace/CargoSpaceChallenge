@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap',
         {'sitemaps': {'cmspages': CMSSitemap}}),
     url(r'^select2/', include('django_select2.urls')),
+    url(r'^invitations/', include('invitations.urls', namespace='invitations')),
 ]
 
 urlpatterns += [

@@ -195,6 +195,7 @@ INSTALLED_APPS = (
     'templatetag_handlebars',
     'django_celery_beat',
     'django_celery_results',
+    'invitations',
 )
 
 MODERNRPC_METHODS_MODULES = [

@@ -1,0 +1,148 @@
+{% load static %}
+{% include "app/_header.html" %}
+    <div class="app" id="app">
+
+<!-- ############ LAYOUT START-->
+  
+  {% include "app/_side.html" %}
+  <!-- content -->
+  <div id="content" class="app-content box-shadow-z2 bg pjax-container" role="main">
+    {% include "app/_navigation.html" %}
+    
+    {% include "app/_copyright.html" %}
+    <div class="app-body">
+        <!-- ############ PAGE START-->
+        <!-- only need a height for layout 4 -->
+        
+        <div class="padding">
+          <div class="p-y-lg clearfix">
+            <div class="text-center">
+              <h2 class="_700 m-b">Add Problem</h2>
+              <!--<h5 class="m-b-md">We create different services for your product. 30 days guaranteed.</h5>-->
+              <a href="/dashboard/problem" class="btn rounded btn-outline b-info text-info p-x-md m-y">Problemsets</a>
+            </div>
+          </div>
+        </div>
+        
+        
+        <div class="padding">
+        <div class="container">
+            <!--<div class="col-md-12">-->
+            <div class="col-md-8 offset-sm-2">
+                <div class="box">
+                    <div class="box-header">
+                        <h2>Add A Problem</h2><small>Auto-approval for priviledged user</small></div>
+                    <div class="box-divider m-a-0"></div>
+                    <div class="box-body">
+                        <div class="app-body">
+                            <!--<div class="padding">-->
+                            <form role="form" action="/dashboard/problem/create" method="post">
+                              
+                              {% csrf_token %}
+                              
+                              <div class="form-group row">
+                                <label for="inputTitle" class="col-sm-2 form-control-label">Title</label>
+                                <div class="col-sm-10">
+                                  <input type="text" name="title" class="form-control" id="inputTitle" placeholder="Title">
+                                </div>
+                              </div>
+                              
+                              <div class="form-group row">
+                                <label for="inputProblemType" class="col-sm-2 form-control-label">Problem Type</label>
+                                <div class="col-sm-10">
+                                  <select class="form-control c-select" name="problem_type" id="inputProblemType">
+                                    <option value="A">Problem A</option>
+                                    <option value="B">Problem B</option>
+                                    <option value="C">Problem C</option>
+                                    <option value="D">Problem D</option>
+                                  </select>
+                                </div>
+                              </div>
+                              
+                              <div class="form-group row">
+                                <label for="inputDescription" class="col-sm-2 form-control-label">Description</label>
+                                <div class="col-sm-10">
+                                  <textarea class="form-control" rows="2" id="inputDescription" name="description"></textarea>
+                                </div>
+                              </div>
+                              <script>
+                                tinymce.init({
+                                  selector:'#inputDescription', 
+                                  menubar: false,
+                                  plugins : 'media',
+                                });
+                              </script>
+                              
+                              <div class="form-group row">
+                                <label for="inputSourceCredit" class="col-sm-2 form-control-label">Source Credit</label>
+                                <div class="col-sm-10">
+                                  <input type="text" name="source_credit" class="form-control" id="inputSourceCredit" placeholder="Title">
+                                </div>
+                              </div>
+                              
+                              <div class="form-group row">
+                                  <label for="inputProblemImage" class="col-sm-2 form-control-label">Problem Image</label>
+                                  <div class="col-sm-10">
+                                      <input class="form-control" type="file" name="image" id="inputProblemImage">
+                                  </div>
+                              </div>
+
+                              <div class="form-group row">
+                                <label for="inputExampleInput" class="col-sm-2 form-control-label">Example Input</label>
+                                <div class="col-sm-10">
+                                  <textarea class="form-control miceable" rows="2" id="inputExampleInput" name="example_input"></textarea>
+                                </div>
+                              </div>
+                              
+                              <div class="form-group row">
+                                <label for="inputExampleOutput" class="col-sm-2 form-control-label">Example Output</label>
+                                <div class="col-sm-10">
+                                  <textarea class="form-control miceable" id="inputExampleOutput" rows="2" name="example_output"></textarea>
+                                </div>
+                              </div>
+                              
+                              <script>
+                                tinymce.init({ 
+                                  selector:'.miceable', 
+                                  menubar: false,
+                                });
+                              </script>
+                              
+                              <div class="form-group row">
+                                  <label for="inputProblemIn" class="col-sm-2 form-control-label">StdIn</label>
+                                  <div class="col-sm-10">
+                                      <input class="form-control" type="file" id="inputProblemIn" name="problem_stdin">
+                                  </div>
+                              </div>
+                              
+                              <div class="form-group row">
+                                  <label for="inputProblemOut" class="col-sm-2 form-control-label">StdOut</label>
+                                  <div class="col-sm-10">
+                                      <input class="form-control" id="inputProblemOut" type="file" name="problem_stdout">
+                                  </div>
+                              </div> 
+                              
+                              <div class="form-group row m-t-md">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                  <button type="submit" class="btn blue">Add</button>
+                                </div>
+                              </div>
+                              
+                            </form>
+                            <!--</div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--</div>-->
+        </div>
+        </div>
+        <!-- ############ PAGE END-->
+    </div>
+  </div>
+  <!-- / -->
+  {% include "app/_theme_switcher.html" %}
+<!-- ############ LAYOUT END-->
+</div>
+
+{% include "app/_footer.html" %}

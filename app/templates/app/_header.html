@@ -33,5 +33,9 @@
   <link rel="stylesheet" href="{% static "app/css/styles/font.css" %}" type="text/css" />
   
   <link rel="stylesheet" href="{% static "app/css/style.css" %}" type="text/css" />
+  
+  {% if page == "create-problem" %}
+  <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+  {% endif %}
 </head>
 <body>

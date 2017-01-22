@@ -18,6 +18,7 @@ from contest.forms import ContestSubmissionForm
 from . import lib
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from contest import tasks as contestTasks
 
 # Function to render templates
 def render_template(context, request, template_name = "default"):
@@ -126,12 +127,13 @@ def doSubmission(request):
 			submission = form.save(commit=False)
 			submission.submitted_by = request.user
 			submission.save()
-			messages.success(request, "Successfuly Submitted");
+			messages.success(request, "Successfuly Submitted")
+			contestTasks.judge_submission.delay(submission.pk)
 			return redirect(running_contest)
 		else:
 			messages.error(request, "Sorry, Please check your input and try again.")
 			return redirect(running_contest)
-	return redirect(running_contest);
+	return redirect(running_contest)
 	
 def doAuth(request):
 	if request.method == 'POST':

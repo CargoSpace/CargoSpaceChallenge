@@ -18,6 +18,8 @@ celery -A csc worker -l info
 
 ## Start the celery beat service using the django scheduler:
 celery -A csc beat -l info -S django
+celery -A csc beat
+celery -A csc worker -B
 
 ## Install RabbitMQ
 http://www.rabbitmq.com/install-debian.html

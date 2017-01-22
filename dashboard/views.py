@@ -3,6 +3,7 @@ from django.template import loader
 from django.http import HttpResponse
 import config
 import inspect
+from contest.models import Contest, ContestSetting, ProblemSet
 
 # Create your views here.
 
@@ -18,3 +19,17 @@ def render_template(context, request, template_name = "default"):
 def index(request):
 	context = { 'title': config.app + ' | Cargo Space Challenge dashboard', 'page': 'dashboard' }
 	return render_template(context, request)
+	
+	
+def show_problems(request):
+	problems = ProblemSet.objects.all()
+	context = {
+		'title': config.app + ' | Cargo Space Challenge Problemset', 
+		'page': 'show-problems',
+		'problems': problems,
+	}
+	return render_template(context, request, template_name = "problem/index")
+	
+def create_problem(request):
+	context = {'title': config.app + ' | Cargo Space Challenge Problemset', 'page': 'create-problem',}
+	return render_template(context, request, template_name = "problem/create")

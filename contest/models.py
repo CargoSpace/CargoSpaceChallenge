@@ -10,14 +10,18 @@ class ProblemSet(models.Model):
 	"""ProblemSet Model"""
 	id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 	title = models.TextField(default=None)
+	problem_color = models.TextField(null=True, blank=True, default='Blue') #ACM style naming
+	source_credit = models.TextField(default=None)
 	description = models.TextField()
 	language = models.CharField(max_length=5, default='en')
 	image = models.FileField(null=True, blank=True)
+	example_input = models.TextField(null=True, blank=True)
+	example_output = models.TextField(null=True, blank=True)
 	problem_type = models.CharField(max_length=30, choices=(
-		('A', 'Problem A'), 	#Simplest
-		('B', 'Problem B'), 	#Simpler
-		('C', 'Problem C'), 	#Simple
-		('D', 'Problem D') ) )	#Hard
+		('A', 'Problem A'),
+		('B', 'Problem B'),
+		('C', 'Problem C'),
+		('D', 'Problem D') ), default='A' ) # Codeforces problem tagging from Easiest (A) to hardest (D)
 	created_at = models.DateTimeField(auto_now_add=True)
 	created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 	updated_at = models.DateTimeField(auto_now=True)
@@ -31,6 +35,7 @@ class ProblemInput(models.Model):
 	label = models.TextField()
 	problem = models.ForeignKey(ProblemSet, related_name='problem_input', on_delete=models.CASCADE)
 	language = models.CharField(max_length=5, default='en')
+	point = models.IntegerField(default=10)
 	problem_stdin = models.FileField(null=False, blank=False)
 	problem_stdout = models.FileField(null=False, blank=False)
 	created_at = models.DateTimeField(auto_now_add=True)
@@ -44,6 +49,10 @@ class Contest(models.Model):
 	title = models.TextField()
 	description = models.TextField(null=True, blank=True)
 	image = models.FileField(null=True, blank=True)
+	contest_type = models.CharField(max_length=20, choices=(
+		('Regular', 'Regular'),
+		('ACM-Style', 'ACM-Style'),
+		('Code-Jam-Style', 'Code-Jam-Style')), default='Regular' )
 	start_time = models.DateTimeField()
 	end_time = models.DateTimeField()
 	language = models.CharField(max_length=5, default='en')
