@@ -49,15 +49,15 @@
 	
 	{% if contestIsActive %}
 	<div class="row-col">
-		<div id="left_side" class="col-xs-3 w-xl" style="height: 600px">
+		<div id="left_side" class="col-xs-3 w-xl dark-light" style="height: 600px">
 		    <div class="row-col b-r bg">
 		        <div class="padding">
 		        	<div class="row">
 						<div class="col-md-6 offset-sm-3">
 							<div id="activeClockdiv">
-		        	        	<div class="hours-wrap"><span class="hours"></span>HOURS</div>
-		        	        	<div class="minutes-wrap"><span class="minutes"></span>MINUTES</div>
-		        	        	<div class="seconds-wrap"><span class="seconds"></span>SECONDS</div>
+		        	        	<div class="hours-wrap"><span class="hours"></span>H</div>
+		        	        	<div class="minutes-wrap"><span class="minutes"></span>M</div>
+		        	        	<div class="seconds-wrap"><span class="seconds"></span>S</div>
 			      	        </div>
 						</div>
 					</div>
@@ -94,7 +94,7 @@
 				                 	</span>
 				                </a>
 				                <div class="clear">
-				                  <a href="/contest?type={{contestProblem.problem.problem_type}}" class="_500 text-ellipsis">Problem {{contestProblem.problem.problem_type}}</a>
+				                  <a href="/contest?type={{contestProblem.problem.problem_type}}" class="_300 text-ellipsis">Problem {{contestProblem.problem.problem_type}}</a>
 				                </div>
 					        </li>
 							{% endfor %}
@@ -148,14 +148,12 @@
 		    </div>
 		</div>
 		<div id="detail" class="col-xs-9" style="min-height: 600px">
-			<div class="padding" style="padding-bottom: 10px;">
-				<h4>Problem {{currentProblem.problem_type}}: {{currentProblem.title}}</h4>
-			</div>
-			<div class="padding">
-				<div class="row-col">
+			<div class="row-col white">
+				<div class="padding">
+					<h4>Problem {{currentProblem.problem_type}}: {{currentProblem.title}}</h4>
 					<div class="panel box no-border m-b-xs">
 						<div class="box-body">
-							<div class="">
+							<div class="problem">
 								<div class="pull-left m-r">
 									<span class="w-40">
 										{% if currentProblem.problem_type == "A" %}
@@ -180,7 +178,7 @@
 					{% if currentProblem.image %}
 					<div class="panel box no-border m-b-xs">
 						<div class="box-body">
-							<div class="">
+							<div class="problem">
 								<center><img class="img-responsive" class="img-rounded" src="{{currentProblem.image.url}}" style="max-width: 400px" alt="{{currentProblem.problem_type}} - {{currentProblem.title}}"></center>
 							</div>
 						</div>
@@ -188,10 +186,10 @@
 					{% endif %}
 					
 					{% if currentProblem.example_input %}
-					<h5>Sample Input</h5>
+					<b>Input:</b>
 					<div class="panel box no-border m-b-xs">
 						<div class="box-body">
-							<div class="">
+							<div class="problem">
 								{{currentProblem.example_input|safe}}
 							</div>
 						</div>
@@ -199,10 +197,10 @@
 					{% endif %}
 					
 					{% if currentProblem.example_output %}
-					<h5>Sample Output</h5>
+					<b>Output:</b>
 					<div class="panel box no-border m-b-xs">
 						<div class="box-body">
-							<div class="">
+							<div class="problem">
 								{{currentProblem.example_output|safe}}
 							</div>
 						</div>
@@ -240,11 +238,8 @@
 							</div>
 						</div>
 					</div>
-					
-					
-            
-				</div>	
-			</div>
+				</div>
+			</div>	
 		</div>
 	</div>
 	{% endif %}
