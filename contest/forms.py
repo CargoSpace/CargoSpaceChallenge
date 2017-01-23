@@ -26,6 +26,10 @@ class ProblemSetForm(forms.ModelForm):
 			"example_input",#forms.FileField()
 			"example_output",#forms.FileField()
 			"problem_type",
+			"image",
+			"input_description",
+			"output_description",
+			"constraints",
 		]
 
 class ProblemInputForm(forms.ModelForm):
