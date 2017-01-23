@@ -15,6 +15,9 @@ class ProblemSet(models.Model):
 	description = models.TextField()
 	language = models.CharField(max_length=5, default='en')
 	image = models.FileField(null=True, blank=True)
+	input_description = models.TextField(null=True, blank=True)
+	output_description = models.TextField(null=True, blank=True)
+	constraints = models.TextField(null=True, blank=True)
 	example_input = models.TextField(null=True, blank=True)
 	example_output = models.TextField(null=True, blank=True)
 	problem_type = models.CharField(max_length=30, choices=(

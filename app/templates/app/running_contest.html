@@ -185,8 +185,41 @@
 					</div>
 					{% endif %}
 					
-					{% if currentProblem.example_input %}
+					{% if currentProblem.input_description %}
 					<b>Input:</b>
+					<div class="panel box no-border m-b-xs">
+						<div class="box-body">
+							<div class="problem">
+								{{currentProblem.input_description|safe}}
+							</div>
+						</div>
+					</div>
+					{% endif %}
+					
+					{% if currentProblem.output_description %}
+					<b>Output:</b>
+					<div class="panel box no-border m-b-xs">
+						<div class="box-body">
+							<div class="problem">
+								{{currentProblem.output_description|safe}}
+							</div>
+						</div>
+					</div>
+					{% endif %}
+					
+					{% if currentProblem.constraints %}
+					<b>Constraint:</b>
+					<div class="panel box no-border m-b-xs">
+						<div class="box-body">
+							<div class="problem">
+								{{currentProblem.constraints|safe}}
+							</div>
+						</div>
+					</div>
+					{% endif %}
+					
+					{% if currentProblem.example_input %}
+					<b>Sample Input:</b>
 					<div class="panel box no-border m-b-xs">
 						<div class="box-body">
 							<div class="problem">
@@ -197,7 +230,7 @@
 					{% endif %}
 					
 					{% if currentProblem.example_output %}
-					<b>Output:</b>
+					<b>Sample Output:</b>
 					<div class="panel box no-border m-b-xs">
 						<div class="box-body">
 							<div class="problem">
