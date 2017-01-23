@@ -18,7 +18,7 @@
           <div class="p-y-lg clearfix">
             <div class="text-center">
               <h2 class="_700 m-b">Add Problem</h2>
-              <!--<h5 class="m-b-md">We create different services for your product. 30 days guaranteed.</h5>-->
+              <h5 class="m-b-md">Auto-approval for priviledged user</h5>
               <a href="/dashboard/problem" class="btn rounded btn-outline b-info text-info p-x-md m-y">Problemsets</a>
             </div>
           </div>
@@ -36,7 +36,7 @@
                     <div class="box-body">
                         <div class="app-body">
                             <!--<div class="padding">-->
-                            <form role="form" action="/dashboard/problem/create" method="post">
+                            <form role="form" action="/dashboard/problem/create" method="post" enctype="multipart/form-data">
                               
                               {% csrf_token %}
                               
@@ -69,14 +69,18 @@
                                 tinymce.init({
                                   selector:'#inputDescription', 
                                   menubar: false,
-                                  plugins : 'media',
+                                  // plugins: 'equationeditor',
+                                  // content_css: '{% static "app/math/build/mathquill.css" %}',
+                                  toolbar: [
+                                    'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | equationeditor'
+                                  ],
                                 });
                               </script>
                               
                               <div class="form-group row">
                                 <label for="inputSourceCredit" class="col-sm-2 form-control-label">Source Credit</label>
                                 <div class="col-sm-10">
-                                  <input type="text" name="source_credit" class="form-control" id="inputSourceCredit" placeholder="Title">
+                                  <input type="text" name="source_credit" class="form-control" id="inputSourceCredit" placeholder="Source Credit">
                                 </div>
                               </div>
                               

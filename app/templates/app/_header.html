@@ -36,6 +36,10 @@
   
   {% if page == "create-problem" %}
   <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+  <script src="{% static "app/math/build/js/mathquill.min.js" %}"></script>
+  <script>
+    tinymce.PluginManager.load('equationeditor', '{% static "app/math/build/js/plugin.min.js" %}');
+  </script>
   {% endif %}
 </head>
 <body>

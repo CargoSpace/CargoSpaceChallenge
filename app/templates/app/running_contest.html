@@ -172,7 +172,7 @@
 				                  		{% endif %}
 				                 	</span>
 								</div>
-								<p>{{currentProblem.description}}</p>
+								<p>{{currentProblem.description|safe}}</p>
 							</div>
 						</div>
 					</div>
@@ -182,6 +182,28 @@
 						<div class="box-body">
 							<div class="">
 								<center><img class="img-responsive" class="img-rounded" src="{{currentProblem.image.url}}" style="max-width: 400px" alt="{{currentProblem.problem_type}} - {{currentProblem.title}}"></center>
+							</div>
+						</div>
+					</div>
+					{% endif %}
+					
+					{% if currentProblem.example_input %}
+					<h5>Sample Input</h5>
+					<div class="panel box no-border m-b-xs">
+						<div class="box-body">
+							<div class="">
+								{{currentProblem.example_input|safe}}
+							</div>
+						</div>
+					</div>
+					{% endif %}
+					
+					{% if currentProblem.example_output %}
+					<h5>Sample Output</h5>
+					<div class="panel box no-border m-b-xs">
+						<div class="box-body">
+							<div class="">
+								{{currentProblem.example_output|safe}}
 							</div>
 						</div>
 					</div>
