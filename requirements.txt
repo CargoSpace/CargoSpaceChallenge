@@ -41,3 +41,5 @@ celery==4.0
 django_celery_beat==1.0.1
 django_celery_results==1.0.1
 django-invitations==1.8
+channels==1.0.1
+celery[redis]

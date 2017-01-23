@@ -1,6 +1,7 @@
 ## Run code as follows
 python3 manage.py runserver $IP:$PORT
 
+<!---
 ### Start new App as follows
 django-admin startapp dashboard
 
@@ -29,3 +30,14 @@ sudo rabbitmqctl status
 daemonizing: sudo rabbitmq-server -detached
 stopping, not killing: sudo rabbitmqctl stop
 http://docs.celeryproject.org/en/latest/getting-started/brokers/rabbitmq.html?highlight=rabbit
+
+## Setting up virtual env for python3
+Install Python 3 and virtualenv apt-get install -y python3 python-virtualenv
+Create a Python 3 virtualenv: virtualenv -p $(which python3) testDir
+source testDir/bin/activate
+
+We are using celery and redis since our move to django channels 
+
+sudo service redis-server start
+settings all reconfigured to use redis instead of rabbitMQ
+--->

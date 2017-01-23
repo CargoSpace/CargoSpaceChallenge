@@ -23,14 +23,17 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-CELERY_BROKER_URL = 'amqp://myuser:mypassword@localhost:5672/dretnan-csc-4280924'
+# CELERY_BROKER_URL = 'amqp://myuser:mypassword@localhost:5672/dretnan-csc-4280924'
+CELERY_BROKER_URL = 'redis://localhost:6379/0' # redis://:password@hostname:port/db_number
+CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600, 'fanout_patterns': True}  # 1 hour.
 
 #: Only add pickle to this list if your broker is secured
 #: from unwanted access (see userguide/security.html)
 CELERY_ACCEPT_CONTENT = ['json']
 # CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
 CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_BACKEND = 'django-db'
+# CELERY_RESULT_BACKEND = 'django-db'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 # CELERY_RESULT_BACKEND = 'django-cache'
 
 
