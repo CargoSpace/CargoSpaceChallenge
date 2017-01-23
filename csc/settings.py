@@ -24,7 +24,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # CELERY_BROKER_URL = 'amqp://myuser:mypassword@localhost:5672/dretnan-csc-4280924'
-CELERY_BROKER_URL = 'redis://localhost:6379/0' # redis://:password@hostname:port/db_number
+CELERY_BROKER_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379/0') # redis://:password@hostname:port/db_number
 CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600, 'fanout_patterns': True}  # 1 hour.
 
 #: Only add pickle to this list if your broker is secured
@@ -33,7 +33,7 @@ CELERY_ACCEPT_CONTENT = ['json']
 # CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
 CELERY_TASK_SERIALIZER = 'json'
 # CELERY_RESULT_BACKEND = 'django-db'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL', 'redis://localhost:6379/0')
 # CELERY_RESULT_BACKEND = 'django-cache'
 
 
@@ -199,7 +199,19 @@ INSTALLED_APPS = (
     'django_celery_beat',
     'django_celery_results',
     'invitations',
+    'channels',
+    'websucks',
 )
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgi_redis.RedisChannelLayer", # asgiref.inmemory.ChannelLayer
+        "CONFIG": {
+            "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
+        },
+        "ROUTING": "csc.routing.channel_routing",
+    },
+}
 
 MODERNRPC_METHODS_MODULES = [
     'rpc.rpc_methods'
