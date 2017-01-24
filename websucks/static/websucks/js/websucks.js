@@ -27,7 +27,11 @@ $( document ).ready(function() {
         };
         self.initSocket = function(user_id, contest_id){
             var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-            self.websucks = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + "/socket/" + user_id + "/" + contest_id);
+            if(ReconnectingWebSocket){
+                self.websucks = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + "/socket/" + user_id + "/" + contest_id);
+            }else{
+                self.websucks = new WebSocket(ws_scheme + '://' + window.location.host + "/socket/" + user_id + "/" + contest_id);
+            }
             self.websucks.onmessage = function(message) {
                 var data = JSON.parse(message.data);
                 console.log(data);
