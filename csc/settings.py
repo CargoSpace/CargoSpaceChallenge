@@ -209,7 +209,7 @@ CHANNEL_LAYERS = {
         "CONFIG": {
             "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
         },
-        "ROUTING": "csc.routing.channel_routing",
+        "ROUTING": "websucks.routing.channel_routing",
     },
 }
 

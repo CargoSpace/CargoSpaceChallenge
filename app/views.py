@@ -91,6 +91,7 @@ def running_contest(request):
 	nextContest = getNextContest(contestIsActive)
 	context = {
 		'title': 'Contest is Running | ' + config.app, 
+		'user': request.user,
 		'page' : 'running_contest',
 		'contestIsActive': contestIsActive,
 		'contest': contest,

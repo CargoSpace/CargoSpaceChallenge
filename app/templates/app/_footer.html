@@ -31,11 +31,13 @@
   <script src="{% static "app/js/activecountdown.js" %}"></script>
 <!-- endbuild -->
 {% if page == "running_contest" %}
+<script src="//raw.githubusercontent.com/jacobian/channels-example/master/static/reconnecting-websocket.min.js"></script>
+<script src="{% static "websucks/js/websucks.js" %}"></script>
 <script type="text/javascript">
   $( document ).ready(function() {
-    var fileUpload = document.getElementById("file_upload");
-    if(fileUpload){
-      document.getElementById("file_upload").onchange = function() {
+      var fileUpload = document.getElementById("file_upload");
+      if(fileUpload){
+        document.getElementById("file_upload").onchange = function() {
         document.getElementById("submission").submit();  
       }
     }

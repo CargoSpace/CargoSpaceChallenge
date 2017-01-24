@@ -40,4 +40,8 @@ We are using celery and redis since our move to django channels
 
 sudo service redis-server start
 settings all reconfigured to use redis instead of rabbitMQ
+
+These articles were useful in setting up channels
+https://blog.heroku.com/in_deep_with_django_channels_the_future_of_real_time_apps_in_django
+https://www.sourcelair.com/blog/articles/115/django-channels-chat
 --->
