@@ -11,18 +11,18 @@ $( document ).ready(function() {
     var ContestModel = function() {
         var self = this;
         self.admin_notification = ko.observable('');
-        self.submisions = ko.observableArray();
+        self.submissions = ko.observableArray();
         self.websucks = null;
         self.addSubmission = function(submision) {
         	var submisionExists = false;
-        	$.map(self.submisions(), function(tmpsubmision) {
+        	$.map(self.submissions(), function(tmpsubmision) {
         		if(tmpsubmision.submission_id == submision.id){
         			submisionExists = true;
         			return;
         		};
         	});
         	if(!submisionExists){
-        	    self.submisions.push(submision);
+        	    self.submissions.push(submision);
         	}
         };
         self.initSocket = function(user_id, contest_id){
@@ -56,7 +56,7 @@ $( document ).ready(function() {
     if(user_id && contest_id && user_id.length > 0 && contest_id.length > 0){
         var contetModel = new ContestModel();
         ko.applyBindings(contetModel);
-        contetModel.initSocket();
+        contetModel.initSocket(user_id, contest_id);
     }else{
         console.log("Requirements to initiate sucket not met");
     }
