@@ -23,7 +23,7 @@ def getUserSubmission(user_id, contest_id):
     contest_id = uuid.UUID(contest_id)
     contest = Contest.objects.get(pk=contest_id)
     user = User.objects.get(username=user_id)
-    contestSubmission = ContestSubmission.objects.filter(submitted_by=user, contest=contest)
+    contestSubmission = ContestSubmission.objects.filter(submitted_by=user, contest=contest).order_by('-created_at')
     smcontestSubmission = ContestSubmissionSerializer(contestSubmission, many=True)
     return smcontestSubmission.data
     

@@ -13,17 +13,17 @@ $( document ).ready(function() {
         self.admin_notification = ko.observable('');
         self.submissions = ko.observableArray();
         self.websucks = null;
-        self.addSubmission = function(submision) {
-        	var submisionExists = false;
+        self.addReplaceSubmission = function(submission) {
         	$.map(self.submissions(), function(tmpsubmision) {
-        		if(tmpsubmision.submission_id == submision.id){
-        			submisionExists = true;
+        		if(tmpsubmision.submission_id == submission.id){
+        			self.removeSubmission(tmpsubmision)
         			return;
         		};
         	});
-        	if(!submisionExists){
-        	    self.submissions.push(submision);
-        	}
+            self.submissions.push(submission);
+        };
+        self.removeSubmission = function(submission) { 
+            self.submissions.remove(submission) 
         };
         self.initSocket = function(user_id, contest_id){
             var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
@@ -48,7 +48,7 @@ $( document ).ready(function() {
 			    submission.submission_id = submissions[i].id;
             	submission.problem_title = submissions[i].problem.title;
             	submission.created_at = new Date(submissions[i].created_at).toLocaleString();
-            	self.addSubmission(submission);
+            	self.addReplaceSubmission(submission);
 			}
         }
     }
