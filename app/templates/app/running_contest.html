@@ -7,7 +7,7 @@
 		var activeNow = '{{ activeCountDown.now }}';
 		var activeEndtime = '{{ activeCountDown.end_time }}';
 		var contest_id = '{{contest.pk}}';
-		var user_id = '{{user.pk}}';
+		var user_id = '{{user}}';
 	</script>
 	
 	{% include "app/_header_down.html" %}
@@ -51,7 +51,7 @@
 	
 	{% if contestIsActive %}
 	<div class="row-col">
-		<div id="left_side" class="col-xs-3 w-xl dark" style="height: 600px">
+		<div id="left_side" class="col-xs-3 w-xl dark-light" style="height: 600px">
 		    <div class="row-col b-r bg">
 		        <div class="padding">
 		        	<div class="row">
@@ -102,6 +102,31 @@
 							{% endfor %}
 					    </ul>
 					</div>
+					
+					<p>My Submission</p>
+		        	<div class="box">
+					    <ul class="list inset">
+					    	<table class="table">
+					    		<thead>
+					    			<tr>
+					    			<th>Problem</th>
+					    			<th>Status</th>
+					    			</tr>
+					    		</thead>
+					    		<tbody>
+					    		<tr>
+					    			<td>Killjee And Sequence</td>
+					    			<td>PENDING</td>
+					    		</tr>
+					    		<tr>
+					    			<td>Killjee And Sequence</td>
+					    			<td>PENDING</td>
+					    		</tr>
+					    		</tbody>
+					    	</table>
+					    </ul>
+					</div>
+					
 					<!--
 		        	<p>Top Challengers</p>
 		        	<div class="box">
