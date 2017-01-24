@@ -12,8 +12,10 @@ def getRandomObject(problemSets):
     else:
         return None;
         
-def compareStdInAndStdOut(stdin, stdout):
-    return filecmp.cmp(stdin, stdout)
+def compareFiles(fileA, fileB):
+    # compareFiles("/home/retnan/file.txt" "/home/retnan/file2.txt")
+    # compareFiles("http://retnan.com/file.txt" "/home/retnan/file2.txt")
+    return filecmp.cmp(fileA, fileB)
     
 def judge_submission(pk):
     contestSubmission = ContestSubmission.objects.get(pk=pk)
