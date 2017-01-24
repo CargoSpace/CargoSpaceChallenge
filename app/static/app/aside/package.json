@@ -1,6 +1,6 @@
 {
   "name": "Aside",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "scripts": {
     "start": "node node_modules/http-server/bin/http-server -o"
