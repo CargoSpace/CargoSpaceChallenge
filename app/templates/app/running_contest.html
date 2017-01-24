@@ -51,125 +51,174 @@
 	
 	{% if contestIsActive %}
 	<div class="row-col">
-		<div id="left_side" class="col-xs-3 w-xl dark-light" style="height: 600px">
+		<div id="left_side" class="col-xs-3 w-xl dark-light">
 		    <div class="row-col b-r bg">
-		        <div class="padding">
-		        	<div class="row">
-						<div class="col-md-8 offset-sm-2">
-							<div id="activeClockdiv">
-		        	        	<div class="hours-wrap"><span class="hours"></span>H</div>
-		        	        	<div class="minutes-wrap"><span class="minutes"></span>M</div>
-		        	        	<div class="seconds-wrap"><span class="seconds"></span>S</div>
-			      	        </div>
+		    	
+		        <div class="padding" style="padding-top: 0px; padding-right: 0px; padding-left: 0px;">
+		        	<div class="box">
+			        	<div class="row">
+							<div class="col-md-8 offset-sm-2">
+								<div id="activeClockdiv">
+			        	        	<div class="hours-wrap"><span class="hours"></span>Hours</div>
+			        	        	<div class="minutes-wrap"><span class="minutes"></span>Minutes</div>
+			        	        	<div class="seconds-wrap"><span class="seconds"></span>Seconds</div>
+				      	        </div>
+							</div>
 						</div>
-					</div>
-					<!--
-		        	<div class="row">
-						<div class="col-md-6 offset-sm-3">
-							<div id="clockdiv">
-					        	<div class="hours-wrap"><span class="hours"></span>HOURS</div>
-					        	<div class="minutes-wrap"><span class="minutes"></span>MINUTES</div>
-					        	<div class="seconds-wrap"><span class="seconds"></span>SECONDS</div>
-						     </div>
+	
+			        	<div class="p-a">
+				        	<h6 class="text-muted m-a-0">Problemset</h6>
+				        </div>
+			        	<div class="box">
+						    <ul class="list inset">
+						    	{% for contestProblem in contestProblems %}
+								<li class="list-item">
+						        	<a herf="" class="pull-left m-r">
+					                	<span class="w-30">
+					                		{% if contestProblem.problem.problem_type == "A" %}
+					                  		<img src="{% static "app/images/a0.jpg" %}" class="w-full" alt="A">
+					                  		{% endif %}
+					                  		{% if contestProblem.problem.problem_type == "B" %}
+					                  		<img src="{% static "app/images/a1.jpg" %}" class="w-full" alt="B">
+					                  		{% endif %}
+					                  		{% if contestProblem.problem.problem_type == "C" %}
+					                  		<img src="{% static "app/images/a2.jpg" %}" class="w-full" alt="C">
+					                  		{% endif %}
+					                  		{% if contestProblem.problem.problem_type == "D" %}
+					                  		<img src="{% static "app/images/a3.jpg" %}" class="w-full" alt="D">
+					                  		{% endif %}
+					                 	</span>
+					                </a>
+					                <div class="clear">
+					                  <a href="/contest?type={{contestProblem.problem.problem_type}}" class="_300 text-ellipsis">Problem {{contestProblem.problem.problem_type}}</a>
+					                </div>
+						        </li>
+								{% endfor %}
+						    </ul>
 						</div>
+						
+						<div class="p-a">
+				        	<h6 class="text-muted m-a-0">My Submission</h6>
+				        </div>
+			        	<div class="box">
+						    <ul class="list inset">
+						    	<table class="table table-striped responsive">
+						    		<thead>
+						    			<tr>
+						    			<th>Problem</th>
+						    			<!--<th>Time</th>-->
+						    			<th>Status</th>
+						    			</tr>
+						    		</thead>
+						    		<tbody data-bind='visible: submissions().length > 0, foreach: submissions'>
+										<tr>
+											<td><span data-bind='text: problem_title'> </span></td>
+											<!--<td><span data-bind='text: created_at'> </span></td>-->
+											<td><span data-bind='text: submission_state'> </span></td>
+										</tr>
+						    		</tbody>
+						    	</table>
+						    </ul>
+						</div>
+						<!--
+			        	<div class="p-a">
+				        	<h6 class="text-muted m-a-0">Top Challengers</h6>
+				        </div>
+			        	<div class="box">
+						    <ul class="list inset">
+						        <li class="list-item">
+						        	<a herf="" class="list-left">
+						        		<span class="w-40 circle avatar accent"><span>C</span>
+						        		<i class="away b-white"></i></span>
+						        	</a>
+						            <div class="list-body">
+						                <div>
+						                	<a href="#">Chris Fox<span class="pull-right">293,200</span></a>
+						                	<small class="text-muted text-ellipsis">Cargo Space Challenger</small>
+						                </div>
+						            </div>
+						        </li>
+						        <li class="list-item">
+						        	<a herf="" class="list-left">
+						        		<span class="w-40 circle avatar accent"><span>C</span>
+						        		<i class="away b-white"></i></span>
+						        	</a>
+						            <div class="list-body">
+						                <div>
+						                	<a href="#">Chris Fox<span class="pull-right">293,200</span></a>
+						                	<small class="text-muted text-ellipsis">Cargo Space Challenger</small>
+						                </div>
+						            </div>
+						        </li>
+						        <li class="list-item">
+						        	<a herf="" class="list-left">
+						        		<span class="w-40 circle avatar accent"><span>C</span>
+						        		<i class="away b-white"></i></span>
+						        	</a>
+						            <div class="list-body">
+						                <div>
+						                	<a href="#">Chris Fox<span class="pull-right">293,200</span></a>
+						                	<small class="text-muted text-ellipsis">Cargo Space Challenger</small>
+						                </div>
+						            </div>
+						        </li>
+						        
+						        <li class="list-item">
+						        	<a herf="" class="list-left">
+						        		<span class="w-40 circle avatar accent"><span>C</span>
+						        		<i class="away b-white"></i></span>
+						        	</a>
+						            <div class="list-body">
+						                <div>
+						                	<a href="#">Chris Fox<span class="pull-right">293,200</span></a>
+						                	<small class="text-muted text-ellipsis">Cargo Space Challenger</small>
+						                </div>
+						            </div>
+						        </li>
+						        
+						        <li class="list-item">
+						        	<a herf="" class="list-left">
+						        		<span class="w-40 circle avatar accent"><span>C</span>
+						        		<i class="away b-white"></i></span>
+						        	</a>
+						            <div class="list-body">
+						                <div>
+						                	<a href="#">Chris Fox<span class="pull-right">293,200</span></a>
+						                	<small class="text-muted text-ellipsis">Cargo Space Challenger</small>
+						                </div>
+						            </div>
+						        </li>
+						        
+						        <li class="list-item">
+						        	<a herf="" class="list-left">
+						        		<span class="w-40 circle avatar accent"><span>C</span>
+						        		<i class="away b-white"></i></span>
+						        	</a>
+						            <div class="list-body">
+						                <div>
+						                	<a href="#">Chris Fox<span class="pull-right">293,200</span></a>
+						                	<small class="text-muted text-ellipsis">Cargo Space Challenger</small>
+						                </div>
+						            </div>
+						        </li>
+						        
+						        <li class="list-item">
+						        	<a herf="" class="list-left">
+						        		<span class="w-40 circle avatar accent"><span>C</span>
+						        		<i class="away b-white"></i></span>
+						        	</a>
+						            <div class="list-body">
+						                <div>
+						                	<a href="#">Chris Fox<span class="pull-right">293,200</span></a>
+						                	<small class="text-muted text-ellipsis">Cargo Space Challenger</small>
+						                </div>
+						            </div>
+						        </li>
+						        
+						    </ul>
+						</div>
+						-->
 					</div>
-					-->
-		        	<p>Problemset</p>
-		        	<div class="box">
-					    <ul class="list inset">
-					    	{% for contestProblem in contestProblems %}
-							<li class="list-item">
-					        	<a herf="" class="pull-left m-r">
-				                	<span class="w-30">
-				                		{% if contestProblem.problem.problem_type == "A" %}
-				                  		<img src="{% static "app/images/a0.jpg" %}" class="w-full" alt="A">
-				                  		{% endif %}
-				                  		{% if contestProblem.problem.problem_type == "B" %}
-				                  		<img src="{% static "app/images/a1.jpg" %}" class="w-full" alt="B">
-				                  		{% endif %}
-				                  		{% if contestProblem.problem.problem_type == "C" %}
-				                  		<img src="{% static "app/images/a2.jpg" %}" class="w-full" alt="C">
-				                  		{% endif %}
-				                  		{% if contestProblem.problem.problem_type == "D" %}
-				                  		<img src="{% static "app/images/a3.jpg" %}" class="w-full" alt="D">
-				                  		{% endif %}
-				                 	</span>
-				                </a>
-				                <div class="clear">
-				                  <a href="/contest?type={{contestProblem.problem.problem_type}}" class="_300 text-ellipsis">Problem {{contestProblem.problem.problem_type}}</a>
-				                </div>
-					        </li>
-							{% endfor %}
-					    </ul>
-					</div>
-					
-					<!--<div data-bind='visible: submissions().length > 0'>-->
-					<p>My Submission</p>
-		        	<div class="box">
-					    <ul class="list inset">
-					    	<table class="table table-striped responsive">
-					    		<thead>
-					    			<tr>
-					    			<th>Problem</th>
-					    			<!--<th>Time</th>-->
-					    			<th>Status</th>
-					    			</tr>
-					    		</thead>
-					    		<tbody data-bind='visible: submissions().length > 0, foreach: submissions'>
-									<tr>
-										<td><span data-bind='text: problem_title'> </span></td>
-										<!--<td><span data-bind='text: created_at'> </span></td>-->
-										<td><span data-bind='text: submission_state'> </span></td>
-									</tr>
-					    		</tbody>
-					    	</table>
-					    </ul>
-					</div>
-					<!--</div>-->
-					<!--
-		        	<p>Top Challengers</p>
-		        	<div class="box">
-					    <ul class="list inset">
-					        <li class="list-item">
-					        	<a herf="" class="list-left">
-					        		<span class="w-40 circle avatar accent"><span>C</span>
-					        		<i class="away b-white"></i></span>
-					        	</a>
-					            <div class="list-body">
-					                <div>
-					                	<a href="#">Chris Fox<span class="pull-right">293,200</span></a>
-					                	<small class="text-muted text-ellipsis">Cargo Space Challenger</small>
-					                </div>
-					            </div>
-					        </li>
-					        <li class="list-item">
-					        	<a herf="" class="list-left">
-					        		<span class="w-40 circle avatar accent"><span>C</span>
-					        		<i class="away b-white"></i></span>
-					        	</a>
-					            <div class="list-body">
-					                <div>
-					                	<a href="#">Chris Fox<span class="pull-right">293,200</span></a>
-					                	<small class="text-muted text-ellipsis">Cargo Space Challenger</small>
-					                </div>
-					            </div>
-					        </li>
-					        <li class="list-item">
-					        	<a herf="" class="list-left">
-					        		<span class="w-40 circle avatar accent"><span>C</span>
-					        		<i class="away b-white"></i></span>
-					        	</a>
-					            <div class="list-body">
-					                <div>
-					                	<a href="#">Chris Fox<span class="pull-right">293,200</span></a>
-					                	<small class="text-muted text-ellipsis">Cargo Space Challenger</small>
-					                </div>
-					            </div>
-					        </li>
-					        
-					    </ul>
-					</div>
-					-->
 		        </div>
 		    </div>
 		</div>

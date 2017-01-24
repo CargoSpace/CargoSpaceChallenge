@@ -48,3 +48,10 @@ def ws_receive(message):
     # m = room.messages.create(handle=data['handle'], message=data['message'])
     # Group('chat-'+label).send({'text': json.dumps(m.as_dict())})
     return None
+
+def sendSubmissionStatus(user_id, submission):
+    Group('user-' + user_id).send({'text': json.dumps({
+        "response": submission,
+        "messageType": "submission"
+    })})
+    return None

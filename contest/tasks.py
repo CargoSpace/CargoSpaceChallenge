@@ -45,7 +45,7 @@ def test(arg):
     logger.info("Task finished:")
     
 
-@shared_task(name="Create Contest")
+@shared_task(name="Create Submission")
 def judge_submission(pk):
     logger.info("Start Judging Submission:")
     logger.info(pk)

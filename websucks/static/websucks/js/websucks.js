@@ -4,7 +4,7 @@ $( document ).ready(function() {
         var self = this;
         self.submission_id = null
         self.problem_title = '';
-        self.submission_state = ko.observable('PENDING');
+        self.submission_state = ko.observable();
         self.created_at = '';
     };
     
@@ -14,17 +14,19 @@ $( document ).ready(function() {
         self.submissions = ko.observableArray();
         self.websucks = null;
         self.addReplaceSubmission = function(submission) {
-        	$.map(self.submissions(), function(tmpsubmision) {
-        		if(tmpsubmision.submission_id == submission.id){
-        			self.removeSubmission(tmpsubmision)
-        			return;
-        		};
-        	});
-            self.submissions.push(submission);
-        };
-        self.removeSubmission = function(submission) { 
-            self.submissions.remove(submission) 
-        };
+        var found = false;
+        for(var i = 0; i < self.submissions().length; i++){
+            if(self.submissions()[i].submission_id == submission.id){
+                self.submissions()[i].submission_state(submission.submission_state);
+                found = true;
+                return;
+            }
+        }
+        if(!found){ self.submissions.push(submission); }
+    };
+    self.removeSubmission = function(submission) { 
+        self.submissions.remove(submission) 
+    };
         self.initSocket = function(user_id, contest_id){
             var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
             if(ReconnectingWebSocket){
@@ -35,11 +37,14 @@ $( document ).ready(function() {
             var submissionsLoaded = false;
             self.websucks.onmessage = function(message) {
                 var data = JSON.parse(message.data);
+                console.log(data.response)
                 if(data.messageType == 'submissions' && !submissionsLoaded){
                     self.populateSubmissions(data.response);
-                    submissionsLoaded = true;
+                    submissionsLoaded = true; //incase of reconnection
                 }else{
-                    
+                    if(data.messageType == 'submission'){
+                        self.populateSubmission(data.response);
+                    }
                 }
             };
             self.websucks.onopen = function() {
@@ -52,9 +57,19 @@ $( document ).ready(function() {
 			    var submission = new Submission();
 			    submission.submission_id = submissions[i].id;
             	submission.problem_title = submissions[i].problem.title;
+            	submission.submission_state(submissions[i].submission_state);
             	submission.created_at = new Date(submissions[i].created_at).toLocaleString();
             	self.addReplaceSubmission(submission);
 			}
+        }
+        
+        self.populateSubmission = function(_submission){
+			    var submission = new Submission();
+			    submission.submission_id = _submission.id;
+			    submission.submission_state(_submission.submission_state);
+            	submission.problem_title = _submission.problem.title;
+            	submission.created_at = new Date(_submission.created_at).toLocaleString();
+            	self.addReplaceSubmission(_submission);
         }
     }
     

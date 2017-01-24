@@ -14,7 +14,7 @@
         <!-- ############ PAGE START-->
         <!-- only need a height for layout 4 -->
         
-        <div class="padding">
+        <!--<div class="padding">-->
           <div class="p-y-lg clearfix">
             <div class="text-center">
               <h2 class="_700 m-b">Add Problem</h2>
@@ -22,13 +22,13 @@
               <a href="/dashboard/problem" class="btn rounded btn-outline b-info text-info p-x-md m-y">Problemsets</a>
             </div>
           </div>
-        </div>
+        <!--</div>-->
         
         
         <div class="padding">
         <div class="container">
-            <!--<div class="col-md-12">-->
-            <div class="col-md-8 offset-sm-2">
+            <div class="col-md-12">
+            <!--<div class="col-md-8 offset-sm-2">-->
                 <div class="box">
                     <div class="box-header">
                         <h2>Add A Problem</h2><small>Auto-approval for priviledged user</small></div>
@@ -40,90 +40,72 @@
                               
                               {% csrf_token %}
                               
-                              <div class="form-group row">
-                                <label for="inputTitle" class="col-sm-2 form-control-label">Title</label>
-                                <div class="col-sm-10">
-                                  <input type="text" name="title" class="form-control" id="inputTitle" placeholder="Title">
-                                </div>
+                              <div class="form-group">
+                                <label for="inputTitle">Title</label>
+                                <input type="text" name="title" class="form-control" id="inputTitle" placeholder="Title">
                               </div>
                               
-                              <div class="form-group row">
-                                <label for="inputProblemType" class="col-sm-2 form-control-label">Problem Type</label>
-                                <div class="col-sm-10">
+                              <div class="form-group">
+                                <label for="inputProblemType">Problem Type</label>
                                   <select class="form-control c-select" name="problem_type" id="inputProblemType">
                                     <option value="A">Problem A</option>
                                     <option value="B">Problem B</option>
                                     <option value="C">Problem C</option>
                                     <option value="D">Problem D</option>
                                   </select>
-                                </div>
                               </div>
                               
-                              <div class="form-group row">
-                                <label for="inputDescription" class="col-sm-2 form-control-label">Description</label>
-                                <div class="col-sm-10">
-                                  <textarea class="form-control" rows="2" id="inputDescription" name="description"></textarea>
-                                </div>
-                              </div>
-                              <script>
-                                tinymce.init({
-                                  selector:'#inputDescription', 
-                                  menubar: false,
-                                  // plugins: 'equationeditor',
-                                  // content_css: '{% static "app/math/build/mathquill.css" %}',
-                                  toolbar: [
-                                    'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | equationeditor'
-                                  ],
-                                });
-                              </script>
-                              
-                              <div class="form-group row">
-                                <label for="inputSourceCredit" class="col-sm-2 form-control-label">Source Credit</label>
-                                <div class="col-sm-10">
-                                  <input type="text" name="source_credit" class="form-control" id="inputSourceCredit" placeholder="Source Credit">
-                                </div>
-                              </div>
-                              
-                              <div class="form-group row">
-                                  <label for="inputProblemImage" class="col-sm-2 form-control-label">Problem Image</label>
-                                  <div class="col-sm-10">
-                                      <input class="form-control" type="file" name="image" id="inputProblemImage">
+                              <div class="form-group">
+                                <label for="inputDescription">Description</label>
+                                  <div class="box m-b-md">
+                                    <textarea class="form-control" data-ui-jp="summernote" rows="5" id="inputDescription" name="description"></textarea>
                                   </div>
                               </div>
+                              <script>
+                                // tinymce.init({
+                                //   selector:'#inputDescription', 
+                                //   menubar: false,
+                                //   // plugins: 'equationeditor',
+                                //   // content_css: '{% static "app/math/build/mathquill.css" %}',
+                                //   toolbar: [
+                                //     'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | equationeditor'
+                                //   ],
+                                // });
+                              </script>
                               
-                              <div class="form-group row">
-                                <label for="inputInputDesc" class="col-sm-2 form-control-label">Input Description</label>
-                                <div class="col-sm-10">
-                                  <textarea class="form-control miceable" rows="2" id="inputInputDesc" name="input_description"></textarea>
-                                </div>
+                              <div class="form-group">
+                                <label for="inputSourceCredit">Source Credit</label>
+                                <input type="text" name="source_credit" class="form-control" id="inputSourceCredit" placeholder="Source Credit">
                               </div>
                               
-                              <div class="form-group row">
-                                <label for="inputEOutputDesc" class="col-sm-2 form-control-label">Output Description</label>
-                                <div class="col-sm-10">
-                                  <textarea class="form-control miceable" rows="2" id="inputEOutputDesc" name="output_description"></textarea>
-                                </div>
+                              <div class="form-group">
+                                  <label for="inputProblemImage">Problem Image</label>
+                                  <input class="form-control" type="file" name="image" id="inputProblemImage">
                               </div>
                               
-                              <div class="form-group row">
-                                <label for="inputConstraint" class="col-sm-2 form-control-label">Constraint</label>
-                                <div class="col-sm-10">
-                                  <textarea class="form-control miceable" rows="2" id="inputConstraint" name="constraints"></textarea>
-                                </div>
+                              <div class="form-group">
+                                <label for="inputInputDesc">Input Description</label>
+                                <textarea class="form-control miceable" rows="2" id="inputInputDesc" name="input_description"></textarea>
+                              </div>
+                              
+                              <div class="form-group">
+                                <label for="inputEOutputDesc">Output Description</label>
+                                <textarea class="form-control miceable" rows="2" id="inputEOutputDesc" name="output_description"></textarea>
+                              </div>
+                              
+                              <div class="form-group">
+                                <label for="inputConstraint">Constraint</label>
+                                <textarea class="form-control miceable" rows="2" id="inputConstraint" name="constraints"></textarea>
                               </div>
 
-                              <div class="form-group row">
-                                <label for="inputExampleInput" class="col-sm-2 form-control-label">Example Input</label>
-                                <div class="col-sm-10">
-                                  <textarea class="form-control miceable" rows="2" id="inputExampleInput" name="example_input"></textarea>
-                                </div>
+                              <div class="form-group">
+                                <label for="inputExampleInput">Example Input</label>
+                                <textarea class="form-control miceable" rows="2" id="inputExampleInput" name="example_input"></textarea>
                               </div>
                               
-                              <div class="form-group row">
-                                <label for="inputExampleOutput" class="col-sm-2 form-control-label">Example Output</label>
-                                <div class="col-sm-10">
-                                  <textarea class="form-control miceable" id="inputExampleOutput" rows="2" name="example_output"></textarea>
-                                </div>
+                              <div class="form-group">
+                                <label for="inputExampleOutput">Example Output</label>
+                                <textarea class="form-control miceable" id="inputExampleOutput" rows="2" name="example_output"></textarea>
                               </div>
                               
                               <script>
@@ -133,24 +115,18 @@
                                 });
                               </script>
                               
-                              <div class="form-group row">
-                                  <label for="inputProblemIn" class="col-sm-2 form-control-label">StdIn</label>
-                                  <div class="col-sm-10">
-                                      <input class="form-control" type="file" id="inputProblemIn" name="problem_stdin">
-                                  </div>
+                              <div class="form-group">
+                                  <label for="inputProblemIn">StdIn</label>
+                                  <input class="form-control" type="file" id="inputProblemIn" name="problem_stdin">
                               </div>
                               
-                              <div class="form-group row">
-                                  <label for="inputProblemOut" class="col-sm-2 form-control-label">StdOut</label>
-                                  <div class="col-sm-10">
-                                      <input class="form-control" id="inputProblemOut" type="file" name="problem_stdout">
-                                  </div>
+                              <div class="form-group">
+                                  <label for="inputProblemOut">StdOut</label>
+                                  <input class="form-control" id="inputProblemOut" type="file" name="problem_stdout">
                               </div> 
                               
-                              <div class="form-group row m-t-md">
-                                <div class="col-sm-offset-2 col-sm-10">
-                                  <button type="submit" class="btn blue">Add</button>
-                                </div>
+                              <div class="form-group">
+                                  <center><button type="submit" class="btn blue">Add</button></center>
                               </div>
                               
                             </form>

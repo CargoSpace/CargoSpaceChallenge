@@ -5,6 +5,8 @@ from .serializers import ContestSubmissionSerializer
 import uuid
 import random
 import filecmp
+from channels import Group
+import json
 
 def getRandomObject(problemSets):
     if problemSets and len(problemSets) > 0:
@@ -19,7 +21,17 @@ def compareFiles(fileA, fileB):
     
 def judge_submission(pk):
     contestSubmission = ContestSubmission.objects.get(pk=pk)
-    return contestSubmission
+    # TODO: Jurge Here
+    # contestSubmission.submission
+    contestSubmission.submission_state = "Accepted"
+    contestSubmission.save()
+    smcontestSubmission = ContestSubmissionSerializer(contestSubmission, many=False)
+    user = User.objects.get(pk=str(smcontestSubmission.data['submitted_by']))
+    Group('user-' + user.username).send({'text': json.dumps({
+        "response": smcontestSubmission.data,
+        "messageType": "submission"
+    })})
+    return smcontestSubmission
     
 def getUserSubmission(user_id, contest_id):
     contest_id = uuid.UUID(contest_id)
