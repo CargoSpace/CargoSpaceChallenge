@@ -32,11 +32,12 @@ $( document ).ready(function() {
             }else{
                 self.websucks = new WebSocket(ws_scheme + '://' + window.location.host + "/socket/" + user_id + "/" + contest_id);
             }
+            var submissionsLoaded = false;
             self.websucks.onmessage = function(message) {
                 var data = JSON.parse(message.data);
-                console.log(data);
-                if(data.messageType == 'submissions'){
+                if(data.messageType == 'submissions' && !submissionsLoaded){
                     self.populateSubmissions(data.response);
+                    submissionsLoaded = true;
                 }else{
                     
                 }
