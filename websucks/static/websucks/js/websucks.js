@@ -47,7 +47,7 @@ $( document ).ready(function() {
 			    var submission = new Submission();
 			    submission.submission_id = submissions[i].id;
             	submission.problem_title = submissions[i].problem.title;
-            	submission.created_at = submissions[i].created_at;
+            	submission.created_at = new Date(submissions[i].created_at).toLocaleString();
             	self.addSubmission(submission);
 			}
         }
