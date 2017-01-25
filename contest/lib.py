@@ -7,18 +7,39 @@ import random
 import filecmp
 from channels import Group
 import json
+import urllib.request
 
 def getRandomObject(problemSets):
     if problemSets and len(problemSets) > 0:
         return random.choice(problemSets);
     else:
         return None;
+
+def file_get_contents(filename, use_include_path = 0, context = None, offset = -1, maxlen = -1):
+    if (filename.find('://') > 0):
+        ret = urllib.request.urlopen(filename).read()
+        if (offset > 0):
+            ret = ret[offset:]
+        if (maxlen > 0):
+            ret = ret[:maxlen]
+        return ret
+    else:
+        fp = open(filename,'rb')
+        try:
+            if (offset > 0):
+                fp.seek(offset)
+            ret = fp.read(maxlen)
+            return ret
+        finally:
+            fp.close( )
         
 def compareFiles(fileA, fileB):
-    # compareFiles("/home/retnan/file.txt" "/home/retnan/file2.txt")
-    # compareFiles("http://retnan.com/file.txt" "/home/retnan/file2.txt")
-    return filecmp.cmp(fileA, fileB)
-    
+    a = file_get_contents(fileA)
+    b = file_get_contents(fileB)
+    if [x for x in a if x not in b] == []:
+        return True
+
+
 def judge_submission(pk):
     contestSubmission = ContestSubmission.objects.get(pk=pk)
     # TODO: Jurge Here
