@@ -35,6 +35,7 @@ def setup_periodic_tasks(sender, **kwargs):
 @shared_task(name="Create Contest")
 def create_contest():
     logger.info("Creating task:")
+    print("Hello World")
     rpc_methods.create_contest()
     logger.info("Task finished:")
 
