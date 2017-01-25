@@ -8,6 +8,8 @@ import filecmp
 from channels import Group
 import json
 import requests
+from django.conf import settings
+import os
 
 
 def getRandomObject(problemSets):
@@ -43,21 +45,32 @@ def isEqual(fileA, fileB):
         return True
     else:
         return False
-
-
+    
 def judge_submission(pk):
     contestSubmission = ContestSubmission.objects.get(pk=pk)
-    # TODO: Jurge Here
-    # contestSubmission.submission
-    contestSubmission.submission_state = "Accepted"
+    problemInput = ProblemInput.objects.filter(problem=contestSubmission.problem).first()
+    cargoSpaceStdOutFile = problemInput.problem_stdout.path
+    if os.path.isfile(cargoSpaceStdOutFile) is False:
+        mainStdOutFile = problemInput.problem_stdout.url #TODO: Concatenate with base url
+    userStdOutFile = contestSubmission.submission.path
+    if os.path.isfile(cargoSpaceStdOutFile) is False:
+        userStdOutFile = contestSubmission.submission.url #TODO: Concatenate with base url
+
+    if isEqual(str(cargoSpaceStdOutFile), str(userStdOutFile)):
+        contestSubmission.submission_state = "Accepted"
+    else:
+        contestSubmission.submission_state = "Failed"
     contestSubmission.save()
-    smcontestSubmission = ContestSubmissionSerializer(contestSubmission, many=False)
-    user = User.objects.get(pk=str(smcontestSubmission.data['submitted_by']))
+    sContestSubmission = ContestSubmissionSerializer(contestSubmission, many=False)
+    pushNotify(sContestSubmission)
+    return sContestSubmission
+
+def pushNotify(sContestSubmission):
+    user = User.objects.get(pk=str(sContestSubmission.data['submitted_by']))
     Group('user-' + user.username).send({'text': json.dumps({
-        "response": smcontestSubmission.data,
+        "response": sContestSubmission.data,
         "messageType": "submission"
     })})
-    return smcontestSubmission
     
 def getUserSubmission(user_id, contest_id):
     contest_id = uuid.UUID(contest_id)
