@@ -15,10 +15,12 @@ from datetime import datetime, date
 from contest.models import Contest, ContestSetting
 import requests
 from contest.forms import ContestSubmissionForm
-from . import lib
+from contest import lib
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from contest import tasks as contestTasks
+from contest.models import ProblemInput
+import os
 
 # Function to render templates
 def render_template(context, request, template_name = "default"):
@@ -124,12 +126,28 @@ def doSubmission(request):
 			if bContest is None:
 				messages.error(request, "Contest is over.")
 				return redirect(running_contest)
-			#TODO: Perform comparison here
-			submission = form.save(commit=False)
-			submission.submitted_by = request.user
-			submission.save()
+				
+			contestSubmission = form.save(commit=False)
+			workerStatus = lib.get_celery_worker_status()
+			contestSubmission.submitted_by = request.user
+			contestSubmission.save()
+			
+			if 'ERROR' in workerStatus:
+				problemInput = ProblemInput.objects.filter(problem=contestSubmission.problem).first()
+				cargoSpaceStdOutFile = problemInput.problem_stdout.path
+				if os.path.isfile(cargoSpaceStdOutFile) is False:
+					cargoSpaceStdOutFile = problemInput.problem_stdout.url #TODO: Concatenate with base url
+				userStdOutFile = contestSubmission.submission.path
+				if os.path.isfile(cargoSpaceStdOutFile) is False:
+					userStdOutFile = contestSubmission.submission.url #TODO: Concatenate with base url
+				if lib.isEqual(str(cargoSpaceStdOutFile), str(userStdOutFile)):
+					contestSubmission.submission_state = "Accepted"
+				else:
+					contestSubmission.submission_state = "Failed"
+				contestSubmission.save()
+			else:
+				contestTasks.judge_submission.delay(submission.pk)
 			messages.success(request, "Successfuly Submitted")
-			contestTasks.judge_submission.delay(submission.pk)
 			return redirect(running_contest)
 		else:
 			messages.error(request, "Sorry, Please check your input and try again.")

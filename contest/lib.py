@@ -10,7 +10,7 @@ import json
 import requests
 from django.conf import settings
 import os
-
+from celery import Celery
 
 def getRandomObject(problemSets):
     if problemSets and len(problemSets) > 0:
@@ -18,6 +18,23 @@ def getRandomObject(problemSets):
     else:
         return None;
 
+def get_celery_worker_status():
+    ERROR_KEY = "ERROR"
+    try:
+        from celery.task.control import inspect
+        insp = inspect()
+        d = insp.stats()
+        if not d:
+            d = { ERROR_KEY: 'No running Celery workers were found.' }
+    except IOError as e:
+        from errno import errorcode
+        msg = "Error connecting to the backend: " + str(e)
+        if len(e.args) > 0 and errorcode.get(e.args[0]) == 'ECONNREFUSED':
+            msg += ' Check that the Redis server is running.'
+        d = { ERROR_KEY: msg }
+    except ImportError as e:
+        d = { ERROR_KEY: str(e)}
+    return d
 
 def file_get_contents(filename, use_include_path = 0, context = None, offset = -1, maxlen = -1):
     if (filename.find('://') > 0):
@@ -51,7 +68,7 @@ def judge_submission(pk):
     problemInput = ProblemInput.objects.filter(problem=contestSubmission.problem).first()
     cargoSpaceStdOutFile = problemInput.problem_stdout.path
     if os.path.isfile(cargoSpaceStdOutFile) is False:
-        mainStdOutFile = problemInput.problem_stdout.url #TODO: Concatenate with base url
+        cargoSpaceStdOutFile = problemInput.problem_stdout.url #TODO: Concatenate with base url
     userStdOutFile = contestSubmission.submission.path
     if os.path.isfile(cargoSpaceStdOutFile) is False:
         userStdOutFile = contestSubmission.submission.url #TODO: Concatenate with base url
