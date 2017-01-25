@@ -14,8 +14,9 @@ sudo pip3 install -r requirements.txt
 ### The template used in this project can be found here.
 http://flatfull.com/themes/aside/index.html
 
-## Celery
+## Celery **
 celery -A csc worker -l info
+
 
 ## Start the celery beat service using the django scheduler:
 celery -A csc beat -l info -S django
