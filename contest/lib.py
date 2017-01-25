@@ -7,7 +7,8 @@ import random
 import filecmp
 from channels import Group
 import json
-import urllib.request
+import urllib
+
 
 def getRandomObject(problemSets):
     if problemSets and len(problemSets) > 0:
@@ -15,9 +16,10 @@ def getRandomObject(problemSets):
     else:
         return None;
 
+
 def file_get_contents(filename, use_include_path = 0, context = None, offset = -1, maxlen = -1):
     if (filename.find('://') > 0):
-        ret = urllib.request.urlopen(filename).read()
+        ret = urllib.urlopen(filename).read()
         if (offset > 0):
             ret = ret[offset:]
         if (maxlen > 0):
@@ -32,7 +34,8 @@ def file_get_contents(filename, use_include_path = 0, context = None, offset = -
             return ret
         finally:
             fp.close( )
-        
+
+
 def compareFiles(fileA, fileB):
     a = file_get_contents(fileA)
     b = file_get_contents(fileB)
