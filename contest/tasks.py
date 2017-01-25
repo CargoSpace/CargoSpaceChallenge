@@ -49,6 +49,6 @@ def test(arg):
 def judge_submission(pk):
     logger.info("Start Judging Submission:")
     logger.info(pk)
-    logger.info(lib.judge_submission(pk))
+    lib.judge_submission(pk)
     logger.info("Finished Judging Submission Task:")
     return pk

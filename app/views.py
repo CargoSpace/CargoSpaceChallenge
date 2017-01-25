@@ -133,20 +133,10 @@ def doSubmission(request):
 			contestSubmission.save()
 			
 			if 'ERROR' in workerStatus:
-				problemInput = ProblemInput.objects.filter(problem=contestSubmission.problem).first()
-				cargoSpaceStdOutFile = problemInput.problem_stdout.path
-				if os.path.isfile(cargoSpaceStdOutFile) is False:
-					cargoSpaceStdOutFile = problemInput.problem_stdout.url #TODO: Concatenate with base url
-				userStdOutFile = contestSubmission.submission.path
-				if os.path.isfile(cargoSpaceStdOutFile) is False:
-					userStdOutFile = contestSubmission.submission.url #TODO: Concatenate with base url
-				if lib.isEqual(str(cargoSpaceStdOutFile), str(userStdOutFile)):
-					contestSubmission.submission_state = "Accepted"
-				else:
-					contestSubmission.submission_state = "Failed"
-				contestSubmission.save()
+				# Worker not running, judge now now
+				contestTasks.judge_submission(contestSubmission.pk)
 			else:
-				contestTasks.judge_submission.delay(submission.pk)
+				contestTasks.judge_submission.delay(contestSubmission.pk)
 			messages.success(request, "Successfuly Submitted")
 			return redirect(running_contest)
 		else:
