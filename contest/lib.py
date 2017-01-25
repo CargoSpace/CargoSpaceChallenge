@@ -66,4 +66,3 @@ def getUserSubmission(user_id, contest_id):
     return smcontestSubmission.data
     
     
-            
