@@ -19,8 +19,6 @@ from contest import lib
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from contest import tasks as contestTasks
-from contest.models import ProblemInput
-import os
 
 # Function to render templates
 def render_template(context, request, template_name = "default"):

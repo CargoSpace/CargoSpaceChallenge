@@ -1,5 +1,14 @@
 ## Run code as follows
+```bash
 python3 manage.py runserver $IP:$PORT
+``` 
+This project uses Socket.IO provided by Django Channels, therefore WSGI is not supported. ASGI is supported
+
+## Celery (Optional Worker)
+```bash
+sudo service redis-server start
+celery -A csc worker -l info
+``` 
 
 <!---
 ### Start new App as follows
