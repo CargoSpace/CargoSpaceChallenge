@@ -7,12 +7,12 @@ This project uses Socket.IO provided by Django Channels, therefore WSGI is not s
 ## Celery (Optional Worker but needed if you are handling large problem submissions)
 ```bash
 sudo service redis-server start
-celery -A csc worker -l info
+celery -A csc worker -l debug
 ``` 
 
 ## Sheduler (Doesn't work without a Worker "Celery". Needed If you need a Periodic Programming Contest)
 ```bash
-celery -A csc beat -l debug -S django
+celery -A csc beat -l debug -S django --max-interval 1
 ```
 <!---
 ### Start new App as follows

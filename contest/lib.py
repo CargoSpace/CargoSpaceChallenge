@@ -11,11 +11,9 @@ import requests
 from django.conf import settings
 import os
 from celery import Celery
-import time, moment
+import time, moment, datetime
 from django.utils import timezone
 import shelve
-
-Cache = shelve.open("AppSettings", writeback=True)
 
 # Ported from JS: https://github.com/CargoSpace/ContestCreator/blob/master/lib.js
 def getUpperHour(hour_set, hour):
@@ -27,14 +25,14 @@ def getUpperHour(hour_set, hour):
 				return hour_set[j]
 				
 def compute_update_next_contest():
-    global Cache;
+    Cache = shelve.open("AppSettings", writeback=True)
     if "Settings" in Cache: # Is this the best way to do caching in django?
         Settings = Cache['Settings']
     else:
         Settings = ContestSetting.objects.all().first()
         Cache['Settings'] = Settings
     contest_interval = Settings.interval
-    hour_set = range(0, 24, contest_interval);
+    hour_set = range(0, 24, contest_interval)
     if contest_interval is None:
         return
     now = moment.utcnow().clone()
@@ -46,6 +44,7 @@ def compute_update_next_contest():
     next_contest = str(now.year) + '-' + str(now.month) + '-' + day + ' ' + str(nextHour) + ':00:' + '00'
     Cache['next_contest'] = next_contest
     Cache.sync()
+    Cache.close()
     return next_contest
 
 def create_contest():

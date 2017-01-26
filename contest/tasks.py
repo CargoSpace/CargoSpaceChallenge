@@ -9,6 +9,7 @@ from . import lib
 logger = get_task_logger(__name__)
 
 # http://celery.readthedocs.io/en/latest/userguide/periodic-tasks.html
+# http://docs.celeryproject.org/en/latest/userguide/configuration.html
 
 app = Celery()
 app.conf.timezone = 'UTC'
@@ -20,7 +21,9 @@ def create_contest():
 # Called Every Second
 @shared_task(name="tasks.compute_update_next_contest")
 def compute_update_next_contest():
-    lib.compute_update_next_contest()
+    next_contest = lib.compute_update_next_contest()
+    logger.info(next_contest)
+    
 
 @app.task(name="tasks.test")
 def test(arg):

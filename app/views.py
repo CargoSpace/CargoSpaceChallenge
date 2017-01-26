@@ -19,6 +19,7 @@ from contest import lib
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from contest import tasks as contestTasks
+import shelve
 
 # Function to render templates
 def render_template(context, request, template_name = "default"):
@@ -51,7 +52,7 @@ def index(request):
 
 def getNextContest(contestIsActive):
 	response = None
-	if False
+	if False:
 		response = requests.get("https://csc-contest-maker.herokuapp.com/next_contest")
 		if response.status_code != 200:
 			return None
@@ -63,6 +64,8 @@ def getNextContest(contestIsActive):
 		if "next_contest" in Cache:
 			response = {'start_time':  Cache['next_contest']}
 		Cache.close()
+	print("hello world")
+	print(response)
 	return response
 	
 @login_required(login_url='/login')
