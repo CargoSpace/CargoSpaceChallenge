@@ -57,15 +57,12 @@ def getNextContest(contestIsActive):
 		if response.status_code != 200:
 			return None
 		response = response.json()
-		print("read next_contest from a remote server")
 		return response
 	else:
 		Cache = shelve.open("AppSettings", flag='r')
 		if "next_contest" in Cache:
 			response = {'start_time':  Cache['next_contest']}
 		Cache.close()
-	print("hello world")
-	print(response)
 	return response
 	
 @login_required(login_url='/login')

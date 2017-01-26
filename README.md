@@ -14,6 +14,12 @@ celery -A csc worker -l debug
 ```bash
 celery -A csc beat -l debug -S django --max-interval 1
 ```
+
+## Pupulate with data
+```bash
+manage.py loaddata --app=contest
+```
+
 <!---
 ### Start new App as follows
 django-admin startapp dashboard
@@ -61,4 +67,5 @@ https://www.sourcelair.com/blog/articles/115/django-channels-chat
 
 The fixtures Generated
 python manage.py dumpdata --indent=4 django_celery_beat > contest/fixtures/Django_Celery_Beat.json
+python manage.py dumpdata --indent=4 contest.contestsetting > contest/fixtures/Contest_Settings.json
 --->

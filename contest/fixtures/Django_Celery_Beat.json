@@ -1,70 +1,70 @@
 [
 {
-    "pk": 1,
     "model": "django_celery_beat.intervalschedule",
+    "pk": 1,
     "fields": {
         "period": "seconds",
         "every": 5
     }
 },
 {
-    "pk": 2,
     "model": "django_celery_beat.crontabschedule",
+    "pk": 2,
     "fields": {
+        "day_of_month": "*",
         "month_of_year": "*",
         "hour": "*/3",
-        "day_of_week": "*",
         "minute": "0",
-        "day_of_month": "*"
+        "day_of_week": "*"
     }
 },
 {
-    "pk": 1,
     "model": "django_celery_beat.periodictasks",
+    "pk": 1,
     "fields": {
-        "last_update": "2017-01-26T11:30:52.371Z"
+        "last_update": "2017-01-26T17:59:30.939Z"
     }
 },
 {
-    "pk": 2,
     "model": "django_celery_beat.periodictask",
-    "fields": {
-        "kwargs": "{}",
-        "routing_key": null,
-        "date_changed": "2017-01-26T11:17:59.481Z",
-        "exchange": null,
-        "task": "tasks.test",
-        "args": "[\"Hello Args\"]",
-        "crontab": null,
-        "total_run_count": 143,
-        "last_run_at": "2017-01-26T11:17:56.947Z",
-        "expires": null,
-        "name": "Hello World",
-        "interval": 1,
-        "enabled": true,
-        "queue": null,
-        "description": ""
-    }
-},
-{
     "pk": 3,
-    "model": "django_celery_beat.periodictask",
     "fields": {
-        "kwargs": "{}",
-        "routing_key": null,
-        "date_changed": "2017-01-26T11:30:52.373Z",
-        "exchange": null,
-        "task": "tasks.create_contest",
-        "args": "[]",
-        "crontab": 2,
-        "total_run_count": 0,
-        "last_run_at": null,
-        "expires": null,
-        "name": "Create Challenge Every Three Hours: midnight, 3am, 6am, 9am, noon, 3pm, 6pm, 9pm.",
         "interval": null,
-        "enabled": true,
         "queue": null,
-        "description": ""
+        "kwargs": "{}",
+        "task": "tasks.create_contest",
+        "last_run_at": "2017-01-26T18:00:00.000Z",
+        "date_changed": "2017-01-26T18:02:32.036Z",
+        "name": "Create Challenge Every Three Hours: midnight, 3am, 6am, 9am, noon, 3pm, 6pm, 9pm.",
+        "description": "",
+        "routing_key": null,
+        "total_run_count": 1,
+        "expires": null,
+        "crontab": 2,
+        "exchange": null,
+        "enabled": true,
+        "args": "[]"
+    }
+},
+{
+    "model": "django_celery_beat.periodictask",
+    "pk": 4,
+    "fields": {
+        "interval": 1,
+        "queue": null,
+        "kwargs": "{}",
+        "task": "tasks.compute_update_next_contest",
+        "last_run_at": "2017-01-26T18:05:31.023Z",
+        "date_changed": "2017-01-26T18:05:33.034Z",
+        "name": "Update Next Contest",
+        "description": "",
+        "routing_key": null,
+        "total_run_count": 394,
+        "expires": null,
+        "crontab": null,
+        "exchange": null,
+        "enabled": true,
+        "args": "[]"
     }
 }
 ]
