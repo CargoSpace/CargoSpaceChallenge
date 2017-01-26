@@ -107,7 +107,6 @@ class ContestSetting(models.Model):
 	title = models.TextField(default="Settings")
 	interval = models.IntegerField(default=3) #Hours
 	duration = models.IntegerField(default=30) #Minutes
-	last_read_next_contest = models.TextField(blank=True, null=True)
 	pauseAutomaticContest = models.BooleanField(default=False)
 	useAutoContestTitle = models.BooleanField(default=True)
 	created_at = models.DateTimeField(auto_now_add=True)

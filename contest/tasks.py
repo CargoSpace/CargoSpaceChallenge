@@ -4,7 +4,6 @@ from celery import shared_task
 from celery.utils.log import get_task_logger
 from celery import Celery
 from celery.schedules import crontab
-from rpc import rpc_methods
 from . import lib
 
 logger = get_task_logger(__name__)
@@ -16,7 +15,7 @@ app.conf.timezone = 'UTC'
 
 @shared_task(name="tasks.create_contest")
 def create_contest():
-    rpc_methods.create_contest()
+    lib.create_contest()
 
 # Called Every Second
 @shared_task(name="tasks.compute_update_next_contest")

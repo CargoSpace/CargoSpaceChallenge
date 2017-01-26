@@ -50,27 +50,20 @@ def index(request):
 	return render_template(context, request)
 
 def getNextContest(contestIsActive):
-	contestSetting = ContestSetting.objects.all().first()
-	minutesAgo = abs((datetime.now() - contestSetting.updated_at.replace(tzinfo=None)).days) * 24 * 60
-	# print(minutesAgo)
-	# print(contestSetting.last_read_next_contest)
-	# print(contestIsActive)
-	# print(minutesAgo >= 10 or contestSetting.last_read_next_contest is None and contestIsActive)
-	if True:#minutesAgo >= 10 or contestSetting.last_read_next_contest is None and contestIsActive:
+	response = None
+	if False
 		response = requests.get("https://csc-contest-maker.herokuapp.com/next_contest")
 		if response.status_code != 200:
 			return None
 		response = response.json()
-		contestSetting.last_read_next_contest = response['start_time']
-		contestSetting.save()
-		print("read next_contest from server")
+		print("read next_contest from a remote server")
 		return response
 	else:
-		# Load from cache to prevent billing after exceeding maximum montly connection quota
-		print ("read next_contest from cache")
-		contestSetting.last_read_next_contest
-		return {'start_time': contestSetting.last_read_next_contest }
-		
+		Cache = shelve.open("AppSettings", flag='r')
+		if "next_contest" in Cache:
+			response = {'start_time':  Cache['next_contest']}
+		Cache.close()
+	return response
 	
 @login_required(login_url='/login')
 def running_contest(request):

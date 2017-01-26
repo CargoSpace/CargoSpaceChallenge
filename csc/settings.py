@@ -154,8 +154,6 @@ INSTALLED_APPS = (
     'app',
     'dashboard',
     'contest',
-    'rpc',
-    'modernrpc',
     'djangocms_admin_style',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -212,10 +210,6 @@ CHANNEL_LAYERS = {
         "ROUTING": "websucks.routing.channel_routing",
     },
 }
-
-MODERNRPC_METHODS_MODULES = [
-    'rpc.rpc_methods'
-]
 
 # LANGUAGES = (
 #     ## Customize this

@@ -1,3 +1,4 @@
 celerybeat-schedule.db
 celerybeat.pid
 project.db
+AppSettings.db
