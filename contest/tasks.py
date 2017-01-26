@@ -9,42 +9,25 @@ from . import lib
 
 logger = get_task_logger(__name__)
 
+# http://celery.readthedocs.io/en/latest/userguide/periodic-tasks.html
+
 app = Celery()
 app.conf.timezone = 'UTC'
 
-# For more crontab rules: http://docs.celeryproject.org/en/latest/userguide/periodic-tasks.html#beat-custom-schedulers
-app.conf.beat_schedule = {
-    # Execute every three hours: midnight, 3am, 6am, 9am, noon, 3pm, 6pm, 9pm.
-    'Execute-every-three-hours': {
-        'task': 'Create Contest',
-        'schedule': crontab(minute=0, hour='*/3'),
-        'args': (),
-    },
-    'Execute-every-sixty-seconds': {
-        'task': 'Hello World Task',
-        'schedule': crontab(),
-        'args': ('Hello World'),
-    },
-}
-
-@app.on_after_configure.connect
-def setup_periodic_tasks(sender, **kwargs):
-    # Calls test('world') every 30 seconds
-    sender.add_periodic_task(30.0, test.s('world'), expires=10)
-
-@shared_task(name="Create Contest")
+@shared_task(name="tasks.create_contest")
 def create_contest():
-    logger.info("Creating task:")
-    print("Hello World")
     rpc_methods.create_contest()
-    logger.info("Task finished:")
 
-@app.task(name="Hello World Task")
+# Called Every Second
+@shared_task(name="tasks.compute_update_next_contest")
+def compute_update_next_contest():
+    lib.compute_update_next_contest()
+
+@app.task(name="tasks.test")
 def test(arg):
     logger.info("Creating task:")
     print(arg)
     logger.info("Task finished:")
-    
 
 @shared_task(name="Create Submission")
 def judge_submission(pk):

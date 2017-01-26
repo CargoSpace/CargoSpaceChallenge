@@ -4,12 +4,16 @@ python3 manage.py runserver $IP:$PORT
 ``` 
 This project uses Socket.IO provided by Django Channels, therefore WSGI is not supported. ASGI is supported
 
-## Celery (Optional Worker)
+## Celery (Optional Worker but needed if you are handling large problem submissions)
 ```bash
 sudo service redis-server start
 celery -A csc worker -l info
 ``` 
 
+## Sheduler (Doesn't work without a Worker "Celery". Needed If you need a Periodic Programming Contest)
+```bash
+celery -A csc beat -l debug -S django
+```
 <!---
 ### Start new App as follows
 django-admin startapp dashboard
@@ -54,4 +58,7 @@ settings all reconfigured to use redis instead of rabbitMQ
 These articles were useful in setting up channels
 https://blog.heroku.com/in_deep_with_django_channels_the_future_of_real_time_apps_in_django
 https://www.sourcelair.com/blog/articles/115/django-channels-chat
+
+The fixtures Generated
+python manage.py dumpdata --indent=4 django_celery_beat > contest/fixtures/Django_Celery_Beat.json
 --->

@@ -11,6 +11,31 @@ import requests
 from django.conf import settings
 import os
 from celery import Celery
+import time, moment
+
+# Ported from JS: https://github.com/CargoSpace/ContestCreator/blob/master/lib.js
+def getUpperHour(hour_set, hour):
+	for i in range(0, len(hour_set)):
+		for j in range(i + 1, i + 2):
+			if i == (len(hour_set) - 1):
+				return hour_set[0]
+			if hour >= hour_set[i] and hour < hour_set[j]:
+				return hour_set[j]
+				
+def compute_update_next_contest():
+    contest_interval = 3 #TODO: From DB or cache via django Dict DB
+    hour_set = range(0, 24, contest_interval);
+    
+    if contest_interval is None:
+        return
+    now = moment.utcnow().clone()
+    nextHour = getUpperHour(hour_set, now.hours)
+    if nextHour == 0:
+        day = str(now.day + 1)
+    else: 
+        day = str(now.day)
+    next_contest = str(now.year) + '-' + str(now.month) + '-' + day + ' ' + str(nextHour) + ':00:' + '00'
+    return next_contest
 
 def getRandomObject(problemSets):
     if problemSets and len(problemSets) > 0:
