@@ -38,10 +38,8 @@ def compute_update_next_contest():
     now = moment.utcnow().clone()
     nextHour = getUpperHour(hour_set, now.hours)
     if nextHour == 0:
-        day = str(now.day + 1)
-    else: 
-        day = str(now.day)
-    next_contest = str(now.year) + '-' + str(now.month) + '-' + day + ' ' + str(nextHour) + ':00:' + '00'
+        now = now.clone().add(day=1)
+    next_contest = str(now.year) + '-' + str(now.month) + '-' + now.day + ' ' + str(nextHour) + ':00:' + '00'
     Cache['next_contest'] = next_contest
     Cache.sync()
     Cache.close()
