@@ -41,10 +41,13 @@ CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL', 'redis://localhost:6379/0')
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '4en8gryp2_)&z@-7uq91r8jf(46&oln60pal5f3l0!7#$l1n5n'
+SECRET_KEY = os.environ.get('APP_SECRET', '4en8gryp2_)&z@-7uq91r8jf(46&oln60pal5f3l0!7#$l1n5n')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if os.environ.get('APP_ENV', 'DEVELOPMENT') == "PRODUCTION":
+    DEBUG = False
+else:
+    DEBUG = True
 
 ALLOWED_HOSTS = [
     '*',
@@ -245,17 +248,29 @@ CMS_PERMISSION = True
 
 CMS_PLACEHOLDER_CONF = {}
 
-DATABASES = {
-    'default': {
-        'CONN_MAX_AGE': 0,
-        'ENGINE': 'django.db.backends.sqlite3',
-        'HOST': 'localhost',
-        'NAME': 'project.db',
-        'PASSWORD': '',
-        'PORT': '',
-        'USER': ''
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'CONN_MAX_AGE': 0,
+            'ENGINE': 'django.db.backends.sqlite3',
+            'HOST': 'localhost',
+            'NAME': 'project.db',
+            'PASSWORD': '',
+            'PORT': '',
+            'USER': ''
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': os.environ.get('DATABASE_BACKEND', 'django.db.backends.mysql'),
+            'NAME': os.environ.get('DATABASE_NAME', 'cargo_space'),
+            'USER': os.environ.get('DATABASE_USER', 'root'),
+            'PASSWORD': os.environ.get('DATABASE_PASS', 'yahweh'),
+            'HOST': os.environ.get('DATABASE_HOST', 'localhost'),
+            'PORT': os.environ.get('DATABASE_PORT', '3306'),
+        }
+    }
 
 MIGRATION_MODULES = {
     
