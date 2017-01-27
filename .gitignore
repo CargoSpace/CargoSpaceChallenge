@@ -2,3 +2,4 @@ celerybeat-schedule.db
 celerybeat.pid
 project.db
 AppSettings.db
+__pycache__
