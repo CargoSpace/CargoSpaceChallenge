@@ -35,3 +35,10 @@ class LoginForm(forms.Form):
             except ObjectDoesNotExist:
                 pass
         return None
+
+class RegisterForm(forms.ModelForm):
+    # password = forms.CharField(widget=forms.PasswordInput())
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password')

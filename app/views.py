@@ -8,7 +8,7 @@ from django.template import loader
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .forms import LoginForm
+from .forms import LoginForm, RegisterForm
 
 import time
 from datetime import datetime, date
@@ -84,7 +84,6 @@ def running_contest(request):
 	nextContest = getNextContest(contestIsActive)
 	context = {
 		'title': 'Contest is Running | ' + config.app, 
-		'user': request.user,
 		'page' : 'running_contest',
 		'contestIsActive': contestIsActive,
 		'contest': contest,
@@ -111,11 +110,11 @@ def doSubmission(request):
 			try:
 				aContest = Contest.objects.get(pk=request.POST['contest'])
 			except Contest.DoesNotExist:
-				messages.error(request, "Contest is over.")
+				messages.info(request, "Contest is over.")
 				return redirect(running_contest)
 			bContest = Contest.objects.filter(start_time__lt=timezone.now(), end_time__gt=timezone.now()).first() #ascending order
 			if bContest is None:
-				messages.error(request, "Contest is over.")
+				messages.info(request, messages.ERROR, "Contest is over.")
 				return redirect(running_contest)
 				
 			contestSubmission = form.save(commit=False)
@@ -128,10 +127,10 @@ def doSubmission(request):
 				contestTasks.judge_submission(contestSubmission.pk)
 			else:
 				contestTasks.judge_submission.delay(contestSubmission.pk)
-			messages.success(request, "Successfuly Submitted")
+			messages.info(request, "Successfuly Submitted")
 			return redirect(running_contest)
 		else:
-			messages.error(request, "Sorry, Please check your input and try again.")
+			messages.info(request, messages.ERROR, "Sorry, Please check your input and try again.")
 			return redirect(running_contest)
 	return redirect(running_contest)
 	
@@ -148,20 +147,22 @@ def doAuth(request):
 				else:
 					return redirect(running_contest)
 			else:
-				messages.error(request, "Please check the inputs and try again")
+				messages.info(request, messages.ERROR, "Please check the inputs and try again")
 				return redirect(auth)
 	return redirect(auth)
 
 def doRegister(request):
 	if request.method == 'POST':
-		print(request.POST)
-		if request.POST['mobile'] and request.POST['email'] and request.POST['password'] and request.POST['full_name']:
-			username = request.POST['mobile']
-			full_name = request.POST['full_name']
+		register_form = RegisterForm(data=request.POST)
+		if register_form.is_valid():
+			username = request.POST['username']
+			display_name = request.POST['display_name']
 			email = request.POST['email']
 			password = request.POST['password']
 			user = User.objects.create_user(username=username, email=email, password=password)
 			if user is not None:
+				user.first_name = display_name
+				user.save()
 				user = authenticate(username=username, password=password)
 				login(request, user)
 				if user:
@@ -172,7 +173,7 @@ def doRegister(request):
 				else:
 					return redirect(register)
 			else:
-				messages.error(request, "Please check the inputs and try again")
+				messages.info(request, messages.ERROR, "Please check the inputs and try again")
 				return redirect(register)
 	else:
 		return redirect(register)
