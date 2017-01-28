@@ -17,7 +17,7 @@ celery -A csc beat -l debug -S django --max-interval 1
 
 ## Pupulate with data
 ```bash
-python manage.py loaddata --app=contest
+python manage.py loaddata --app=contest Contest_Settings Django_Celery_Beat
 ```
 
 <!---
