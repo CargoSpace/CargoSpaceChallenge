@@ -17,7 +17,13 @@
 <!-- ############ PAGE START-->
 
 <div class="row-col white">
-	<div class="col-sm-3"></div>
+	<div class="col-sm-3">
+		{% if DEBUG %}
+		<div class="padding">
+		<span class="label label-lg dark pos-rlt m-r-xs"><b class="arrow right b-dark"></b>Test Mode</span>
+		</div>
+		{% endif %}
+	</div>
 	<div class="col-sm-6 text-center">
 		<div class="p-t-lg">
 			<h1 class="m-y-md text-black">Cargo Space Challenge</h1>

@@ -126,6 +126,8 @@ TEMPLATES = [
                 'cms.context_processors.cms_settings',
                 'django.template.context_processors.request',
                 'context_preprocessors.extra_context',
+                'csc.context_processors.debug',
+                # 'csc.context_preprocessors.debug',
             ],
             'loaders': [
                 'django.template.loaders.filesystem.Loader',
@@ -319,7 +321,8 @@ LANGUAGES = languages
 TEMPLATE_CONTEXT_PROCESSORS = (
     'pages.context_processors.media',
     'django.core.context_processors.request',
-    'csc.context_preprocessors.extra_context',
+    # 'csc.context_preprocessors.extra_context',
+    # 'csc.context_processors.debug',
 )
 
 PAGE_USE_SITE_ID = True
