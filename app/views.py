@@ -164,7 +164,7 @@ def doRegister(request):
 			if user is not None:
 				user = authenticate(username=username, password=password)
 				login(request, user)
-				if user.authenticated:
+				if user:
 					if user.is_superuser:
 						return redirect(running_contest) # redirect to our dashboard
 					else:
