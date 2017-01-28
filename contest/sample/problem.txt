@@ -2,16 +2,18 @@
 Majority
 
 [Problem Description]
-The votes are in! Mathematicians world-wide have been polled, and each has chosen their
-favorite number between 1 and 1000. Your goal is to tally the votes and determine what the most
-popular number is.
-If there is a tie for the greatest number of votes, choose the smallest number with that many
-votes
+The votes are in! Mathematicians world-wide have been polled, and each has chosen their favorite number between 1 and 1000.
+
+Your goal is to tally the votes and determine what the most popular number is.
+
+If there is a tie for the greatest number of votes, choose the smallest number with that many votes
 
 [Input Description]
 Input will start with a single line containing the number of test cases, between 1 and 100 inclusive.
-For each test case, there will be a single line giving the number of votes V , 1 ≤ V ≤ 1000. Following
-that line will be V lines, each with a single integer vote between 1 and 1000.
+
+For each test case, there will be a single line giving the number of votes V , 1 ≤ V ≤ 1000.
+
+Followingthat line will be V lines, each with a single integer vote between 1 and 1000.
 
 [Source] 
 2014 Pacific Northwest Region Programming Contest—Division 2
