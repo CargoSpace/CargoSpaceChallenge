@@ -1,6 +1,6 @@
 ## Run code as follows
 ```bash
-python3 manage.py runserver $IP:$PORT
+python manage.py runserver $IP:$PORT
 ``` 
 This project uses Socket.IO provided by Django Channels, therefore WSGI is not supported. ASGI is supported
 
