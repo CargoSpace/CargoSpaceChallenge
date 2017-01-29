@@ -21,6 +21,7 @@ urlpatterns = [
 urlpatterns += [
     url(r'^', include('app.urls')),
     url(r'^dashboard/', include('dashboard.urls')),
+    url(r'^cschallenge/', include('acm.urls')),
     url(r'^accounts/', include('allauth.urls')), #django-allauth
     url(r'^taggit_autosuggest/', include('taggit_autosuggest.urls')),    
 ]

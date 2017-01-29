@@ -125,6 +125,7 @@ TEMPLATES = [
                 'django.core.context_processors.static',
                 'cms.context_processors.cms_settings',
                 'django.template.context_processors.request',
+                'csc.context_processors.extra_context',
                 'csc.context_processors.debug',
             ],
             'loaders': [
@@ -202,6 +203,7 @@ INSTALLED_APPS = (
     'invitations',
     'channels',
     'websucks',
+    'acm',
 )
 
 CHANNEL_LAYERS = {

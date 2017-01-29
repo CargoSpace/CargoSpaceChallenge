@@ -1,6 +1,7 @@
 {% load static %}
 <div class="footer dark-light text-info-hover">
-    <!--
+    
+    {% if request.build_absolute_uri|slice:"7:20" != "cargospace.ng" and request.build_absolute_uri|slice:"8:21" != "cargospace.ng" %}
   	<div class="container">
   		<div class="p-y-lg b-b">
   			<a href="/cschallenge" class="btn info rounded pull-right pull-none-xs">Register</a>
@@ -9,7 +10,7 @@
   			</div>
   		</div>
   	</div>
-  	-->
+  	{% endif %}
   	<div class="container">
   	    <!--
   		<div class="row p-y-lg">

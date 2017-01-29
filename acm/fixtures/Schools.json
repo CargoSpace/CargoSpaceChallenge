@@ -1,0 +1,22 @@
+[
+{
+    "model": "acm.school",
+    "fields": {
+        "created_at": "2017-01-29T09:43:25.306Z",
+        "title": "University of Jos",
+        "verified": true,
+        "updated_at": "2017-01-29T09:43:25.306Z"
+    },
+    "pk": "8a713c4c-972f-42ff-b79c-c586795845fd"
+},
+{
+    "model": "acm.school",
+    "fields": {
+        "created_at": "2017-01-29T09:43:04.402Z",
+        "title": "Abubakar Tafawa Balewa University, Bauchi",
+        "verified": true,
+        "updated_at": "2017-01-29T09:43:04.402Z"
+    },
+    "pk": "ce71a20d-2c04-436e-9328-3c161bf697a2"
+}
+]

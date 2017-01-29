@@ -3,7 +3,6 @@ import uuid
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
-from crum import get_current_user
 # Create your models here.
 
 class ProblemSet(models.Model):
