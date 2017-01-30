@@ -52,20 +52,20 @@
                     	        <thead>
                     	            <tr>
                     	                <th>Member</th>
-                    	                <th>Group</th>
                     	                <th>Email</th>
                     	                <th>Mobile</th>
+                    	                <th>Group</th>
                     	                <th>Verified</th>
                     	            </tr>
                     	        </thead>
                     	        <tbody>
-                    	            {% for member in members %}
+                    	            {% for teamMember in members %}
                     	            <tr>
-                    	                <td>{{member.user.first_name}}</td>
-                    	                <td>{{member.group}}</td>
-                    	                <td>{{member.user.email}}</td>
-                    	                <td>{{member.user.username}}</td>
-                    	                <td>{{member.verified}}</td>
+                    	                <td>{{teamMember.member.first_name}}</td>
+                    	                <td>{{teamMember.member.email}}</td>
+                    	                <td>{{teamMember.member.username}}</td>
+                    	                <td>{{teamMember.group}}</td>
+                    	                <td>{{teamMember.verified}}</td>
                     	            </tr>
                     	            {% endfor %}
                     	        </tbody>

@@ -84,7 +84,7 @@ def team_details(request, pk):
 		if team is None:
 			return HttpResponse(status=404)
 		
-	members = Member.objects.all().filter(group=team)
+	members = Member.objects.filter(group=team)
 	
 	context = {
 		'title': config.app + ' | Cargo Space Challenge Team', 
