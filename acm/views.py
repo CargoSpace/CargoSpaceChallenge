@@ -9,7 +9,9 @@ from .models import School, Group, Member
 from django.contrib.auth.decorators import login_required
 from .forms import SchoolForm, MemberForm, GroupForm
 from . import context_processors
-
+from django.contrib.auth.models import User
+from django.db.models import Q
+from . import lib
 # Create your views here.
 
 # Function to render templates
@@ -67,6 +69,33 @@ def teams(request):
 	}
 	return render_template(context, request, template_name = "team")
 
+@login_required(login_url='/login')	
+def team_details(request, pk):
+	if request.method == 'POST':
+		return doAddMember(request, pk)
+	cschallenge_data = context_processors.cschallenge(request)
+	if cschallenge_data is None and cschallenge_data['csc_registration_is_on'] is False:
+		messages.info(request, "Registration is closed")
+		return redirect(teams)
+		
+	try:
+		team = Group.objects.get(pk=pk)
+	finally:
+		if team is None:
+			return HttpResponse(status=404)
+		
+	members = Member.objects.all().filter(group=team)
+	
+	print(dir(members.first()))
+	
+	context = {
+		'title': config.app + ' | Cargo Space Challenge Team', 
+		'page': 'team-details',
+		'team': team,
+		'members': members,
+	}
+	return render_template(context, request, template_name = "team_details")
+	
 def doAddSchool(request):
 	if request.method == 'POST':
 		school_form = SchoolForm(data=request.POST)
@@ -99,20 +128,26 @@ def doAddTeam(request):
 		return redirect(teams)
 
 
-def doAddMember(request):
+def doAddMember(request, pk):
 	cschallenge_data = context_processors.cschallenge(request)
 	if cschallenge_data is None and cschallenge_data['csc_registration_is_on'] is False:
 		messages.info(request, "Registration is closed")
-		return redirect(teams)
+		return redirect("/cschallenge/teams/" + pk)
+	user = User.objects.filter(Q(username=request.POST['identity']) | Q(email=request.POST['identity']))
+	if not user:
+		print("usr not foundx")
+		messages.info(request, "User not found! Has user registered?")
+		return redirect("/cschallenge/teams/" + pk)
 	member_form = MemberForm(data=request.POST)
 	if member_form.is_valid():
-		member_form.save(commit=False)
-		member_form.coach = request.user
-		member_form.challenge = cschallenge_data['cschallenge']
+		member = member_form.save(commit=False)
+		member.member = user.first()
 		if request.user.is_superuser:
-			member_form.verified = True
-		member_form.save()
-		return redirect(teams)
+			member.verified = True
+		member.save()
+		return redirect("/cschallenge/teams/" + pk)
 	else:
+		print("form not valid")
+		print(member_form)
 		messages.info(request, messages.ERROR, "Please check the inputs and try again")
-		return redirect(teams)
+		return redirect("/cschallenge/teams/" + pk)

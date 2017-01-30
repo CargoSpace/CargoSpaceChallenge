@@ -19,7 +19,7 @@ class GroupForm(forms.ModelForm):
 class MemberForm(forms.ModelForm):
 	class Meta:
 		model = Member
+		excludes = ['member',]
 		fields = (
-			"member",
 			"group",
 		)

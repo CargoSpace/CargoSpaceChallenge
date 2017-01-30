@@ -24,7 +24,7 @@
                         {% endif %}
                         {% for team in userTeams %}
                         <tr>
-                            <td>{{team}}</td>
+                            <td><a href="/cschallenge/teams/{{team.pk}}">{{team}}</a></td>
                         </tr>
                         {% endfor %}
                     </tbody>
