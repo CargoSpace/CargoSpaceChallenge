@@ -47,7 +47,7 @@ class Member(models.Model):
 	"""Member Model"""
 	id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 	group = models.ForeignKey(Group, on_delete=models.CASCADE)
-	member = models.ForeignKey(User, related_name='user', on_delete=models.CASCADE)
+	member = models.ForeignKey(User, on_delete=models.CASCADE)
 	verified = models.BooleanField(default=False)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)

@@ -86,8 +86,6 @@ def team_details(request, pk):
 		
 	members = Member.objects.all().filter(group=team)
 	
-	print(dir(members.first()))
-	
 	context = {
 		'title': config.app + ' | Cargo Space Challenge Team', 
 		'page': 'team-details',
