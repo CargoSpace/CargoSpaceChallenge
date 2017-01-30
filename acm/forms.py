@@ -13,7 +13,7 @@ class SchoolForm(forms.ModelForm):
 class GroupForm(forms.ModelForm):
 	class Meta:
 		model = Group
-		excludes = ('challenge','coach','verified',)
+		excludes = ['challenge','coach','verified',]
 		fields = ('team_name', 'school',)
 
 class MemberForm(forms.ModelForm):

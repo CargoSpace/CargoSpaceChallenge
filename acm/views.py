@@ -55,13 +55,15 @@ def teams(request):
 		messages.info(request, "Registration is closed")
 		
 	userTeams = Group.objects.filter(challenge=cschallenge_data['cschallenge'], coach=request.user)
+	allTeams = Group.objects.filter(challenge=cschallenge_data['cschallenge'])
 	schools = School.objects.all()
 	
 	context = {
 		'title': config.app + ' | Cargo Space Challenge Team', 
 		'page': 'team',
 		'schools': schools,
-		'teams': userTeams,
+		'userTeams': userTeams,
+		'teams': allTeams,
 	}
 	return render_template(context, request, template_name = "team")
 
@@ -77,26 +79,22 @@ def doAddSchool(request):
 	else:
 		return redirect(schools)
 		
-
 def doAddTeam(request):
-	print("hello gorillas")
 	cschallenge_data = context_processors.cschallenge(request)
 	if cschallenge_data is None and cschallenge_data['csc_registration_is_on'] is False:
 		messages.info(request, "Registration is closed")
-		print("hello")
 		return redirect(teams)
 	team_form = GroupForm(data=request.POST)
 	if team_form.is_valid():
-		team_form.save(commit=False)
-		team_form.coach = request.user
-		team_form.challenge = cschallenge_data['cschallenge']
+		team = team_form.save(commit=False)
+		team.coach = request.user
+		team.challenge = cschallenge_data['cschallenge']
 		if request.user.is_superuser:
-			team_form.verified = True
-		team_form.save()
-		messages.info(request, "Succesfuly create the team")
+			team.verified = True
+		team.save()
+		messages.info(request, "Successful")
 		return redirect(teams)
 	else:
-		print("we here gorillas")
 		messages.info(request, messages.ERROR, "Please check the inputs and try again")
 		return redirect(teams)
 

@@ -10,21 +10,42 @@
         <!-- ############ PAGE START-->
         <div id="left_side" class="col-xs-3 w-xl white">
             <div class="padding" style="padding-top: 0px; padding-right: 0px; padding-left: 0px;">
-                <div class="box">
-                    <div class="box-header">
-                        <h3>{{cschallenge}}</h3>
-                        <small>List of Teams.</small>
-                    </div>
-                    <div class="box-body">
-                        {% if not team %}
-                            None
+                <table class="table table-hover table-striped b-t">
+                    <thead>
+                    <tr>
+                        <th>{{cschallenge}}<br/><small><b><i>Your Teams</small></i></b></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% if not userTeams %} 
+                        <tr>
+                            <td>None</td>
+                        </tr>
                         {% endif %}
-                        
-                        {% for team in teams%}
-                        {{team}}
+                        {% for team in userTeams %}
+                        <tr>
+                            <td>{{team}}</td>
+                        </tr>
                         {% endfor %}
-                    </div>
-                </div>
+                    </tbody>
+                </table>
+                <table class="table table-hover table-striped b-t">
+                    <thead>
+                    <tr>
+                        <th>Institutions<br/><small><b><i>Verified & Unverified</small></i></b></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for school in schools %}
+                        <tr>
+                            <td>{{school}}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td><a href="/cschallenge/schools">Add Yours</a></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
         <div id="detail" class="col-xs-9" style="min-height: 600px">
@@ -54,7 +75,7 @@
                                 <div class="form-group">
                                     <select class="form-control" name="school">
                                     {% for school in schools %}
-                    	                <option value="{{school}}.id">{{school}}</option>
+                    	                <option value="{{school.id}}">{{school}}</option>
                     	            {% endfor %}
                     	            </select>
                     	        </div>
@@ -62,6 +83,35 @@
                                     <center><button type="submit" class="btn">Create Team</button></center>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                    </div>
+                    <br/>
+                    <div class="padding blue-grey-50">
+                    <div class="box">
+                        <div class="box-header dark-light">
+                            <h3>Registered Teams and Institutions for {{cschallenge}}</h3>
+                            <small>List of participating institutions and teams</small>
+                        </div>
+                        <div class="box-body">
+                            <table class="table table-hover table-striped b-t">
+                    	        <thead>
+                    	            <tr>
+                    	                <th>Team</th>
+                    	                <th>Insitution</th>
+                    	                <th>Verified</th>
+                    	            </tr>
+                    	        </thead>
+                    	        <tbody>
+                    	            {% for team in teams %}
+                    	            <tr>
+                    	                <td>{{team}}</td>
+                    	                <td>{{team.school}}</td>
+                    	                <td>{{team.verified}}</td>
+                    	            </tr>
+                    	            {% endfor %}
+                    	        </tbody>
+                    	    </table>
                         </div>
                     </div>
                     </div>
