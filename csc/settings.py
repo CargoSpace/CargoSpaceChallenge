@@ -127,6 +127,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'csc.context_processors.extra_context',
                 'csc.context_processors.debug',
+                'acm.context_processors.cschallenge',
             ],
             'loaders': [
                 'django.template.loaders.filesystem.Loader',

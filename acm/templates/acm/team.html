@@ -1,0 +1,82 @@
+{% load static %}
+{% include "app/_header.html" %}
+  <div class="app" id="app">
+
+ {% include "app/_header_down.html" %}
+
+  <!-- content -->
+  <div id="content" class="app-content" role="main">
+    <div class="app-body">
+        <!-- ############ PAGE START-->
+        <div id="left_side" class="col-xs-3 w-xl white">
+            <div class="padding" style="padding-top: 0px; padding-right: 0px; padding-left: 0px;">
+                <div class="box">
+                    <div class="box-header">
+                        <h3>{{cschallenge}}</h3>
+                        <small>List of Teams.</small>
+                    </div>
+                    <div class="box-body">
+                        {% if not team %}
+                            None
+                        {% endif %}
+                        
+                        {% for team in teams%}
+                        {{team}}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="detail" class="col-xs-9" style="min-height: 600px">
+            <div class="row-col white">
+        	<div class="padding">
+        	    <div class="col-md-8 offset-sm-2">
+        	        {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    <div class="padding blue-grey-50">
+                    <div class="box">
+                        <div class="box-header dark-light">
+                            <h3>Create Team</h3>
+                            <small>The creator of the team to be created is the coach</small>
+                        </div>
+                        <div class="box-body">
+                            <form role="form" action="/cschallenge/teams" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="inputTitle">Team name</label>
+                                    <input type="text" name="team_name" class="form-control" id="inputTitle" placeholder="Team Name">
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control" name="school">
+                                    {% for school in schools %}
+                    	                <option value="{{school}}.id">{{school}}</option>
+                    	            {% endfor %}
+                    	            </select>
+                    	        </div>
+                                <div class="form-group">
+                                    <center><button type="submit" class="btn">Create Team</button></center>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    </div>
+                    <br/>
+        	    </div>
+        	</div>
+        </div>
+        </div>
+        <!-- ############ PAGE END-->
+    </div>
+  </div>
+  <!-- / -->
+
+{% include "app/_footer_top.html" %}
+
+<!-- ############ LAYOUT END-->
+  </div>
+{% include "app/_footer.html" %}

@@ -1,5 +1,6 @@
 ## Run code as follows
 ```bash
+source ../venv/bin/activate
 python manage.py runserver $IP:$PORT
 ``` 
 This project uses Socket.IO provided by Django Channels, therefore WSGI is not supported. ASGI is supported
@@ -70,4 +71,5 @@ The fixtures Generated
 python manage.py dumpdata --indent=4 django_celery_beat > contest/fixtures/Django_Celery_Beat.json
 python manage.py dumpdata --indent=4 contest.contestsetting > contest/fixtures/Contest_Settings.json
 python manage.py dumpdata --indent=4 acm.school > acm/fixtures/Schools.json
+python manage.py dumpdata --indent=4 acm.challenge > acm/fixtures/Challenge.json
 --->

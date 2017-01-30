@@ -2,14 +2,18 @@
 <div class="footer dark-light text-info-hover">
     
     {% if request.build_absolute_uri|slice:"7:20" != "cargospace.ng" and request.build_absolute_uri|slice:"8:21" != "cargospace.ng" %}
+    {% if cschallenge %}
   	<div class="container">
   		<div class="p-y-lg b-b">
+  		    {% if csc_registration_is_on %}
   			<a href="/cschallenge" class="btn info rounded pull-right pull-none-xs">Register</a>
+  			{% endif %}
   			<div class="m-r">
-  				<div class="text-md p-y-sm">Register your team for Cargo Space Challenge 2017</div>
+  				<div class="text-md p-y-sm">Register your team for {{cschallenge}}</div>
   			</div>
   		</div>
   	</div>
+  	{% endif %}
   	{% endif %}
   	<div class="container">
   	    <!--

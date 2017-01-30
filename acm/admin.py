@@ -4,7 +4,7 @@ from .models import Challenge, School, Group, Member
 
 @admin.register(Challenge)
 class ChallengeAdmin(admin.ModelAdmin):
-	list_display = ('title', 'description', 'start_time', 'end_time',)
+	list_display = ('title', 'description', 'start_time', 'end_time', 'registration_close_at',)
 	search_fields = ('title', 'description', )
 
 

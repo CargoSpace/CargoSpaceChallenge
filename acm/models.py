@@ -11,6 +11,7 @@ class Challenge(models.Model):
 	title = models.TextField()
 	description = models.TextField(null=True, blank=True)
 	image = models.FileField(null=True, blank=True)
+	registration_close_at = models.DateTimeField()
 	start_time = models.DateTimeField()
 	end_time = models.DateTimeField()
 	language = models.CharField(max_length=5, default='en')

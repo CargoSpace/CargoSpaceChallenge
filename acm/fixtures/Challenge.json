@@ -1,0 +1,17 @@
+[
+{
+    "model": "acm.challenge",
+    "fields": {
+        "image": "",
+        "end_time": "2017-05-06T14:30:00Z",
+        "updated_at": "2017-01-29T12:11:29.355Z",
+        "description": "",
+        "start_time": "2017-05-06T10:00:00Z",
+        "created_at": "2017-01-29T11:20:32.550Z",
+        "registration_close_at": "2017-04-22T23:00:00Z",
+        "language": "en",
+        "title": "Cargo Space Challenge 2017"
+    },
+    "pk": "9381bc94-9988-45af-9c3f-a2aa73726518"
+}
+]
