@@ -25,6 +25,7 @@ def render_template(context, request, template_name = "default"):
 
 @login_required(login_url='/login')	
 def index(request):
+	return redirect(teams) #TODO Remove this line when a custom design for cargo space challenge 2017 is ready
 	schools = School.objects.filter(verified=True)
 	context = {
 		'title': config.app + ' | Cargo Space Challenge Registration',
