@@ -20,6 +20,7 @@ celery -A csc beat -l debug -S django --max-interval 1
 ```bash
 python manage.py loaddata --app=contest Contest_Settings Django_Celery_Beat
 python manage.py loaddata --app=acm  Schools
+python manage.py loaddata --app=acm Challenge
 ```
 
 <!---
