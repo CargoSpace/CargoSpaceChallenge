@@ -136,6 +136,7 @@ def doSubmission(request):
 	
 def doAuth(request):
 	if request.method == 'POST':
+		redirect_to = request.REQUEST.get('next', running_contest)
 		if request.POST['username'] and request.POST['password']:
 			username = request.POST['username']
 			password = request.POST['password']
@@ -143,9 +144,9 @@ def doAuth(request):
 			if user is not None:
 				login(request, user)
 				if user.is_superuser:
-					return redirect(running_contest)
+					return redirect(redirect_to)
 				else:
-					return redirect(running_contest)
+					return redirect(redirect_to)
 			else:
 				messages.info(request, messages.ERROR, "Please check the inputs and try again")
 				return redirect(auth)
@@ -153,6 +154,7 @@ def doAuth(request):
 
 def doRegister(request):
 	if request.method == 'POST':
+		redirect_to = request.REQUEST.get('next', running_contest)
 		register_form = RegisterForm(data=request.POST)
 		if register_form.is_valid():
 			username = request.POST['username']
@@ -167,9 +169,9 @@ def doRegister(request):
 				login(request, user)
 				if user:
 					if user.is_superuser:
-						return redirect(running_contest) # redirect to our dashboard
+						return redirect(redirect_to) # redirect to our dashboard
 					else:
-						return redirect(running_contest)
+						return redirect(redirect_to)
 				else:
 					return redirect(register)
 			else:

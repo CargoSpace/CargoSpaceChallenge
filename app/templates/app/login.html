@@ -37,6 +37,7 @@
         
         <form name="form" action="/login" method="post">
           {% csrf_token %}
+          <input type="hidden" name="next" value="{{next}}" />
           <div class="form-group">
             <input type="username" class="form-control" placeholder="Mobile" name="username" required>
           </div>
