@@ -10,11 +10,8 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.static import static
 
 admin.autodiscover()
-
-urlpatterns = static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 	
-urlpatterns += [
+urlpatterns = [
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap',
         {'sitemaps': {'cmspages': CMSSitemap}}),
     url(r'^select2/', include('django_select2.urls')),
@@ -35,9 +32,5 @@ urlpatterns += i18n_patterns('',
     url(r'^', include('cms.urls')),
 )
 
-# This is only needed when using runserver.
-# if settings.DEBUG:
-#     urlpatterns = [
-#         url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
-#             {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
-#         ] + staticfiles_urlpatterns() + urlpatterns
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
