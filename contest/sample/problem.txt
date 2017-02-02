@@ -13,7 +13,7 @@ Input will start with a single line containing the number of test cases, between
 
 For each test case, there will be a single line giving the number of votes V , 1 ≤ V ≤ 1000.
 
-Followingthat line will be V lines, each with a single integer vote between 1 and 1000.
+Following that line will be V lines, each with a single integer vote between 1 and 1000.
 
 [Source] 
 2014 Pacific Northwest Region Programming Contest—Division 2
