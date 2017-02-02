@@ -1,7 +1,6 @@
 {% load static %}
 <div class="footer dark-light text-info-hover">
     
-    {% if request.build_absolute_uri|slice:"7:20" != "cargospace.ng" and request.build_absolute_uri|slice:"8:21" != "cargospace.ng" %}
     {% if cschallenge %}
   	<div class="container">
   		<div class="p-y-lg b-b">
@@ -13,7 +12,6 @@
   			</div>
   		</div>
   	</div>
-  	{% endif %}
   	{% endif %}
   	<div class="container">
   	    <!--
