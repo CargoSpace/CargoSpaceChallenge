@@ -319,10 +319,11 @@ languages = list(PAGE_LANGUAGES)
 
 LANGUAGES = languages
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'pages.context_processors.media',
-    'django.core.context_processors.request',
-)
+# Deprecated in 1.8
+# TEMPLATE_CONTEXT_PROCESSORS = (
+    # 'pages.context_processors.media',
+    # 'django.core.context_processors.request',
+# )
 
 PAGE_USE_SITE_ID = True
 
