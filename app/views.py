@@ -191,7 +191,7 @@ def auth(request):
 		return doAuth(request)
 	context = { 'title': 'Login | ' + config.app, 
 	'page' : 'login',
-	'redirect_to':  request.GET['next'] if 'next' in request.GET else ''
+	'redirect_to':  request.GET['next'] if 'next' in request.GET else False
 	}
 	return render_template(context, request, 'login')
 	
@@ -201,7 +201,7 @@ def register(request):
 		return doRegister(request)
 	context = { 'title': 'Register | ' + config.app, 
 	'page' : 'register', 
-	'redirect_to': request.GET['next'] if 'next' in request.GET else ''
+	'redirect_to': request.GET['next'] if 'next' in request.GET else False
 	}
 	return render_template(context, request, 'register')
 	

@@ -37,7 +37,9 @@
         
         <form name="form" action="/login" method="post">
           {% csrf_token %}
+          {% if redirect_to %}
           <input type="hidden" name="next" value="{{redirect_to}}" />
+          {% endif %}
           <div class="form-group">
             <input type="username" class="form-control" placeholder="Mobile" name="username" required>
           </div>
