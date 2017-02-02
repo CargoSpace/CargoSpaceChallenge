@@ -114,7 +114,7 @@ def doSubmission(request):
 				return redirect(running_contest)
 			bContest = Contest.objects.filter(start_time__lt=timezone.now(), end_time__gt=timezone.now()).first() #ascending order
 			if bContest is None:
-				messages.info(request, messages.ERROR, "Contest is over.")
+				messages.info(request, "Contest is over.")
 				return redirect(running_contest)
 				
 			contestSubmission = form.save(commit=False)
@@ -130,13 +130,13 @@ def doSubmission(request):
 			messages.info(request, "Successfuly Submitted")
 			return redirect(running_contest)
 		else:
-			messages.info(request, messages.ERROR, "Sorry, Please check your input and try again.")
+			messages.info(request, "Sorry, Please check your input and try again.")
 			return redirect(running_contest)
 	return redirect(running_contest)
 	
 def doAuth(request):
 	if request.method == 'POST':
-		redirect_to = request.POST['next'] if request.POST['next'] else running_contest
+		redirect_to = request.POST['next'] if 'next' in request.POST else running_contest
 		if request.POST['username'] and request.POST['password']:
 			username = request.POST['username']
 			password = request.POST['password']
@@ -148,13 +148,13 @@ def doAuth(request):
 				else:
 					return redirect(redirect_to)
 			else:
-				messages.info(request, messages.ERROR, "Please check the inputs and try again")
+				messages.info(request, "Please check the inputs and try again")
 				return redirect(auth)
 	return redirect(auth)
 
 def doRegister(request):
 	if request.method == 'POST':
-		redirect_to = request.POST['next'] if request.POST['next'] else running_contest
+		redirect_to = request.POST['next'] if 'next' in request.POST else running_contest
 		register_form = RegisterForm(data=request.POST)
 		if register_form.is_valid():
 			username = request.POST['username']
@@ -175,7 +175,7 @@ def doRegister(request):
 				else:
 					return redirect(register)
 			else:
-				messages.info(request, messages.ERROR, "Please check the inputs and try again")
+				messages.info(request, "Please check the inputs and try again")
 				return redirect(register)
 	else:
 		return redirect(register)
