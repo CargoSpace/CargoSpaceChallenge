@@ -136,7 +136,7 @@ def doSubmission(request):
 	
 def doAuth(request):
 	if request.method == 'POST':
-		redirect_to = request.REQUEST.get('next', running_contest)
+		redirect_to = request.POST['next'] if request.POST['next'] else running_contest
 		if request.POST['username'] and request.POST['password']:
 			username = request.POST['username']
 			password = request.POST['password']
@@ -154,7 +154,7 @@ def doAuth(request):
 
 def doRegister(request):
 	if request.method == 'POST':
-		redirect_to = request.REQUEST.get('next', running_contest)
+		redirect_to = request.POST['next'] if request.POST['next'] else running_contest
 		register_form = RegisterForm(data=request.POST)
 		if register_form.is_valid():
 			username = request.POST['username']
@@ -189,14 +189,20 @@ def logout_user(request):
 def auth(request):
 	if request.method == 'POST':
 		return doAuth(request)
-	context = { 'title': 'Login | ' + config.app, 'page' : 'login' }
+	context = { 'title': 'Login | ' + config.app, 
+	'page' : 'login',
+	'redirect_to':  request.GET['next'] if 'next' in request.GET else ''
+	}
 	return render_template(context, request, 'login')
 	
 # /register
 def register(request):
 	if request.method == 'POST':
 		return doRegister(request)
-	context = { 'title': 'Register | ' + config.app, 'page' : 'register' }
+	context = { 'title': 'Register | ' + config.app, 
+	'page' : 'register', 
+	'redirect_to': request.GET['next'] if 'next' in request.GET else ''
+	}
 	return render_template(context, request, 'register')
 	
 # /forgot_password

@@ -75,7 +75,9 @@
                                 <div class="form-group">
                                     <select class="form-control" name="school">
                                     {% for school in schools %}
+                                        {% if school.verified %}
                     	                <option value="{{school.id}}">{{school}}</option>
+                    	                {% endif %}
                     	            {% endfor %}
                     	            </select>
                     	        </div>

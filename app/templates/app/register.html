@@ -36,7 +36,7 @@
         {% endif %}
         <form name="form" action="/register" method="post">
           {% csrf_token %}
-          <input type="hidden" name="next" value="{{next}}" />
+          <input type="hidden" name="next" value="{{redirect_to}}" />
           <div class="form-group">
             <input type="text" class="form-control" name="display_name" placeholder="Display Name" required>
           </div>
