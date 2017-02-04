@@ -70,22 +70,21 @@ $( document ).ready(function() {
                     throw new Error("Supply at least contest_id");
                 }
             }
-            var submissionsLoaded = false;
-            var allSubmissionsLoaded = false;
+            
             self.websucks.onmessage = function(message) {
                 var data = JSON.parse(message.data);
                 console.log(data.response)
-                if(data.messageType == 'submissions' && !submissionsLoaded){
+                if(data.messageType == 'submissions'){
+                    self.submissions.removeAll()
                     self.populateSubmissions(data.response);
-                    submissionsLoaded = true; //incase of reconnection
                 }else{
                     if(data.messageType == 'submission'){
                         self.populateSubmission(data.response);
                     }
                 }
-                if(data.messageType == 'all_submissions' && !allSubmissionsLoaded){
+                if(data.messageType == 'all_submissions'){
+                    self.all_submissions.removeAll()
                     self.populateUserSubmissions(data.response);
-                    allSubmissionsLoaded = true; //incase of reconnection
                 }else{
                     if(data.messageType == 'new_submission'){
                         self.populateUserSubmission(data.response);
