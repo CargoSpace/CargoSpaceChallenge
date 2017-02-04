@@ -128,7 +128,27 @@ def all_submissions(request):
 	}
 	return render_template(context, request, 'all_submissions')
 def submission_details(request, pk):
-	print ("hello")
+	contestIsActive = False
+	contest = Contest.objects.get(pk=pk)
+	contestProblems = contest.contest_problems.all() if contest else None
+	nextContest = getNextContest(contestIsActive)
+	context = {
+		'title': 'Contest is Running | ' + config.app if contestIsActive else 'Play time is over | ' + config.app, 
+		'page' : 'running_contest',
+		'contestIsActive': contestIsActive,
+		'contest': contest,
+		'contestProblems': contestProblems,
+		'pastContests': Contest.objects.all().order_by('-created_at')[:64], # past 1 week
+		'countDown': {
+			'now': str(datetime.utcnow()),
+			'end_time': nextContest['start_time'] if nextContest else str(datetime.utcnow()),
+		},
+		'activeCountDown': {
+			'now': str(datetime.now()) if contestIsActive else str(datetime.now()),
+			'end_time': str(contest.end_time) if contestIsActive else str(datetime.now()),
+		},
+	}
+	return render_template(context, request, 'all_submissions')
 	
 @login_required(login_url='/login')
 def doSubmission(request):

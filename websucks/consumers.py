@@ -37,15 +37,15 @@ def ws_connect(message):
 
 @channel_session
 def ws_disconnect(message):
-    prefix, contest_id, user_id = message['path'].strip('/').split('/')
-    if user_id and user_id != "AnonymousUser":
-        user_id = message.channel_session['user-' + user_id]
-        Group('user-'+user_id).discard(message.reply_channel)
-        logging.info("%s left", user_id)
-    if contest_id:
-        contest_id = message.channel_session['contest-'+ contest_id]
-        Group('contest-'+contest_id).discard(message.reply_channel)
-    
+#     prefix, contest_id, user_id = message['path'].strip('/').split('/')
+#     if user_id and user_id != "AnonymousUser":
+#         user_id = message.channel_session['user-' + user_id]
+#         Group('user-'+user_id).discard(message.reply_channel)
+#         logging.info("%s left", user_id)
+#     if contest_id:
+#         contest_id = message.channel_session['contest-'+ contest_id]
+#         Group('contest-'+contest_id).discard(message.reply_channel)
+    print("ws_disconnect: not implemented yet")
 
 @channel_session
 def ws_receive(message):
