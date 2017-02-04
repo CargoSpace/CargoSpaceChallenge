@@ -1,4 +1,3 @@
-var tactive = Date.parse(activeEndtime) - Date.parse(activeNow);
 function getActiveTimeRemaining() {
   var seconds = Math.floor((tactive / 1000) % 60);
   var minutes = Math.floor((tactive / 1000 / 60) % 60);
@@ -14,10 +13,11 @@ function getActiveTimeRemaining() {
     'seconds': seconds
   };
 }
-
+var tactive;
 function initializeActiveClock(id) {
   var clock = document.getElementById(id);
   if(!clock) return;
+  tactive = Date.parse(activeEndtime) - Date.parse(activeNow);
   // var daysSpan = clock.querySelector('.days');
   var hoursSpan = clock.querySelector('.hours');
   var minutesSpan = clock.querySelector('.minutes');

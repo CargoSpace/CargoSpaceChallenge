@@ -1,0 +1,159 @@
+{% load static %}
+{% include "app/_header.html" %}
+  <div class="app" id="app">
+	<script type="text/javascript">
+		var now = '{{ countDown.now }}';
+  		var endtime = '{{ countDown.end_time }}';
+		var activeNow = '{{ activeCountDown.now }}';
+		var activeEndtime = '{{ activeCountDown.end_time }}';
+		var contest_id = '{{contest.pk}}';
+		{% if user %}
+		var user_id = '{{user}}';
+		{% endif %}
+	</script>
+	
+	{% include "app/_header_down.html" %}
+  <!-- content -->
+  <div id="content" class="app-content" role="main">
+	<div class="app-body dark-light">
+	<!-- ############ PAGE START-->
+	
+	<div class="row-col">
+		<div id="left_side" class="col-xs-3 w-xl dark-light">
+		    <div class="row-col b-r bg">
+		    	
+		        <div class="padding" style="padding-top: 0px; padding-right: 0px; padding-left: 0px;">
+		        	<div class="box">
+		        		{% if contestIsActive %}
+			        	<div class="row">
+							<div class="col-md-8 offset-sm-2">
+								<div id="activeClockdiv">
+			        	        	<div class="hours-wrap"><span class="hours"></span>Hours</div>
+			        	        	<div class="minutes-wrap"><span class="minutes"></span>Minutes</div>
+			        	        	<div class="seconds-wrap"><span class="seconds"></span>Seconds</div>
+				      	        </div>
+							</div>
+						</div>
+						{% endif %}
+						<div class="p-a">
+				        	<h6 class="text-muted m-a-0">Problemset</h6>
+				        </div>
+			        	<div class="box">
+						    <ul class="list inset">
+						    	{% for contestProblem in contestProblems %}
+								<li class="list-item">
+						        	<a herf="" class="pull-left m-r">
+					                	<span class="w-30">
+					                		{% if contestProblem.problem.problem_type == "A" %}
+					                  		<img src="{% static "app/images/a0.jpg" %}" class="w-full" alt="A">
+					                  		{% endif %}
+					                  		{% if contestProblem.problem.problem_type == "B" %}
+					                  		<img src="{% static "app/images/a1.jpg" %}" class="w-full" alt="B">
+					                  		{% endif %}
+					                  		{% if contestProblem.problem.problem_type == "C" %}
+					                  		<img src="{% static "app/images/a2.jpg" %}" class="w-full" alt="C">
+					                  		{% endif %}
+					                  		{% if contestProblem.problem.problem_type == "D" %}
+					                  		<img src="{% static "app/images/a3.jpg" %}" class="w-full" alt="D">
+					                  		{% endif %}
+					                 	</span>
+					                </a>
+					                <div class="clear">
+					                  <a href="/contest?type={{contestProblem.problem.problem_type}}" class="_300 text-ellipsis">Problem {{contestProblem.problem.problem_type}}</a>
+					                </div>
+						        </li>
+								{% endfor %}
+						    </ul>
+						</div>
+						{% if user.id %}
+						<div class="p-a">
+				        	<h6 class="text-muted m-a-0">My Submission</h6>
+				        </div>
+			        	<div class="box">
+						    <ul class="list inset">
+						    	<table class="table table-striped responsive">
+						    		<thead>
+						    			<tr>
+						    			<th>Problem</th>
+						    			<!--<th>Time</th>-->
+						    			<th>Status</th>
+						    			</tr>
+						    		</thead>
+						    		<tbody data-bind='visible: submissions().length > 0, foreach: submissions'>
+										<tr>
+											<td><span data-bind='text: problem_title'> </span></td>
+											<!--<td><span data-bind='text: created_at'> </span></td>-->
+											<td><span data-bind='text: submission_state'> </span></td>
+										</tr>
+						    		</tbody>
+						    	</table>
+						    </ul>
+						</div>
+						{% endif %}
+						{% if not contestIsActive %}
+						<div class="p-a">
+				        	<h6 class="text-muted m-a-0">Past Contests</h6>
+				        </div>
+			        	<div class="box">
+						    <ul class="list inset">
+						    	<table class="table table-striped responsive">
+						    		<tbody>
+						    			{% for contest in pastContests %}
+										<tr>
+											<td><a href="/submissions/{{contest.pk}}">{{contest}}</a></td>
+											<td>{{contest.created_at}}</td>
+										</tr>
+										{% endfor %}
+						    		</tbody>
+						    	</table>
+						    </ul>
+						</div>
+						{% endif %}
+					</div>
+		        </div>
+		    </div>
+		</div>
+		<div id="detail" class="col-xs-9" style="min-height: 600px">
+			<div class="row-col white">
+				<div class="padding">
+					<h4>Contest Submissions</h4>
+					<div class="panel box no-border m-b-xs">
+						<div class="box-body">
+							<div class="all_submission" style="min-height: 400px; max-height: 960px; overflow: scroll;overflow-x: hidden;">
+								<table class="table table-striped responsive">
+									<thead>
+										<tr>
+											<th>Handle</th>
+											<th>Problem</th>
+											<th>Time</th>
+											<th>Status</th>
+										</tr>
+									</thead>
+									<tbody>
+									<tbody data-bind='visible: all_submissions().length > 0, foreach: all_submissions'>
+										<tr>
+											<td><span data-bind='text: user'> </span></td>
+											<td><span data-bind='text: problem_title'> </span></td>
+											<td><span data-bind='text: created_at'> </span></td>
+											<td><span data-bind='text: submission_state'> </span></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+	</div>
+	
+	<!-- ############ PAGE END-->
+	</div>
+  </div>
+  <!-- / -->
+
+{% include "app/_footer_top.html" %}
+{% include "app/_theme_switcher.html" %}
+<!-- ############ LAYOUT END-->
+  </div>
+{% include "app/_footer.html" %}

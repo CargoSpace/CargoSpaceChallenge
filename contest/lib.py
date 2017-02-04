@@ -151,6 +151,10 @@ def pushNotify(sContestSubmission):
         "response": sContestSubmission.data,
         "messageType": "submission"
     })})
+    Group('contest-' + str(sContestSubmission.data['contest']['id'])).send({'text': json.dumps({
+        "response": sContestSubmission.data,
+        "messageType": "new_submission"
+    })})
     
 def getUserSubmission(user_id, contest_id):
     contest_id = uuid.UUID(contest_id)
@@ -159,5 +163,10 @@ def getUserSubmission(user_id, contest_id):
     contestSubmission = ContestSubmission.objects.filter(submitted_by=user, contest=contest).order_by('-created_at')
     smcontestSubmission = ContestSubmissionSerializer(contestSubmission, many=True)
     return smcontestSubmission.data
-    
-    
+
+def getAllSubmissions(contest_id):
+    contest_id = uuid.UUID(contest_id)
+    contest = Contest.objects.get(pk=contest_id)
+    contestSubmission = ContestSubmission.objects.filter(contest=contest).order_by('-created_at')
+    smcontestSubmission = ContestSubmissionSerializer(contestSubmission, many=True)
+    return smcontestSubmission.data

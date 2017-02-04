@@ -1,4 +1,3 @@
-var t = Date.parse(endtime) - Date.parse(now);
 function getTimeRemaining() {
   var seconds = Math.floor((t / 1000) % 60);
   var minutes = Math.floor((t / 1000 / 60) % 60);
@@ -14,10 +13,11 @@ function getTimeRemaining() {
     'seconds': seconds
   };
 }
-
+var t;
 function initializeClock(id) {
   var clock = document.getElementById(id);
   if(!clock) return;
+  t = Date.parse(endtime) - Date.parse(now);
   // var daysSpan = clock.querySelector('.days');
   var hoursSpan = clock.querySelector('.hours');
   var minutesSpan = clock.querySelector('.minutes');

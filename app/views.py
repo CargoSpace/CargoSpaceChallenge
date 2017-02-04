@@ -31,7 +31,7 @@ def render_template(context, request, template_name = "default"):
 	return HttpResponse(template_obj.render(context, request))
 
 def index(request):
-	contest = Contest.objects.filter(start_time__lt=timezone.now(), end_time__gt=timezone.now()).first() #ascending order
+	contest = Contest.objects.filter(contest_type="Regular", start_time__lt=timezone.now(), end_time__gt=timezone.now()).first() #ascending order
 	contestIsActive = True if contest else False
 	nextContest = getNextContest(contestIsActive)
 	context = {
@@ -68,7 +68,7 @@ def getNextContest(contestIsActive):
 @login_required(login_url='/login')
 def running_contest(request):
 	
-	contest = Contest.objects.filter(start_time__lt=timezone.now(), end_time__gt=timezone.now()).first() #ascending order
+	contest = Contest.objects.filter(contest_type="Regular", start_time__lt=timezone.now(), end_time__gt=timezone.now()).first() #ascending order
 	contestIsActive = True if contest else False
 	contestProblems = contest.contest_problems.all() if contest else None
 	problemType = request.GET.get("type", "A")
@@ -83,7 +83,7 @@ def running_contest(request):
 	
 	nextContest = getNextContest(contestIsActive)
 	context = {
-		'title': 'Contest is Running | ' + config.app, 
+		'title': 'Contest is Running | ' + config.app if contestIsActive else 'Play time is over | ' + config.app, 
 		'page' : 'running_contest',
 		'contestIsActive': contestIsActive,
 		'contest': contest,
@@ -101,6 +101,35 @@ def running_contest(request):
 	}
 	return render_template(context, request, 'running_contest')
 
+def all_submissions(request):
+	
+# 	contest = Contest.objects.filter(start_time__lt=timezone.now(), end_time__gt=timezone.now()).first() #ascending order
+# 	contestIsActive = True if contest else False
+	contestIsActive = False
+	if not contestIsActive:
+		contest = Contest.objects.filter(contest_type="Regular").order_by('-created_at').first() #ascending order
+	contestProblems = contest.contest_problems.all() if contest else None
+	nextContest = getNextContest(contestIsActive)
+	context = {
+		'title': 'Contest is Running | ' + config.app if contestIsActive else 'Play time is over | ' + config.app, 
+		'page' : 'running_contest',
+		'contestIsActive': contestIsActive,
+		'contest': contest,
+		'contestProblems': contestProblems,
+		'pastContests': Contest.objects.all().order_by('-created_at')[:64], # past 1 week
+		'countDown': {
+			'now': str(datetime.utcnow()),
+			'end_time': nextContest['start_time'] if nextContest else str(datetime.utcnow()),
+		},
+		'activeCountDown': {
+			'now': str(datetime.now()) if contestIsActive else str(datetime.now()),
+			'end_time': str(contest.end_time) if contestIsActive else str(datetime.now()),
+		},
+	}
+	return render_template(context, request, 'all_submissions')
+def submission_details(request, pk):
+	print ("hello")
+	
 @login_required(login_url='/login')
 def doSubmission(request):
 	if request.method == 'POST':
