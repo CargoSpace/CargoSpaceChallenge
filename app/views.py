@@ -108,6 +108,7 @@ def all_submissions(request):
 	contestIsActive = False
 	if not contestIsActive:
 		contest = Contest.objects.filter(contest_type="Regular").order_by('-created_at').first() #ascending order
+		contestIsActive = True if contest.start_time <= timezone.now() and contest.end_time >= timezone.now() else False
 	contestProblems = contest.contest_problems.all() if contest else None
 	nextContest = getNextContest(contestIsActive)
 	context = {
@@ -128,8 +129,8 @@ def all_submissions(request):
 	}
 	return render_template(context, request, 'all_submissions')
 def submission_details(request, pk):
-	contestIsActive = False
 	contest = Contest.objects.get(pk=pk)
+	contestIsActive = True if contest.start_time <= timezone.now() and contest.end_time >= timezone.now() else False
 	contestProblems = contest.contest_problems.all() if contest else None
 	nextContest = getNextContest(contestIsActive)
 	context = {
