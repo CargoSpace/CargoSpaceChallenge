@@ -141,7 +141,7 @@ def judge_submission(pk):
     else:
         contestSubmission.submission_state = "Failed"
     contestSubmission.save()
-    sContestSubmission = ContestSubmissionSerializer(contestSubmission, many=False)
+    sContestSubmission = ContestSubmissionSerializer(contestSubmission, many=True)
     pushNotify(sContestSubmission)
     return sContestSubmission
 

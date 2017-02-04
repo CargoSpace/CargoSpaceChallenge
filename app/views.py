@@ -138,7 +138,7 @@ def submission_details(request, pk):
 		'contestIsActive': contestIsActive,
 		'contest': contest,
 		'contestProblems': contestProblems,
-		'pastContests': Contest.objects.all().order_by('-created_at')[:64], # past 1 week
+		'pastContests': Contest.objects.all().order_by('-created_at')[:64], # past 1 week 8 Contest per day 7 days
 		'countDown': {
 			'now': str(datetime.utcnow()),
 			'end_time': nextContest['start_time'] if nextContest else str(datetime.utcnow()),
