@@ -17,7 +17,7 @@ var t;
 function initializeClock(id) {
   var clock = document.getElementById(id);
   if(!clock) return;
-  t = Date.parse(endtime) - Date.parse(now);
+  t = Date.parse(endtime.replace('-','/').replace('-','/')) - Date.parse(now.replace('-','/').replace('-','/'));
   // var daysSpan = clock.querySelector('.days');
   var hoursSpan = clock.querySelector('.hours');
   var minutesSpan = clock.querySelector('.minutes');
