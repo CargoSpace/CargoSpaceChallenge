@@ -8,7 +8,7 @@
   			<a href="/cschallenge" class="btn info rounded pull-right pull-none-xs">Register</a>
   			{% endif %}
   			<div class="m-r">
-  				<div class="text-md p-y-sm">Register your team for {{cschallenge}} strictly for students {% if registration_close_at %}Registration Closes at {{registration_close_at}} {% endif %}</div>
+  				<div class="text-md p-y-sm">Register your team for {{cschallenge}} strictly for students. {% if cschallenge.registration_close_at %}Registration closes {{cschallenge.registration_close_at}} {% endif %}</div>
   			</div>
   		</div>
   	</div>
