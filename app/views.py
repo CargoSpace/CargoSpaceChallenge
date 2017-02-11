@@ -35,7 +35,7 @@ def index(request):
 	contestIsActive = True if contest else False
 	nextContest = getNextContest(contestIsActive)
 	context = {
-		'title': config.app + ' | The Developer\'s Exercise - Building Highly Efficient Software Engineers', 
+		'title': config.app + ' | Exercise Daily and Become an Efficient Software Engineer', 
 		'page': 'home',
 		'countDown': {
 			'now': str(datetime.utcnow()),
