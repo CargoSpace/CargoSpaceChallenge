@@ -15,8 +15,8 @@
     <div class="app-body">
 
 <!-- ############ PAGE START-->
-
-<div class="row-col white">
+<div id="cover">
+<div class="row-col">
 	<div class="col-sm-3">
 		{% if DEBUG %}
 		<div class="padding">
@@ -26,17 +26,17 @@
 	</div>
 	<div class="col-sm-6 text-center">
 		<div class="p-t-lg">
-			<h1 class="m-y-md text-black">Cargo Space Challenge</h1>
-			<h6 class="text-muted">The Developer's Exercise - Building Highly Efficient Software Engineers</h6>
+			<h1 class="m-y-md text-white">Cargo Space Challenge</h1>
+			<h6 class="text-white">The Developer's Exercise - Building Highly Efficient Software Engineers</h6>
 			{% if contestIsActive %}
 			<div class="row">
 				<div class="col-md-6 offset-sm-3">
 				    <a href="/contest" class="btn btn-lg rounded success p-x-md m-x">goto: contest</a>
 					<div id="activeClockdiv">
         		        <!--<div class="days-wrap"><span class="activeDays"></span>DAYS</div>-->
-        	        	<div class="hours-wrap"><span class="hours"></span>HOURS</div>
-        	        	<div class="minutes-wrap"><span class="minutes"></span>MINUTES</div>
-        	        	<div class="seconds-wrap"><span class="seconds"></span>SECONDS</div>
+        	        	<div class="hours-wrap text-white"><span class="hours"></span>HOURS</div>
+        	        	<div class="minutes-wrap text-white"><span class="minutes"></span>MINUTES</div>
+        	        	<div class="seconds-wrap text-white"><span class="seconds"></span>SECONDS</div>
 	      	        </div>
 				</div>
 			</div>
@@ -53,9 +53,9 @@
 				<div class="col-md-6 offset-sm-3">
 					<div id="clockdiv">
         		        <!--<div class="days-wrap"><span class="days"></span>DAYS</div>-->
-        	        	<div class="hours-wrap"><span class="hours"></span>HOURS</div>
-        	        	<div class="minutes-wrap"><span class="minutes"></span>MINUTES</div>
-        	        	<div class="seconds-wrap"><span class="seconds"></span>SECONDS</div>
+        	        	<div class="hours-wrap text-white"><span class="hours"></span>HOURS</div>
+        	        	<div class="minutes-wrap text-white"><span class="minutes"></span>MINUTES</div>
+        	        	<div class="seconds-wrap text-white"><span class="seconds"></span>SECONDS</div>
 	      	        </div>
 				</div>
 			</div>
@@ -64,7 +64,7 @@
 	</div>
 	<div class="col-sm-3"></div>
 </div>
-<div class="white">
+<div class="">
 	<div>
     <canvas data-ui-jp="chart" data-ui-options="
     {
@@ -117,6 +117,7 @@
     </canvas>
   	</div>
 </div>
+</div> <!-- cover -->
 <div class="row-col h-v p-t-lg" style="background-color: #F0F0F0">
 	<!--<div class="col-sm-1"></div>-->
 	<div class="col-sm-5">
