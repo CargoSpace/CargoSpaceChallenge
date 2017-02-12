@@ -38,12 +38,14 @@ def index(request):
 		'title': 'Exercise Daily and Become an Efficient Software Engineer | ' + config.app, 
 		'page': 'home',
 		'countDown': {
-			'now': str(datetime.utcnow()),
-			'end_time': nextContest['start_time'] if nextContest else str(datetime.utcnow()),
+			'now': str(datetime.utcnow())[:19],
+			'end_time': nextContest['start_time'][:19] if nextContest else str(datetime.utcnow())[:19],
+			'tDifInMil': 0
 		},
 		'activeCountDown': {
-			'now': str(datetime.now()) if contestIsActive else str(datetime.now()),
-			'end_time': str(contest.end_time) if contestIsActive else str(datetime.now()),
+			'now': str(datetime.now())[:19] if contestIsActive else str(datetime.now())[:19],
+			'end_time': str(contest.end_time)[:19] if contestIsActive else str(datetime.now())[:19],
+			'tDifInMil': 0
 		},
 		'contestIsActive': contestIsActive,
 		'current_contest': contest
@@ -91,12 +93,12 @@ def running_contest(request):
 		'currentProblem' : currentProblem,
 		'currentProblemInputs': currentProblemInputs,
 		'countDown': {
-			'now': str(datetime.utcnow()),
-			'end_time': nextContest['start_time'] if nextContest else str(datetime.utcnow()),
+			'now': str(datetime.utcnow())[:19],
+			'end_time': nextContest['start_time'][:19] if nextContest else str(datetime.utcnow())[:19],
 		},
 		'activeCountDown': {
-			'now': str(datetime.now()) if contestIsActive else str(datetime.now()),
-			'end_time': str(contest.end_time) if contestIsActive else str(datetime.now()),
+			'now': str(datetime.now())[:19] if contestIsActive else str(datetime.now())[:19],
+			'end_time': str(contest.end_time)[:19] if contestIsActive else str(datetime.now())[:19],
 		},
 	}
 	return render_template(context, request, 'running_contest')
@@ -119,12 +121,12 @@ def all_submissions(request):
 		'contestProblems': contestProblems,
 		'pastContests': Contest.objects.all().order_by('-created_at')[:64], # past 1 week
 		'countDown': {
-			'now': str(datetime.utcnow()),
-			'end_time': nextContest['start_time'] if nextContest else str(datetime.utcnow()),
+			'now': str(datetime.utcnow())[:19],
+			'end_time': nextContest['start_time'][:19] if nextContest else str(datetime.utcnow())[:19],
 		},
 		'activeCountDown': {
-			'now': str(datetime.now()) if contestIsActive else str(datetime.now()),
-			'end_time': str(contest.end_time) if contestIsActive else str(datetime.now()),
+			'now': str(datetime.now())[:19] if contestIsActive else str(datetime.now())[:19],
+			'end_time': str(contest.end_time)[:19] if contestIsActive else str(datetime.now())[:19],
 		},
 	}
 	return render_template(context, request, 'all_submissions')
@@ -141,12 +143,12 @@ def submission_details(request, pk):
 		'contestProblems': contestProblems,
 		'pastContests': Contest.objects.all().order_by('-created_at')[:64], # past 1 week 8 Contest per day 7 days
 		'countDown': {
-			'now': str(datetime.utcnow()),
-			'end_time': nextContest['start_time'] if nextContest else str(datetime.utcnow()),
+			'now': str(datetime.utcnow())[:19],
+			'end_time': nextContest['start_time'][:19] if nextContest else str(datetime.utcnow())[:19],
 		},
 		'activeCountDown': {
-			'now': str(datetime.now()) if contestIsActive else str(datetime.now()),
-			'end_time': str(contest.end_time) if contestIsActive else str(datetime.now()),
+			'now': str(datetime.now())[:19] if contestIsActive else str(datetime.now())[:19],
+			'end_time': str(contest.end_time)[:19] if contestIsActive else str(datetime.now())[:19],
 		},
 	}
 	return render_template(context, request, 'all_submissions')
