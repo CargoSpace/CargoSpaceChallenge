@@ -147,7 +147,7 @@ def submission_details(request, pk):
 			'end_time': nextContest['start_time'][:19] if nextContest else str(datetime.utcnow())[:19],
 		},
 		'activeCountDown': {
-			'now': str(datetime.now())[:19] if contestIsActive else str(datetime.now())[:19],
+			'now': str(datetime.now())[:19],
 			'end_time': str(contest.end_time)[:19] if contestIsActive else str(datetime.now())[:19],
 		},
 	}
