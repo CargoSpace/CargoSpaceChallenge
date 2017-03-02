@@ -39,7 +39,7 @@ def compute_update_next_contest():
     nextHour = getUpperHour(hour_set, now.hours)
     if nextHour == 0:
         now = now.clone().add(day=1)
-    next_contest = "%d-%d-%d %d:00:00" % (now.year, now.month, now.day, nextHour)
+    next_contest = "%d-%02d-%02d %02d:00:00" % (now.year, now.month, now.day, nextHour)
     Cache['next_contest'] = next_contest
     Cache.sync()
     Cache.close()
