@@ -17,7 +17,7 @@ var tactive;
 function initializeActiveClock(id) {
   var clock = document.getElementById(id);
   if(!clock) return;
-  tactive = (Date.parse(activeEndtime.replace('-','/').replace('-','/')) + (60 * 60 * 1000)) - Date.parse(activeNow.replace('-','/').replace('-','/'));
+  tactive = (Date.parse(activeEndtime.replace('-','/').replace('-','/')) ) - Date.parse(activeNow.replace('-','/').replace('-','/'));
   // var daysSpan = clock.querySelector('.days');
   var hoursSpan = clock.querySelector('.hours');
   var minutesSpan = clock.querySelector('.minutes');
