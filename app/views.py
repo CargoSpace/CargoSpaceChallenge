@@ -207,11 +207,13 @@ def doSubmission(request):
 				aContest = Contest.objects.get(pk=request.POST['contest'])
 			except Contest.DoesNotExist:
 				messages.info(request, "Contest is over.")
-				return redirect(running_contest)
+				# return redirect(running_contest)
+				return redirect(request.POST.get('next', '/'));
 			bContest = Contest.objects.filter(start_time__lt=timezone.now(), end_time__gt=timezone.now()).first() #ascending order
 			if bContest is None:
 				messages.info(request, "Contest is over.")
-				return redirect(running_contest)
+				# return redirect(running_contest)
+				return redirect(request.POST.get('next', '/'));
 				
 			contestSubmission = form.save(commit=False)
 			workerStatus = lib.get_celery_worker_status()
@@ -224,11 +226,14 @@ def doSubmission(request):
 			else:
 				contestTasks.judge_submission.delay(contestSubmission.pk)
 			messages.info(request, "Successfuly Submitted")
-			return redirect(running_contest)
+			# return redirect(running_contest)
+			return redirect(request.POST.get('next', '/'));
 		else:
 			messages.info(request, "Sorry, Please check your input and try again.")
-			return redirect(running_contest)
-	return redirect(running_contest)
+			# return redirect(running_contest)
+			return redirect(request.POST.get('next', '/'));
+	# return redirect(running_contest)
+	return redirect(request.POST.get('next', '/'));
 	
 def doAuth(request):
 	if request.method == 'POST':

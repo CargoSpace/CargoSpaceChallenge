@@ -12,7 +12,7 @@ urlpatterns = [
     
     # Custom Contest (views.custom_submission_details)
     # url(r'^contests', views.custom_contests),
-    url(r'contests/(?P<pk>[0-9,A-Z,a-z,-]+)$', views.custom_contest),
+    url(r'contest/(?P<pk>[0-9,A-Z,a-z,-]+)$', views.custom_contest),
     
     url(r'^login', views.auth),
     url(r'^register', views.register),

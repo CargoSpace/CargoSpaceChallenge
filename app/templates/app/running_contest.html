@@ -332,6 +332,7 @@
 							<div class="">
 								<form id="submission" role="form" class="form" action="/submission" method="post" enctype="multipart/form-data">
 								{% csrf_token %}
+								<input type="hidden" name="next" value="{{ request.get_full_path }}">
 								<input type="hidden" name="contest" value="{{contest.id}}"><!--contest_id-->
 								<input type="hidden" name="problem" value="{{currentProblem.id}}"><!--problem_id-->
 								<div class="form-group">
