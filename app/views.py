@@ -152,6 +152,50 @@ def submission_details(request, pk):
 		},
 	}
 	return render_template(context, request, 'all_submissions')
+
+@login_required(login_url='/login')
+def custom_contest(request, pk):
+	try:
+		contest = Contest.objects.get(pk=pk)
+		contestIsActive = False
+		contestIsValid = False
+		if contest.start_time < timezone.now() and contest.end_time > timezone.now():
+			contestIsActive = True
+		if contest.start_time > timezone.now():
+			contestIsValid = True
+			
+		contestProblems = contest.contest_problems.all() if contest else None
+		problemType = request.GET.get("type", "A")
+		currentProblem = contestProblems[0].problem if contest else None
+		currentProblemInputs = None
+		if currentProblem:
+			for contestProblem in contestProblems:
+				if contestProblem.problem.problem_type == problemType:
+					currentProblem = contestProblem.problem
+					currentProblemInputs = contestProblem.problem.problem_input.all()
+					break
+		context = {
+			'title': 'Contest is Running | ' + config.app if contestIsActive else 'Contest is over | ' + config.app, 
+			'page' : 'running_contest',
+			'contestIsActive': contestIsActive,
+			'contestIsValid': contestIsValid,
+			'contest': contest,
+			'contestProblems': contestProblems,
+			'currentProblem' : currentProblem,
+			'currentProblemInputs': currentProblemInputs,
+			'countDown': {
+				'now': str(datetime.utcnow())[:19],
+				'end_time': str(contest.start_time)[:19] if contestIsValid else str(datetime.utcnow())[:19],
+			},
+			'activeCountDown': {
+				'now': str(datetime.now())[:19] if contestIsActive else str(datetime.now())[:19],
+				'end_time': str(contest.end_time)[:19] if contestIsActive else str(datetime.now())[:19],
+			},
+		}
+		return render_template(context, request, 'running_custom_contest')
+	except Contest.DoesNotExist:
+		messages.info(request, "Contest doesn't exist")
+		return redirect(index)
 	
 @login_required(login_url='/login')
 def doSubmission(request):

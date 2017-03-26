@@ -1,0 +1,374 @@
+{% load static %}
+{% include "app/_header.html" %}
+  <div class="app" id="app">
+	<script type="text/javascript">
+		var now = '{{ countDown.now }}';
+  		var endtime = '{{ countDown.end_time }}';
+		var activeNow = '{{ activeCountDown.now }}';
+		var activeEndtime = '{{ activeCountDown.end_time }}';
+		var contest_id = '{{contest.pk}}';
+		var user_id = '{{user}}';
+	</script>
+	
+	{% include "app/_header_down.html" %}
+  <!-- content -->
+  <div id="content" class="app-content" role="main">
+	<div class="app-body dark-light">
+	<!-- ############ PAGE START-->
+	{% if not contestIsActive %}
+	<div class="row-col white">
+		<div class="col-sm-3"></div>
+		<div class="col-sm-6 text-center">
+			<div class="p-y-lg clearfix">
+			    <div class="text-center">
+			      <h2 class="_700 m-b">
+			      	{% if not contestIsValid %}Contest is over{% endif %}
+			      	{% if contestIsValid %}Contest is yet to begin{% endif %}
+			      	</h2>
+			      <h5 class="m-b-md">
+			      	{% if not contestIsValid %}the leaderboard is available{% endif %}
+			      	{% if contestIsValid %}Contest begins shortly{% endif %}
+			      </h5>
+			      <!--<a href="#" class="btn rounded btn-outline b-info text-info p-x-md m-y">Start Now</a>-->
+			    </div>
+			    <div class="row padding">
+				<div class="col-md-8 offset-sm-2">
+					<div class="box-color blue pos-rlt">
+						<span class="arrow bottom b-blue"></span>
+						<div class="box-body">
+							<h4>
+							{% if not contestIsValid %}$this->challenge->end(){% endif %}
+			      			{% if contestIsValid %}$this->challenge->start(){% endif %}
+							</h4>
+						</div>
+					</div>
+				</div>
+			</div>
+				<div class="row">
+					<div class="col-md-6 offset-sm-3">
+						<div id="clockdiv">
+	        		        <!--<div class="days-wrap"><span class="days"></span>DAYS</div>-->
+	        	        	<div class="hours-wrap"><span class="hours"></span>HOURS</div>
+	        	        	<div class="minutes-wrap"><span class="minutes"></span>MINUTES</div>
+	        	        	<div class="seconds-wrap"><span class="seconds"></span>SECONDS</div>
+		      	        </div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-3"></div>
+	</div>
+	{% endif %}
+	
+	{% if contestIsActive %}
+	<div class="row-col">
+		<div id="left_side" class="col-xs-3 w-xl dark-light">
+		    <div class="row-col b-r bg">
+		    	
+		        <div class="padding" style="padding-top: 0px; padding-right: 0px; padding-left: 0px;">
+		        	<div class="box">
+			        	<div class="row">
+							<div class="col-md-8 offset-sm-2">
+								<div id="activeClockdiv">
+			        	        	<div class="hours-wrap"><span class="hours"></span>Hours</div>
+			        	        	<div class="minutes-wrap"><span class="minutes"></span>Minutes</div>
+			        	        	<div class="seconds-wrap"><span class="seconds"></span>Seconds</div>
+				      	        </div>
+							</div>
+						</div>
+	
+			        	<div class="p-a">
+				        	<h6 class="text-muted m-a-0">Problemset</h6>
+				        </div>
+			        	<div class="box">
+						    <ul class="list inset">
+						    	{% for contestProblem in contestProblems %}
+								<li class="list-item">
+						        	<a herf="" class="pull-left m-r">
+					                	<span class="w-30">
+					                		{% if contestProblem.problem.problem_type == "A" %}
+					                  		<img src="{% static "app/images/a0.jpg" %}" class="w-full" alt="A">
+					                  		{% endif %}
+					                  		{% if contestProblem.problem.problem_type == "B" %}
+					                  		<img src="{% static "app/images/a1.jpg" %}" class="w-full" alt="B">
+					                  		{% endif %}
+					                  		{% if contestProblem.problem.problem_type == "C" %}
+					                  		<img src="{% static "app/images/a2.jpg" %}" class="w-full" alt="C">
+					                  		{% endif %}
+					                  		{% if contestProblem.problem.problem_type == "D" %}
+					                  		<img src="{% static "app/images/a3.jpg" %}" class="w-full" alt="D">
+					                  		{% endif %}
+					                 	</span>
+					                </a>
+					                <div class="clear">
+					                  <a href="/contests/{{contest.pk}}?type={{contestProblem.problem.problem_type}}" class="_300 text-ellipsis">Problem {{contestProblem.problem.problem_type}}</a>
+					                </div>
+						        </li>
+								{% endfor %}
+						    </ul>
+						</div>
+						
+						<div class="p-a">
+				        	<h6 class="text-muted m-a-0">My Submission</h6>
+				        </div>
+			        	<div class="box">
+						    <ul class="list inset">
+						    	<table class="table table-striped responsive">
+						    		<thead>
+						    			<tr>
+						    			<th>Problem</th>
+						    			<!--<th>Time</th>-->
+						    			<th>Status</th>
+						    			</tr>
+						    		</thead>
+						    		<tbody data-bind='visible: submissions().length > 0, foreach: submissions'>
+										<tr>
+											<td><span data-bind='text: problem_title'> </span></td>
+											<!--<td><span data-bind='text: created_at'> </span></td>-->
+											<td><span data-bind='text: submission_state'> </span></td>
+										</tr>
+						    		</tbody>
+						    	</table>
+						    </ul>
+						</div>
+						<!--
+			        	<div class="p-a">
+				        	<h6 class="text-muted m-a-0">Top Challengers</h6>
+				        </div>
+			        	<div class="box">
+						    <ul class="list inset">
+						        <li class="list-item">
+						        	<a herf="" class="list-left">
+						        		<span class="w-40 circle avatar accent"><span>C</span>
+						        		<i class="away b-white"></i></span>
+						        	</a>
+						            <div class="list-body">
+						                <div>
+						                	<a href="#">Chris Fox<span class="pull-right">293,200</span></a>
+						                	<small class="text-muted text-ellipsis">Cargo Space Challenger</small>
+						                </div>
+						            </div>
+						        </li>
+						        <li class="list-item">
+						        	<a herf="" class="list-left">
+						        		<span class="w-40 circle avatar accent"><span>C</span>
+						        		<i class="away b-white"></i></span>
+						        	</a>
+						            <div class="list-body">
+						                <div>
+						                	<a href="#">Chris Fox<span class="pull-right">293,200</span></a>
+						                	<small class="text-muted text-ellipsis">Cargo Space Challenger</small>
+						                </div>
+						            </div>
+						        </li>
+						        <li class="list-item">
+						        	<a herf="" class="list-left">
+						        		<span class="w-40 circle avatar accent"><span>C</span>
+						        		<i class="away b-white"></i></span>
+						        	</a>
+						            <div class="list-body">
+						                <div>
+						                	<a href="#">Chris Fox<span class="pull-right">293,200</span></a>
+						                	<small class="text-muted text-ellipsis">Cargo Space Challenger</small>
+						                </div>
+						            </div>
+						        </li>
+						        
+						        <li class="list-item">
+						        	<a herf="" class="list-left">
+						        		<span class="w-40 circle avatar accent"><span>C</span>
+						        		<i class="away b-white"></i></span>
+						        	</a>
+						            <div class="list-body">
+						                <div>
+						                	<a href="#">Chris Fox<span class="pull-right">293,200</span></a>
+						                	<small class="text-muted text-ellipsis">Cargo Space Challenger</small>
+						                </div>
+						            </div>
+						        </li>
+						        
+						        <li class="list-item">
+						        	<a herf="" class="list-left">
+						        		<span class="w-40 circle avatar accent"><span>C</span>
+						        		<i class="away b-white"></i></span>
+						        	</a>
+						            <div class="list-body">
+						                <div>
+						                	<a href="#">Chris Fox<span class="pull-right">293,200</span></a>
+						                	<small class="text-muted text-ellipsis">Cargo Space Challenger</small>
+						                </div>
+						            </div>
+						        </li>
+						        
+						        <li class="list-item">
+						        	<a herf="" class="list-left">
+						        		<span class="w-40 circle avatar accent"><span>C</span>
+						        		<i class="away b-white"></i></span>
+						        	</a>
+						            <div class="list-body">
+						                <div>
+						                	<a href="#">Chris Fox<span class="pull-right">293,200</span></a>
+						                	<small class="text-muted text-ellipsis">Cargo Space Challenger</small>
+						                </div>
+						            </div>
+						        </li>
+						        
+						        <li class="list-item">
+						        	<a herf="" class="list-left">
+						        		<span class="w-40 circle avatar accent"><span>C</span>
+						        		<i class="away b-white"></i></span>
+						        	</a>
+						            <div class="list-body">
+						                <div>
+						                	<a href="#">Chris Fox<span class="pull-right">293,200</span></a>
+						                	<small class="text-muted text-ellipsis">Cargo Space Challenger</small>
+						                </div>
+						            </div>
+						        </li>
+						        
+						    </ul>
+						</div>
+						-->
+					</div>
+		        </div>
+		    </div>
+		</div>
+		<div id="detail" class="col-xs-9" style="min-height: 600px">
+			<div class="row-col white">
+				<div class="padding">
+					<h4>Problem {{currentProblem.problem_type}}: {{currentProblem.title}}</h4>
+					<div class="panel box no-border m-b-xs">
+						<div class="box-body">
+							<div class="problem">
+								<div class="pull-left m-r">
+									<span class="w-40">
+										{% if currentProblem.problem_type == "A" %}
+				                  		<img src="{% static "app/images/a0.jpg" %}" class="w-full" alt="A">
+				                  		{% endif %}
+				                  		{% if currentProblem.problem_type == "B" %}
+				                  		<img src="{% static "app/images/a1.jpg" %}" class="w-full" alt="B">
+				                  		{% endif %}
+				                  		{% if currentProblem.problem_type == "C" %}
+				                  		<img src="{% static "app/images/a2.jpg" %}" class="w-full" alt="C">
+				                  		{% endif %}
+				                  		{% if currentProblem.problem_type == "D" %}
+				                  		<img src="{% static "app/images/a3.jpg" %}" class="w-full" alt="D">
+				                  		{% endif %}
+				                 	</span>
+								</div>
+								<p>{{currentProblem.description|safe}}</p>
+							</div>
+						</div>
+					</div>
+					
+					{% if currentProblem.image %}
+					<div class="panel box no-border m-b-xs">
+						<div class="box-body">
+							<div class="problem">
+								<center><img class="img-responsive" class="img-rounded" src="{{currentProblem.image.url}}" style="max-width: 400px" alt="{{currentProblem.problem_type}} - {{currentProblem.title}}"></center>
+							</div>
+						</div>
+					</div>
+					{% endif %}
+					
+					{% if currentProblem.input_description %}
+					<b>Input:</b>
+					<div class="panel box no-border m-b-xs">
+						<div class="box-body">
+							<div class="problem">
+								{{currentProblem.input_description|safe}}
+							</div>
+						</div>
+					</div>
+					{% endif %}
+					
+					{% if currentProblem.output_description %}
+					<b>Output:</b>
+					<div class="panel box no-border m-b-xs">
+						<div class="box-body">
+							<div class="problem">
+								{{currentProblem.output_description|safe}}
+							</div>
+						</div>
+					</div>
+					{% endif %}
+					
+					{% if currentProblem.constraints %}
+					<b>Constraints:</b>
+					<div class="panel box no-border m-b-xs">
+						<div class="box-body">
+							<div class="problem">
+								{{currentProblem.constraints|safe}}
+							</div>
+						</div>
+					</div>
+					{% endif %}
+					
+					{% if currentProblem.example_input %}
+					<b>Sample Input:</b>
+					<div class="panel box no-border m-b-xs">
+						<div class="box-body">
+							<div class="problem">
+								{{currentProblem.example_input|safe|linebreaksbr}}
+							</div>
+						</div>
+					</div>
+					{% endif %}
+					
+					{% if currentProblem.example_output %}
+					<b>Sample Output:</b>
+					<div class="panel box no-border m-b-xs">
+						<div class="box-body">
+							<div class="problem">
+								{{currentProblem.example_output|safe|linebreaksbr}}
+							</div>
+						</div>
+					</div>
+					{% endif %}
+					
+					{% if currentProblemInputs %}
+					{% for currentProblemInput in currentProblemInputs %}
+					<div class="panel box no-border m-b-xs">
+						<div class="box-body">
+							<div class="">
+								<a href="{{currentProblemInput.problem_stdin.url}}" class="btn btn-fw info">Download Standard Input..</a>
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+					{% endif %}
+					
+					<div class="panel box no-border m-b-xs">
+						<div class="box-body">
+							<div class="">
+								<form id="submission" role="form" class="form" action="/submission" method="post" enctype="multipart/form-data">
+								{% csrf_token %}
+								<input type="hidden" name="contest" value="{{contest.id}}"><!--contest_id-->
+								<input type="hidden" name="problem" value="{{currentProblem.id}}"><!--problem_id-->
+								<div class="form-group">
+									<!--<label for="exampleInputFile">Standard Output File..</label>-->
+									<div class="form-file">
+										<input type="file" name="submission" id="file_upload" {% if not contestIsActive %} disabled {% endif %}>
+										<button class="btn info">Upload Standard Output..</button>
+									</div>
+					              	<!--<p class="help-block">Upload the output of your file.</p>-->
+					            </div>
+					            </form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+	</div>
+	{% endif %}
+	<!-- ############ PAGE END-->
+	</div>
+  </div>
+  <!-- / -->
+
+{% include "app/_footer_top.html" %}
+{% include "app/_theme_switcher.html" %}
+<!-- ############ LAYOUT END-->
+  </div>
+{% include "app/_footer.html" %}
