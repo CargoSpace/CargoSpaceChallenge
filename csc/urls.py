@@ -12,6 +12,7 @@ from django.conf.urls.static import static
 admin.autodiscover()
 
 urlpatterns = [
+    url(r'^\.well-known/', include('letsencrypt.urls')),
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap',
         {'sitemaps': {'cmspages': CMSSitemap}}),
     url(r'^select2/', include('django_select2.urls')),

@@ -156,6 +156,7 @@ MIDDLEWARE_CLASSES = (
 
 INSTALLED_APPS = (
     'rest_framework',
+    'letsencrypt',
     'app',
     'dashboard',
     'contest',
