@@ -50,7 +50,7 @@ def create_contest():
     if contestSetting.pauseAutomaticContest:
         print("cant proceed. flag automatic contest pausing..")
         return {'status': False, 'message': 'Automatic Contest Paused'}
-    newContestProblem = getRandomObject(ProblemSet.objects.all())
+    newContestProblem = getRandomObject(ProblemSet.objects.filter(created_by_id=1)) #only return question by first citizen (admin)
     if not newContestProblem:
         print("no contest problem found")
         return {'status': False, 'message': 'No contest problem found'}
